@@ -1,2 +1,3 @@
-# P6-TBD
-Project 6
+# P6-PhotoCulling
+
+Automating the process of culling photos from photography events, such as weddings, using learning techniques that rank the image aesthetics.

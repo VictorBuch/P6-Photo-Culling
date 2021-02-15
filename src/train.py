@@ -1,8 +1,10 @@
-import json
 from sklearn.model_selection import train_test_split
-import numpy as np
 import tensorflow.keras as keras
 import tensorflow as tf
+import numpy as np
+import cv2
+import os
+import json
 
 DATASET_PATH = "datasets/images_subset"
 MODEL_PATH = "models/model.h5"
@@ -15,9 +17,7 @@ REGULARIZATION_PARAMETER = 0.001
 
 def get_data_splits(dataset_path):
 
-    # This method's task is to get the image data from the folder into numpy arrays (train, validation and test splits),
-    # and also to dissect the AVA.txt's content and extract the ranks into numpy array of labels (and associate them
-    # with the images they correspond to.
+    # Splt the data into train, validation and test set
 
     X = np.array()  # All images
     y = np.array()  # All ranks (ordered according to the images)

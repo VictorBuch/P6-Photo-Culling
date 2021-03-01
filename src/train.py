@@ -1,3 +1,5 @@
+from src.data_preperation import *
+
 from sklearn.model_selection import train_test_split
 import tensorflow.keras as keras
 import tensorflow as tf
@@ -6,7 +8,10 @@ import cv2
 import os
 import json
 
-DATASET_PATH = "datasets/images_subset"
+IMAGE_DATASET_PATH = "../datasets/images"
+IMAGE_DATASET_SUBSET_PATH = "../datasets/images_subset/"
+IMAGE_INFO_PATH = "../datasets/AVA.txt"
+
 MODEL_PATH = "models/model.h5"
 
 EPOCHS = 40
@@ -72,7 +77,26 @@ def build_model(input_shape):
 
 if __name__ == "__main__":
 
-    X_train, X_validation, X_test, y_train, y_validation, y_test = get_data_splits(DATASET_PATH)
+    labels = get_labels(IMAGE_DATASET_PATH, IMAGE_INFO_PATH)
+
+    keras.preprocessing.image.image_dataset_from_directory(
+        IMAGE_DATASET_PATH,
+        labels=labels,
+        label_mode="int",
+        class_names=None,
+        color_mode="rgb",
+        batch_size=32,
+        image_size=(256, 256),
+        shuffle=True,
+        seed=None,
+        validation_split=None,
+        subset=None,
+        interpolation="bilinear",
+        follow_links=False,
+    )
+
+
+    X_train, X_validation, X_test, y_train, y_validation, y_test = get_data_splits(IMAGE_DATASET_PATH)
 
     model = build_model((X_train.shape[1], X_train.shape[2], X_train.shape[3]))
 

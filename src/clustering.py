@@ -9,7 +9,7 @@ Input: An array (any size) of textual time data information in format "YYYY:MM:D
 Output: A key-value store encoding the cluster information. Keys are cluster indices (positive integers),
 values are numpy arrays containing chronologically ordered time data belonging to a cluster.
 
-In words:
+Algorithm:
     * We use distance between data stamps to determine the neighbours, which should be clustered together.
     * The distance is represented as a set of differently scaled time information
       (years -> seconds, see DISTANCE_THREHSOLD below). The representation of distance using one uniform scale,

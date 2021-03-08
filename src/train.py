@@ -95,7 +95,6 @@ if __name__ == "__main__":
         follow_links=False,
     )
 
-
     X_train, X_validation, X_test, y_train, y_validation, y_test = get_data_splits(IMAGE_DATASET_PATH)
 
     model = build_model((X_train.shape[1], X_train.shape[2], X_train.shape[3]))

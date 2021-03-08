@@ -116,14 +116,6 @@ if __name__ == "__main__":
     time_data = ["21/03/08 09:18:44", "21/03/08 09:18:43",
                  "20/03/08 09:18:43", "20/03/08 09:18:44", "21/03/08 09:18:45"]
 
-    if is_predecessor(time_data[0], time_data[1]):
-        distance = get_distance(time_data[0], time_data[1])
-    else:
-        distance = get_distance(time_data[1], time_data[0])
-
-
-    print(distance)
-
     clusters = cluster_data(time_data)
 
     for key in clusters:

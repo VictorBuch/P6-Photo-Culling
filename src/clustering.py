@@ -11,12 +11,13 @@ values are numpy arrays containing chronologically ordered time data belonging t
 
 Algorithm:
     * We use distance between data stamps to determine the neighbours, which should be clustered together.
-    * The distance is represented as a set of differently scaled time information
-      (years -> seconds, see DISTANCE_THREHSOLD below). The representation of distance using one uniform scale,
-      say seconds or milliseconds, could cause data overflow when dealing with a huge distance.
-      (One year is 3.2 × 10^10 milliseconds, we cannot store that in a numeric variable.
-      And yes, there probably won't be a one year difference between our image data, but when solving
-      a problem, it's a good practice to generalize it to its extreme.)
+    * The distance is represented as a tuple: (days, seconds), see DISTANCE THRESHOLD below. It is something
+      like a priority-ordered distance tuple. If extra information is necessary (file index when time data missing,
+      or some other metadata), it can simply be added to the distance representation, e.g. (days, seconds, file_index)
+      The representation of distance using one uniform scale, say seconds or milliseconds,
+      could cause data overflow when dealing with a huge distance. (One year is 3.2 × 10^10 milliseconds,
+      we cannot store that in a numeric variable. And yes, there probably won't be a one year difference between our
+      images, but when solving a problem, it's a good practice to generalize it to its extreme. So that's why a tuple.)
     * We loop through all time stamps and compare them with the ones already clustered. If a time stamp is
       close enough (less than DISTANCE_THRESHOLD) to any other time stamp in a cluster,
       the time stamp is put into that cluster. If it belongs to no cluster, it is put to a new cluster.
@@ -27,29 +28,29 @@ Possible improvements:
     * Distance threshold could adapt to the context.
     * This is quite a basic implementation. (I googled time series clustering, but what I found seemed to be
       unnecessarily complicated for our problem, so I wrote this for now.
-    * Also, I gotta fix in_proximity function, there's a bug.
 """
 
 
-import numpy as np
+import datetime as dt
+
+FORMAT = "%y/%m/%d %H:%M:%S"
+DISTANCE_THRESHOLD = (0, 5)  # 0 days, 5 seconds
 
 
-DISTANCE_THRESHOLD = (0, 0, 0, 0, 0, 5)  # 5 seconds
-
-
-def get_time_data(time_stamp):  # "2021:03:08:09:18:43" -> [2021, 3, 8, 9, 18, 43]
-    return np.array(time_stamp.split(":")).astype(int)
+def get_distance(time_stamp_a, time_stamp_b):
+    distance = dt.datetime.strptime(time_stamp_b, FORMAT) - dt.datetime.strptime(time_stamp_a, FORMAT)
+    return [distance.days, distance.seconds]
 
 
 def in_proximity(time_stamp_a, time_stamp_b, distance_threshold=DISTANCE_THRESHOLD):
     """Is one time stamp close to another time stamp with respect to distance threshold?"""
 
-    # I forgot to account for when seconds flow into minutes, etc. Gotta fix that.
-
     result = True
 
-    for i in range(0, len(time_stamp_a)):
-        if abs(time_stamp_a[i] - time_stamp_b[i]) > distance_threshold[i]:
+    distance = get_distance(time_stamp_a, time_stamp_b) if is_predecessor(time_stamp_a, time_stamp_b) else get_distance(time_stamp_b, time_stamp_a)
+
+    for i in range(0, len(distance)):
+        if abs(distance[i]) > distance_threshold[i]:
             result = False
             break
 
@@ -59,12 +60,14 @@ def in_proximity(time_stamp_a, time_stamp_b, distance_threshold=DISTANCE_THRESHO
 def is_predecessor(time_stamp_a, time_stamp_b):
     """Did time_stamp_a come before time_stamp_b?"""
 
-    for i in range(0, len(time_stamp_a)):
-        distance = time_stamp_a[i] - time_stamp_b[i]
+    distance = get_distance(time_stamp_a, time_stamp_b)
 
-        if distance != 0:
-            return distance < 0
+    for i in range(0, len(distance)):
 
+        if distance[i] != 0:
+            return distance[i] > 0
+
+    # If two time stamps are equal, (i) this will never happen (ii) let's just return True
     return True
 
 
@@ -91,7 +94,7 @@ def cluster_data(time_data):
         is_time_stamp_sorted = False
 
         i = 0
-        while i < len(clusters) and not is_time_stamp_sorted:  #
+        while i < len(clusters) and not is_time_stamp_sorted:
 
             j = 0
             while j < len(clusters[i]) and not is_time_stamp_sorted:
@@ -110,9 +113,16 @@ def cluster_data(time_data):
 
 if __name__ == "__main__":
 
-    text_time_data = ["2021:03:08:09:18:44", "2021:03:08:09:18:43",
-                      "2020:03:08:09:18:43", "2020:03:08:09:18:44", "2021:03:08:09:18:45"]
-    time_data = [get_time_data(time_stamp) for time_stamp in text_time_data]
+    time_data = ["21/03/08 09:18:44", "21/03/08 09:18:43",
+                 "20/03/08 09:18:43", "20/03/08 09:18:44", "21/03/08 09:18:45"]
+
+    if is_predecessor(time_data[0], time_data[1]):
+        distance = get_distance(time_data[0], time_data[1])
+    else:
+        distance = get_distance(time_data[1], time_data[0])
+
+
+    print(distance)
 
     clusters = cluster_data(time_data)
 

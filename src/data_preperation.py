@@ -88,3 +88,48 @@ def get_labels(image_dataset_path, image_info_path):
     return labels
 
 
+def prepare_dataframe(image_dataset_path, image_info_path):
+    original_dataframe = pd.read_csv(image_info_path, sep=' ')
+
+    data = {
+        "filename": [],
+        "rank": []
+    }
+
+    count = 0
+    count_failed = 0
+
+    for filename in os.listdir(image_dataset_path):
+
+        if count > 2000:
+            break
+
+        # Get the row from AVA.txt dataframe where the index (in dataframe) equals filename minus .jpg.
+        image_data = original_dataframe[original_dataframe["index"] == int(filename.split('.')[0])].iloc[0]
+
+        count += 1
+        if image_data is None:
+            # We will remove these from the directory, but first I wanna see how many (if any) we're talking.
+            count_failed += 1
+            continue
+
+        # Get the average of ranks (although literature suggests to use different metrics).
+        num_annotations = 0
+        rank_sum = 0
+
+        for i in range(1, 11):
+            rank_sum += image_data[str(i)] * i
+            num_annotations += image_data[str(i)]
+
+        average_rank = int(round(rank_sum / num_annotations))
+
+        data["filename"].append(filename)
+        data["rank"].append(average_rank)
+
+        if count % 500 == 0:
+            print("Count: {}".format(count))
+
+    print("{} indices were not found in the image dataset.".format(count_failed))
+
+    dataframe = pd.DataFrame(data)
+    dataframe.to_csv("../datasets/AVA_dataframe.csv")

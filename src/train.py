@@ -1,7 +1,6 @@
 from src.data_preperation import *
 
 from sklearn.model_selection import train_test_split
-import tensorflow.keras as keras
 import tensorflow as tf
 import numpy as np
 import cv2
@@ -39,35 +38,35 @@ def get_data_splits(dataset_path):
 
 def build_model(input_shape):
 
-    model = keras.models.Sequential()
+    model = tf.keras.models.Sequential()
 
-    model.add(keras.layers.Conv2D(
+    model.add(tf.keras.layers.Conv2D(
         filters=64, kernel_size=(3, 3), input_shape=input_shape,
-        activation="relu", kernel_regularizer=keras.regularizers.l2(REGULARIZATION_PARAMETER))
+        activation="relu", kernel_regularizer=tf.keras.regularizers.l2(REGULARIZATION_PARAMETER))
     )
-    model.add(keras.layers.BatchNormalization())
-    model.add(keras.layers.MaxPooling2D(pool_size=(3, 3), strides=(2, 2), padding="same"))
+    model.add(tf.keras.layers.BatchNormalization())
+    model.add(tf.keras.layers.MaxPooling2D(pool_size=(3, 3), strides=(2, 2), padding="same"))
 
-    model.add(keras.layers.Conv2D(
+    model.add(tf.keras.layers.Conv2D(
         filters=32, kernel_size=(3, 3),
-        activation="relu", kernel_regularizer=keras.regularizers.l2(REGULARIZATION_PARAMETER))
+        activation="relu", kernel_regularizer=tf.keras.regularizers.l2(REGULARIZATION_PARAMETER))
     )
-    model.add(keras.layers.BatchNormalization())
-    model.add(keras.layers.MaxPooling2D(pool_size=(3, 3), strides=(2, 2), padding="same"))
+    model.add(tf.keras.layers.BatchNormalization())
+    model.add(tf.keras.layers.MaxPooling2D(pool_size=(3, 3), strides=(2, 2), padding="same"))
 
-    model.add(keras.layers.Conv2D(
+    model.add(tf.keras.layers.Conv2D(
         filters=32, kernel_size=(2, 2),
-        activation="relu", kernel_regularizer=keras.regularizers.l2(REGULARIZATION_PARAMETER))
+        activation="relu", kernel_regularizer=tf.keras.regularizers.l2(REGULARIZATION_PARAMETER))
     )
-    model.add(keras.layers.BatchNormalization())
-    model.add(keras.layers.MaxPooling2D(pool_size=(3, 3), strides=(2, 2), padding="same"))
+    model.add(tf.keras.layers.BatchNormalization())
+    model.add(tf.keras.layers.MaxPooling2D(pool_size=(3, 3), strides=(2, 2), padding="same"))
 
-    model.add(keras.layers.Flatten())
-    model.add(keras.layers.Dense(units=64, activation="relu"))
-    model.add(keras.layers.Dropout(0.3))
-    model.add(keras.layers.Dense(units=1))
+    model.add(tf.keras.layers.Flatten())
+    model.add(tf.keras.layers.Dense(units=64, activation="relu"))
+    model.add(tf.keras.layers.Dropout(0.3))
+    model.add(tf.keras.layers.Dense(units=1))
 
-    optimizer = keras.optimizers.Adam(learning_rate=LEARNING_RATE)
+    optimizer = tf.keras.optimizers.Adam(learning_rate=LEARNING_RATE)
     model.compile(optimizer=optimizer, loss="sparse_categorical_crossentropy", metrics=["accuracy"])
 
     model.summary()
@@ -77,39 +76,42 @@ def build_model(input_shape):
 
 if __name__ == "__main__":
 
-    labels = get_labels(IMAGE_DATASET_PATH, IMAGE_INFO_PATH)
-    print('Got labels.')
+    prepare_dataframe(IMAGE_DATASET_SUBSET_PATH, IMAGE_INFO_PATH)
 
-    keras.preprocessing.image.image_dataset_from_directory(
-        IMAGE_DATASET_PATH,
-        labels=labels,
-        label_mode="int",
-        class_names=None,
-        color_mode="rgb",
-        batch_size=32,
-        image_size=(256, 256),
-        shuffle=True,
-        seed=None,
-        validation_split=None,
-        subset=None,
-        interpolation="bilinear",
-        follow_links=False,
-    )
 
-    X_train, X_validation, X_test, y_train, y_validation, y_test = get_data_splits(IMAGE_DATASET_PATH)
-
-    model = build_model((X_train.shape[1], X_train.shape[2], X_train.shape[3]))
-
-    early_stopping_callback = keras.callbacks.EarlyStopping(monitor="accuracy", min_delta=0.001, patience=5)
-
-    history = model.fit(X_train, y_train, epochs=EPOCHS, batch_size=BATCH_SIZE,
-              validation_data=(X_validation, y_validation), callbacks=[early_stopping_callback])
-
-    test_loss, test_accuracy = model.evaluate(X_test, y_test)
-
-    print(f"Test loss is {test_loss}.")
-    print(f"Test accuracy is {test_accuracy}.")
-
-    model.save(MODEL_PATH)
+    # data_generator = tf.keras.preprocessing.image.ImageDataGenerator(rescale=1.0/255)
+    # data_generator.flow_from_dataframe(
+    #     directory=IMAGE_DATASET_PATH,
+    #     dataframe=dataframe,
+    #     x_col="id",
+    #     y_col="score",
+    #     class_mode="other",
+    #     target_size=(256, 256),
+    #     color_mode="rgb",
+    #     has_ext=True,
+    #     batch_size=32
+    # )
+    #
+    # step_size = data_generator.n // data_generator.batch_size
+    #
+    # X_train, X_validation, X_test, y_train, y_validation, y_test = get_data_splits(IMAGE_DATASET_PATH)
+    # model = build_model((X_train.shape[1], X_train.shape[2], X_train.shape[3]))
+    #
+    # model.fit_generator(
+    #     generator=data_generator,
+    #     steps_per_epoch=step_size,
+    #     validation_data=data_generator,
+    #     validation_steps=step_size,
+    #     epochs=10
+    # )
+    #
+    # # early_stopping_callback = tf.keras.callbacks.EarlyStopping(monitor="accuracy", min_delta=0.001, patience=5)
+    # # history = model.fit(X_train, y_train, epochs=EPOCHS, batch_size=BATCH_SIZE,
+    # #           validation_data=(X_validation, y_validation), callbacks=[early_stopping_callback])
+    # # test_loss, test_accuracy = model.evaluate(X_test, y_test)
+    # # print(f"Test loss is {test_loss}.")
+    # # print(f"Test accuracy is {test_accuracy}.")
+    #
+    # model.save(MODEL_PATH)
 
 

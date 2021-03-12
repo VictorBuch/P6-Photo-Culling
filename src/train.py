@@ -78,6 +78,7 @@ def build_model(input_shape):
 if __name__ == "__main__":
 
     labels = get_labels(IMAGE_DATASET_PATH, IMAGE_INFO_PATH)
+    print('Got labels.')
 
     keras.preprocessing.image.image_dataset_from_directory(
         IMAGE_DATASET_PATH,

@@ -38,8 +38,22 @@ DISTANCE_THRESHOLD = (0, 5)  # 0 days, 5 seconds
 
 
 def get_distance(time_stamp_a, time_stamp_b):
+
     distance = dt.datetime.strptime(time_stamp_b, FORMAT) - dt.datetime.strptime(time_stamp_a, FORMAT)
     return [distance.days, distance.seconds]
+
+
+def is_predecessor(time_stamp_a, time_stamp_b):
+    """Did time_stamp_a come before time_stamp_b?"""
+
+    distance = get_distance(time_stamp_a, time_stamp_b)
+
+    for i in range(0, len(distance)):
+        if distance[i] != 0:
+            return distance[i] > 0
+
+    # If two time stamps are equal, (i) this will never happen (ii) let's just return True
+    return True
 
 
 def in_proximity(time_stamp_a, time_stamp_b, distance_threshold=DISTANCE_THRESHOLD):
@@ -55,20 +69,6 @@ def in_proximity(time_stamp_a, time_stamp_b, distance_threshold=DISTANCE_THRESHO
             break
 
     return result
-
-
-def is_predecessor(time_stamp_a, time_stamp_b):
-    """Did time_stamp_a come before time_stamp_b?"""
-
-    distance = get_distance(time_stamp_a, time_stamp_b)
-
-    for i in range(0, len(distance)):
-
-        if distance[i] != 0:
-            return distance[i] > 0
-
-    # If two time stamps are equal, (i) this will never happen (ii) let's just return True
-    return True
 
 
 def insert_time_stamp_chronologically(time_stamp, cluster):

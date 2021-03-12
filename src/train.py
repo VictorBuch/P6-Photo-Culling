@@ -76,42 +76,60 @@ def build_model(input_shape):
 
 if __name__ == "__main__":
 
-    prepare_dataframe(IMAGE_DATASET_SUBSET_PATH, IMAGE_INFO_PATH)
+    # prepare_dataframe(IMAGE_DATASET_SUBSET_PATH, IMAGE_INFO_PATH)
 
+    dataframe = pd.read_csv("AVA_dataframe.csv")
 
-    # data_generator = tf.keras.preprocessing.image.ImageDataGenerator(rescale=1.0/255)
-    # data_generator.flow_from_dataframe(
-    #     directory=IMAGE_DATASET_PATH,
-    #     dataframe=dataframe,
-    #     x_col="id",
-    #     y_col="score",
-    #     class_mode="other",
-    #     target_size=(256, 256),
-    #     color_mode="rgb",
-    #     has_ext=True,
-    #     batch_size=32
-    # )
-    #
-    # step_size = data_generator.n // data_generator.batch_size
-    #
+    data_generator = tf.keras.preprocessing.image.ImageDataGenerator(
+        rescale=1.0/255,
+        validation_split=0.2
+    )
+
+    train_generator = data_generator.flow_from_dataframe(
+        directory=IMAGE_DATASET_PATH,
+        dataframe=dataframe,
+        x_col="id",
+        y_col="score",
+        class_mode="other",
+        target_size=(256, 256),
+        color_mode="rgb",
+        batch_size=32,
+        subset="training"
+    )
+
+    validation_generator = data_generator.flow_from_dataframe(
+        directory=IMAGE_DATASET_PATH,
+        dataframe=dataframe,
+        x_col="id",
+        y_col="score",
+        class_mode="other",
+        target_size=(256, 256),
+        color_mode="rgb",
+        batch_size=32,
+        subset="validation"
+    )
+
     # X_train, X_validation, X_test, y_train, y_validation, y_test = get_data_splits(IMAGE_DATASET_PATH)
-    # model = build_model((X_train.shape[1], X_train.shape[2], X_train.shape[3]))
-    #
-    # model.fit_generator(
-    #     generator=data_generator,
-    #     steps_per_epoch=step_size,
-    #     validation_data=data_generator,
-    #     validation_steps=step_size,
-    #     epochs=10
-    # )
-    #
-    # # early_stopping_callback = tf.keras.callbacks.EarlyStopping(monitor="accuracy", min_delta=0.001, patience=5)
-    # # history = model.fit(X_train, y_train, epochs=EPOCHS, batch_size=BATCH_SIZE,
-    # #           validation_data=(X_validation, y_validation), callbacks=[early_stopping_callback])
-    # # test_loss, test_accuracy = model.evaluate(X_test, y_test)
-    # # print(f"Test loss is {test_loss}.")
-    # # print(f"Test accuracy is {test_accuracy}.")
-    #
-    # model.save(MODEL_PATH)
+    model = build_model((256, 256, 3))  # I don't know about the shape.
+
+    model.fit_generator(
+        generator=train_generator,
+        steps_per_epoch=train_generator.samples // train_generator.batch_size,
+        validation_data=validation_generator,
+        validation_steps=validation_generator.samples // validation_generator.batch_size,
+        epochs=10
+    )
+
+    model.save(MODEL_PATH)
+
+    # early_stopping_callback = tf.keras.callbacks.EarlyStopping(monitor="accuracy", min_delta=0.001, patience=5)
+    # history = model.fit(X_train, y_train, epochs=EPOCHS, batch_size=BATCH_SIZE,
+    #           validation_data=(X_validation, y_validation), callbacks=[early_stopping_callback])
+    # test_loss, test_accuracy = model.evaluate(X_test, y_test)
+
+    # print(f"Test loss is {test_loss}.")
+    # print(f"Test accuracy is {test_accuracy}.")
+
+
 
 

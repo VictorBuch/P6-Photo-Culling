@@ -1,5 +1,4 @@
 from src.data_preperation import *
-
 from sklearn.model_selection import train_test_split
 import tensorflow as tf
 import numpy as np
@@ -9,9 +8,12 @@ import json
 
 IMAGE_DATASET_PATH = "../datasets/images"
 IMAGE_DATASET_SUBSET_PATH = "../datasets/images_subset/"
-IMAGE_INFO_PATH = "../datasets/AVA.txt"
 
-MODEL_PATH = "models/model.h5"
+AVA_TEXT_PATH = "../datasets/AVA.txt"
+AVA_DATAFRAME_PATH = "../datasets/AVA_dataframe.csv"
+AVA_DATAFRAME_SUBSET_PATH = "../datasets/AVA_dataframe_subset.csv"
+
+MODEL_PATH = "../models/model_AVAsubset_val_loss-0.0037.h5"
 
 EPOCHS = 40
 BATCH_SIZE = 32
@@ -76,23 +78,22 @@ def build_model(input_shape):
 
 if __name__ == "__main__":
 
-    # prepare_dataframe(IMAGE_DATASET_PATH, IMAGE_INFO_PATH)
+    # dataframe = prepare_dataframe(IMAGE_DATASET_PATH, AVA_TEXT_PATH)
+    # dataframe.to_csv(AVA_DATAFRAME_PATH)
 
-    dataframe = pd.read_csv("AVA_dataframe.csv")
+    dataframe = pd.read_csv(AVA_DATAFRAME_SUBSET_PATH)
 
     data_generator = tf.keras.preprocessing.image.ImageDataGenerator(
         rescale=1.0/255,
         validation_split=0.2
     )
 
-    # "123.jpg" 5
-
     train_generator = data_generator.flow_from_dataframe(
-        directory=IMAGE_DATASET_PATH,
+        directory=IMAGE_DATASET_SUBSET_PATH,
         dataframe=dataframe,
         x_col="id",
         y_col="score",
-        class_mode="other",
+        class_mode="raw",
         target_size=(256, 256),
         color_mode="rgb",
         batch_size=32,
@@ -100,18 +101,17 @@ if __name__ == "__main__":
     )
 
     validation_generator = data_generator.flow_from_dataframe(
-        directory=IMAGE_DATASET_PATH,
+        directory=IMAGE_DATASET_SUBSET_PATH,
         dataframe=dataframe,
         x_col="id",
         y_col="score",
-        class_mode="other",
+        class_mode="raw",
         target_size=(256, 256),
         color_mode="rgb",
         batch_size=32,
         subset="validation"
     )
 
-    # X_train, X_validation, X_test, y_train, y_validation, y_test = get_data_splits(IMAGE_DATASET_PATH)
     model = build_model((256, 256, 3))  # I don't know about the shape.
 
     model.fit_generator(
@@ -119,24 +119,10 @@ if __name__ == "__main__":
         steps_per_epoch=train_generator.samples // train_generator.batch_size,
         validation_data=validation_generator,
         validation_steps=validation_generator.samples // validation_generator.batch_size,
-        epochs=10
+        epochs=20
     )
 
     model.save(MODEL_PATH)
-
-
-
-    # X_train, X_validation, X_test, y_train, y_validation, y_test = get_data_splits(IMAGE_DATASET_PATH)
-    # model = build_model((256, 256, 3))  # I don't know about the shape.
-    #
-    # early_stopping_callback = tf.keras.callbacks.EarlyStopping(monitor="accuracy", min_delta=0.001, patience=5)
-    # history = model.fit(X_train, y_train, epochs=EPOCHS, batch_size=BATCH_SIZE,
-    #           validation_data=(X_validation, y_validation), callbacks=[early_stopping_callback])
-    # test_loss, test_accuracy = model.evaluate(X_test, y_test)
-
-    # print(f"Test loss is {test_loss}.")
-    # print(f"Test accuracy is {test_accuracy}.")
-
 
 
 

@@ -92,8 +92,8 @@ def prepare_dataframe(image_dataset_path, image_info_path):
     original_dataframe = pd.read_csv(image_info_path, sep=' ')
 
     data = {
-        "filename": [],
-        "rank": []
+        "id": [],
+        "score": []
     }
 
     count = 0
@@ -106,7 +106,7 @@ def prepare_dataframe(image_dataset_path, image_info_path):
         file_index = filename.split('.')[0]
 
         if file_index.isdigit():
-            image_data = original_dataframe[original_dataframe["index"] == int(file_index)]
+            image_data = original_dataframe[original_dataframe["index"] == int(file_index)].iloc[0]
         else:
             print("Non-digit file name: {}".format(file_index))
             count_failed += 1
@@ -123,15 +123,14 @@ def prepare_dataframe(image_dataset_path, image_info_path):
             rank_sum += image_data[str(i)] * i
             num_annotations += image_data[str(i)]
 
-        average_rank = int(round(rank_sum / num_annotations))
+        average_rank = rank_sum / num_annotations
 
-        data["filename"].append(filename)
-        data["rank"].append(average_rank)
+        data["id"].append(filename)
+        data["score"].append(average_rank / 10)
 
         if count % 500 == 0:
             print("Count: {}".format(count))
 
     print("{} indices were not found in the image dataset.".format(count_failed))
 
-    dataframe = pd.DataFrame(data)
-    dataframe.to_csv("../datasets/AVA_dataframe.csv")
+    return pd.DataFrame(data)

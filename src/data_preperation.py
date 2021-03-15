@@ -63,7 +63,7 @@ def get_labels(image_dataset_path, image_info_path):
     for filename in os.listdir(image_dataset_path):
 
         # Get the row from AVA.txt dataframe where the index (in dataframe) equals filename minus .jpg.
-        image_data = dataframe[dataframe["index"] == int(filename.split('.')[0])]
+        image_data = dataframe[dataframe["index"] == int("final")]
 
         count += 1
         if image_data is None:
@@ -101,19 +101,21 @@ def prepare_dataframe(image_dataset_path, image_info_path):
 
     for filename in os.listdir(image_dataset_path):
 
-        if count > 2000:
-            break
+        """Get the row from AVA.txt dataframe where the index (in dataframe) equals filename minus .jpg."""
 
-        # Get the row from AVA.txt dataframe where the index (in dataframe) equals filename minus .jpg.
-        image_data = original_dataframe[original_dataframe["index"] == int(filename.split('.')[0])].iloc[0]
+        file_index = filename.split('.')[0]
 
-        count += 1
-        if image_data is None:
-            # We will remove these from the directory, but first I wanna see how many (if any) we're talking.
+        if file_index.isdigit():
+            image_data = original_dataframe[original_dataframe["index"] == int(file_index)]
+        else:
+            print("Non-digit file name: {}".format(file_index))
             count_failed += 1
             continue
 
-        # Get the average of ranks (although literature suggests to use different metrics).
+        count += 1
+
+        """ Get the average of ranks (although literature suggests to use different metrics)."""
+
         num_annotations = 0
         rank_sum = 0
 

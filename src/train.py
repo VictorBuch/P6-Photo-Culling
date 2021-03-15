@@ -76,7 +76,7 @@ def build_model(input_shape):
 
 if __name__ == "__main__":
 
-    # prepare_dataframe(IMAGE_DATASET_SUBSET_PATH, IMAGE_INFO_PATH)
+    # prepare_dataframe(IMAGE_DATASET_PATH, IMAGE_INFO_PATH)
 
     dataframe = pd.read_csv("AVA_dataframe.csv")
 
@@ -84,6 +84,8 @@ if __name__ == "__main__":
         rescale=1.0/255,
         validation_split=0.2
     )
+
+    # "123.jpg" 5
 
     train_generator = data_generator.flow_from_dataframe(
         directory=IMAGE_DATASET_PATH,
@@ -122,6 +124,11 @@ if __name__ == "__main__":
 
     model.save(MODEL_PATH)
 
+
+
+    # X_train, X_validation, X_test, y_train, y_validation, y_test = get_data_splits(IMAGE_DATASET_PATH)
+    # model = build_model((256, 256, 3))  # I don't know about the shape.
+    #
     # early_stopping_callback = tf.keras.callbacks.EarlyStopping(monitor="accuracy", min_delta=0.001, patience=5)
     # history = model.fit(X_train, y_train, epochs=EPOCHS, batch_size=BATCH_SIZE,
     #           validation_data=(X_validation, y_validation), callbacks=[early_stopping_callback])

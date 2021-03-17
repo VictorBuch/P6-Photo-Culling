@@ -1,4 +1,9 @@
 body {
   background-color: #4b4545;
+  height: 100vh;
 }
 /*# sourceMappingURL=style.css.map */
+
+#root {
+  height: 100vh;
+}

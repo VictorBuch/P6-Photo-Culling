@@ -5,7 +5,10 @@ import RankedImage from "./RankedImage";
 function ImageCardDeck() {
   return (
     <CardGroup
-      style={{ justifyContent: "center", alignItems: "center", margin: "50px" }}
+      style={{
+        justifyContent: "center",
+        alignItems: "center",
+      }}
     >
       <RankedImage isChoosen="true" />
       <RankedImage />

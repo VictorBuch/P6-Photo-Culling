@@ -10,6 +10,8 @@ function App() {
       style={{
         display: "flex",
         flexDirection: "row",
+        justifyContent: "space-evenly",
+        alignItems: "center",
       }}
     >
       <ImageCardDeck />

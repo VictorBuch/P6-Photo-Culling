@@ -7,6 +7,7 @@ function RankedImage(props) {
       bg="secondary"
       border={props.isChoosen && "success"}
       style={{ width: "18rem" }}
+      className="m-2"
     >
       <Card.Img variant="top" src="https://picsum.photos/200" />
       <Card.Body>

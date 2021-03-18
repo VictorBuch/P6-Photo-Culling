@@ -1,4 +1,22 @@
 // make all the css styles in here plz sass is smart
+:root {
+  --background-color: #2d2d2d;
+  --card-background-color: #414141;
+  --selected-image-color: #3f8a4b;
+}
+
 body {
-  background-color: #4b4545;
+  background-color: var(--background-color);
+}
+
+// For the Upload Button, hides the input
+.file-upload {
+  display: none;
+}
+
+// The images the user uploads
+.uploadedImg {
+  object-fit: cover;
+  height: 200px;
+  width: 200px;
 }

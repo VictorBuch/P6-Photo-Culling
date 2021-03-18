@@ -15,8 +15,15 @@ body {
 }
 
 // The images the user uploads
-.uploadedImg {
+// .uploadedImg {
+//   border-radius: 5%;
+//   height: 200px;
+//   width: 200px;
+//   padding: 5px;
+// }
+
+.card-img-top {
+  width: auto;
+  height: 15vh;
   object-fit: cover;
-  height: 200px;
-  width: 200px;
 }

@@ -36,10 +36,20 @@ export default function App() {
           </label>
 
           {/* This section will need to be a JSX comonent soon but for now it dynamically loads the images */}
-          <div className="Images">
+          <div className="uploadedImages row">
             {imageArr.map((index) => {
               return (
-                <img key={index} src={index} alt="" className="uploadedImg" />
+                <div className="card" style={{ width: "18rem", margin: "3px" }}>
+                  <img
+                    key={index}
+                    src={index}
+                    alt=""
+                    className="card-img-top"
+                  />
+                  <div className="card-body">
+                    <p className="card-text">Ranking: 5/10</p>
+                  </div>
+                </div>
               );
             })}
           </div>
@@ -58,6 +68,6 @@ export default function App() {
 }
 
 // the tasks
-// have a button that accepts only PNG's and JPG's --------V---------
-// save those images in an array -----------V------------
-// use that array of images to dynamically display images, propably using state
+// Make sure the state array isnt reset everytime an image is uploaded
+// Find a clever way to save user ranking of images
+// Allow for user ranking

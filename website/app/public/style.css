@@ -12,10 +12,10 @@ body {
   display: none;
 }
 
-.uploadedImg {
+.card-img-top {
+  width: auto;
+  height: 15vh;
   -o-object-fit: cover;
      object-fit: cover;
-  height: 200px;
-  width: 200px;
 }
 /*# sourceMappingURL=style.css.map */

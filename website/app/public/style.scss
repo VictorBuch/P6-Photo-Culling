@@ -27,3 +27,7 @@ body {
   height: 15vh;
   object-fit: cover;
 }
+
+.cardSelected {
+  border: 5px solid var(--selected-image-color);
+}

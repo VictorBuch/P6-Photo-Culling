@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import ImageCard from "./Components/ImageCard";
 
 export default function App() {
   const imageFileArr = [];
@@ -35,32 +36,12 @@ export default function App() {
             />
           </label>
 
-          {/* This section will need to be a JSX comonent soon but for now it dynamically loads the images */}
+          {/* This section will need to be a JSX component soon but for now it dynamically loads the images */}
           <div className="uploadedImages row">
             {imageArr.map((index) => {
-              return (
-                <div className="card" style={{ width: "18rem", margin: "3px" }}>
-                  <img
-                    key={index}
-                    src={index}
-                    alt=""
-                    className="card-img-top"
-                  />
-                  <div className="card-body">
-                    <p className="card-text">Ranking: 5/10</p>
-                  </div>
-                </div>
-              );
+              return <ImageCard index={index} />;
             })}
           </div>
-
-          {/* <input
-            style={{ display: "block" }}
-            className="btn btn-danger"
-            onChange={loadImages}
-            placeholder="Upload Images"
-            type="file"
-          /> */}
         </div>
       </div>
     </div>

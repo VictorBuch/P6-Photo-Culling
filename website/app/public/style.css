@@ -18,4 +18,8 @@ body {
   -o-object-fit: cover;
      object-fit: cover;
 }
+
+.cardSelected {
+  border: 5px solid var(--selected-image-color);
+}
 /*# sourceMappingURL=style.css.map */

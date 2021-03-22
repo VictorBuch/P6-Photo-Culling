@@ -4,19 +4,19 @@ into RAM, the training process is such that the data flows from a dataframe usin
 As this is a regression problem, the labels are normalized average ranks of aesthetic quality of corresponding images.
 """
 
-from src.giaa_mean.data_preperation import *
+from src.giiaa_mean.data_preperation import *
 import tensorflow as tf
 
-IMAGE_DATASET_PATH = "../../datasets/images"
-IMAGE_DATASET_SUBSET_PATH = "../../datasets/images_subset/"
+IMAGE_DATASET_PATH = "../../ava/train"
+IMAGE_DATASET_SUBSET_PATH = "../../ava/train_subset/"
 
-AVA_TEXT_PATH = "../../datasets/AVA.txt"
-AVA_DATAFRAME_PATH = "../../datasets/AVA_dataframe.csv"
-AVA_DATAFRAME_SUBSET_PATH = "../../datasets/AVA_dataframe_subset.csv"
+AVA_TEXT_PATH = "../../ava/AVA.txt"
+AVA_DATAFRAME_PATH = "../../ava/AVA_dataframe.csv"
+AVA_DATAFRAME_SUBSET_PATH = "../../ava/AVA_dataframe_subset.csv"
 
 MODEL_PATH = "../../models/model_AVAsubset_val_loss-0.0037.h5"
 
-EPOCHS = 20
+EPOCHS = 10
 BATCH_SIZE = 32
 LEARNING_RATE = 0.0001
 REGULARIZATION_PARAMETER = 0.001

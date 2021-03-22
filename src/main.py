@@ -7,7 +7,7 @@ import random
 
 MODEL_H5_PATH = "../models/model_AVAsubset_val_loss-0.0037.h5"
 MODEL_JS_PATH = "../models/model_AVAsubset_val_loss-0.0037.json"
-IMAGE_DATASET_SUBSET_PATH = "../datasets/images_subset/"
+IMAGE_DATASET_SUBSET_PATH = "../ava/train_subset/"
 
 if __name__ == "__main__":
 

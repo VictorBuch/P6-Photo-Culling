@@ -11,8 +11,8 @@ IMAGE_DATASET_PATH = "../../ava/train"
 IMAGE_DATASET_SUBSET_PATH = "../../ava/train_subset/"
 
 AVA_TEXT_PATH = "../../ava/AVA.txt"
-AVA_DATAFRAME_PATH = "../../ava/AVA_dataframe.csv"
-AVA_DATAFRAME_SUBSET_PATH = "../../ava/AVA_dataframe_subset.csv"
+AVA_DATAFRAME_PATH = "../../ava/AVA_mean_dataframe.csv"
+AVA_DATAFRAME_SUBSET_PATH = "../../ava/AVA_mean_dataframe_subset.csv"
 
 MODEL_PATH = "../../models/model_AVAsubset_val_loss-0.0037.h5"
 

@@ -28,6 +28,10 @@ body {
   object-fit: cover;
 }
 
+.card {
+  border: none;
+}
+
 .cardSelected {
-  border: 5px solid var(--selected-image-color);
+  border: 3px solid var(--selected-image-color);
 }

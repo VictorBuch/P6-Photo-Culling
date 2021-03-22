@@ -1,19 +1,24 @@
 import React, { useState } from "react";
-import ImageCard from "./Components/ImageCard";
+import Cluster from "./Components/Cluster";
+import Clusters from "./Components/Clusters";
 
 export default function App() {
   const imageFileArr = [];
   const imageBlobs = [];
   const [imageArr, setImageArr] = useState([]);
+  var imageLastModified;
 
   function loadImages(e) {
     imageFileArr.push(e.target.files); // gets a file object with all files
-    console.log(imageFileArr[0]); // this gives an image file
+    // console.log(imageFileArr[0]); // this gives an image file
     // console.log("File arr length: " + imageFileArr[0].length);
 
     // Loop trough all the local images and creat blob elements for later use
     for (let i = 0; i < imageFileArr[0].length; i++) {
       imageBlobs.push(URL.createObjectURL(imageFileArr[0][i]));
+      // console.log(imageFileArr[0][i].lastModified);
+      imageLastModified = String(imageFileArr[0][i].lastModified); // use this to cluster, it represents milliseconds since 1 January 1970 UTC for some reason. 🤷
+      // console.log(imageLastModified);
     }
     setImageArr(imageBlobs); // set the dynamic state array equal to the blobs we just made
   }
@@ -38,9 +43,10 @@ export default function App() {
 
           {/* This section will need to be a JSX component soon but for now it dynamically loads the images */}
           <div className="uploadedImages row">
-            {imageArr.map((index) => {
-              return <ImageCard index={index} />;
-            })}
+            <Clusters
+              imageArr={imageArr}
+              imageLastModified={imageLastModified}
+            />
           </div>
         </div>
       </div>
@@ -49,6 +55,5 @@ export default function App() {
 }
 
 // the tasks
+// render imagecards based on the amount of images withing a specific modified date
 // Make sure the state array isnt reset everytime an image is uploaded
-// Find a clever way to save user ranking of images
-// Allow for user ranking

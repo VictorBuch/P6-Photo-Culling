@@ -22,6 +22,9 @@ function ImageCard(props) {
         className="card-img-top"
         onClick={selectImage}
       />
+      <div className="card-body">
+        <button className="btn btn-danger">Submit</button>
+      </div>
     </div>
   );
 }

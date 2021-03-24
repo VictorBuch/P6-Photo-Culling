@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Cluster from "./Components/Cluster";
 import Clusters from "./Components/Clusters";
 
 export default function App() {
@@ -18,7 +17,7 @@ export default function App() {
       imageBlobs.push(URL.createObjectURL(imageFileArr[0][i]));
       // console.log(imageFileArr[0][i].lastModified);
       imageLastModified = String(imageFileArr[0][i].lastModified); // use this to cluster, it represents milliseconds since 1 January 1970 UTC for some reason. 🤷
-      // console.log(imageLastModified);
+      console.log(imageLastModified);
     }
     setImageArr(imageBlobs); // set the dynamic state array equal to the blobs we just made
   }
@@ -57,3 +56,5 @@ export default function App() {
 // the tasks
 // render imagecards based on the amount of images withing a specific modified date
 // Make sure the state array isnt reset everytime an image is uploaded
+
+// sort images based on lastmodified data. if milisec < 10 between the two they are in a cluster.

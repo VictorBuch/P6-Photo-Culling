@@ -18,7 +18,9 @@ export default function Clusters(props) {
       return (
         <div style={{ display: "flex", flexDirection: "row" }}>
           <hr></hr>
-          <h1 style={{ color: "white" }}>New Cluster</h1>
+          <h1 style={{ color: "white" }}>
+            New Cluster {props.imageLastModified}
+          </h1>
           <Cluster
             className={index}
             imageArr={props.imageArr.slice(

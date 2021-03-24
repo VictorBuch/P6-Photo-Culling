@@ -4,8 +4,8 @@ import Clusters from "./Components/Clusters";
 export default function App() {
   const imageFileArr = [];
   const imageBlobs = [];
-  const [imageArr, setImageArr] = useState([]);
-  var imageLastModified;
+  const imageLastModified = [];
+  const [imageObj, setImageObj] = useState({ blobs: [], lastModified: [] });
 
   function loadImages(e) {
     imageFileArr.push(e.target.files); // gets a file object with all files
@@ -16,10 +16,15 @@ export default function App() {
     for (let i = 0; i < imageFileArr[0].length; i++) {
       imageBlobs.push(URL.createObjectURL(imageFileArr[0][i]));
       // console.log(imageFileArr[0][i].lastModified);
-      imageLastModified = String(imageFileArr[0][i].lastModified); // use this to cluster, it represents milliseconds since 1 January 1970 UTC for some reason. 🤷
-      console.log(imageLastModified);
+      imageLastModified.push(String(imageFileArr[0][i].lastModified)); // use this to cluster, it represents milliseconds since 1 January 1970 UTC for some reason. 🤷
+      //console.log(imageLastModified);
     }
-    setImageArr(imageBlobs); // set the dynamic state array equal to the blobs we just made
+    setImageObj({
+      ...imageObj,
+      blobs: imageBlobs,
+      lastModified: imageLastModified,
+    }); //  set the dynamic state array equal to the blobs we just made
+    console.log(imageObj);
   }
 
   return (
@@ -43,8 +48,8 @@ export default function App() {
           {/* This section will need to be a JSX component soon but for now it dynamically loads the images */}
           <div className="uploadedImages row">
             <Clusters
-              imageArr={imageArr}
-              imageLastModified={imageLastModified}
+              imageArr={imageObj.blobs}
+              imageLastModified={imageObj.lastModified}
             />
           </div>
         </div>

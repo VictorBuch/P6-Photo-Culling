@@ -6,6 +6,18 @@ export default function App() {
   const images2DArray = [];
   const [imageBlobArr, setimageBlobArr] = useState([]);
 
+  function compareSecondColumn(a, b) {
+    if (a[1] === b[1]) {
+      return 0;
+    } else {
+      return a[1] < b[1] ? -1 : 1;
+    }
+  }
+
+  function sortByLastModified(img2DArr) {
+    img2DArr.sort(compareSecondColumn);
+  }
+
   function loadImages(e) {
     imageFileArr.push(e.target.files); // gets a file object with all files
     // console.log(imageFileArr[0]); // this gives an image file
@@ -19,8 +31,9 @@ export default function App() {
       ]);
       // use this to cluster, it represents milliseconds since 1 January 1970 UTC for some reason. 🤷
     }
-    setimageBlobArr(...imageBlobArr, images2DArray); //  set the dynamic state array equal to the blobs we just made
-    console.log(imageBlobArr);
+    console.log("unsorted: " + images2DArray);
+    sortByLastModified(images2DArray);
+    setimageBlobArr(images2DArray); //  set the dynamic state array equal to the blobs we just made
   }
 
   return (

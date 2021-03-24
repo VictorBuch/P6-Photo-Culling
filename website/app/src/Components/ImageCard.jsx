@@ -15,8 +15,8 @@ function ImageCard(props) {
       style={{ width: "18rem", margin: "3px" }}
     >
       <img
-        key={props.index}
-        src={props.index}
+        key={props.blob}
+        src={props.blob}
         alt=""
         className="card-img-top"
         onClick={selectImage}

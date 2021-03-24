@@ -2,7 +2,20 @@ import importlib
 from tensorflow.keras.models import Model
 from tensorflow.keras.layers import Dropout, Dense
 from tensorflow.keras.optimizers import Adam
-from src.giiaa_distribution.emd import earth_movers_distance
+from tensorflow.keras import backend as K
+
+
+def earth_movers_distance(y_true, y_pred):
+
+    print("y_true: {}, y_pred: {}".format(y_true, y_pred))
+    cdf_true = K.cumsum(y_true, axis=-1)
+    cdf_pred = K.cumsum(y_pred, axis=-1)
+    # print("cdf_true: {}, cdf_pred: {}".format(cdf_true, cdf_pred))
+    # print("cdf_true - cdf_pred: {}".format(cdf_true - cdf_pred))
+    # print("cdf_true - cdf_pred squared: {}".format(K.square(cdf_true - cdf_pred)))
+    # print("cdf_true - cdf_pred squared mean: {}".format(K.mean(K.square(cdf_true - cdf_pred), axis=-1)))
+    emd = K.sqrt(K.mean(K.square(cdf_true - cdf_pred), axis=-1))
+    return K.mean(emd)
 
 
 class NimaModule:

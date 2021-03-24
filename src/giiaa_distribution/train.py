@@ -2,7 +2,7 @@
 Training script for distribution-based GIAA. Implem
 """
 
-from src.giiaa_distribution.nima_module import *
+from src.giiaa_distribution.nima import *
 import tensorflow as tf
 import numpy as np
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
@@ -56,7 +56,7 @@ if __name__ == "__main__":
     nima = NimaModule(base_model_name, N_CLASSES, LEARNING_RATE_DENSE, DECAY_DENSE, DROPOUT_RATE)
     nima.build()
 
-    dataframe = pd.read_csv(dataframe_path)
+    dataframe = pd.read_csv(dataframe_path, converters={'label': eval})
 
     data_generator = ImageDataGenerator(
         rescale=1.0 / 255,
@@ -67,7 +67,7 @@ if __name__ == "__main__":
         directory=dataset_path,
         dataframe=dataframe,
         x_col='id',
-        y_col=[str(i) for i in range(1, 11)],
+        y_col=['label'],
         class_mode='multi_output',
         target_size=(224, 224),
         color_mode='rgb',
@@ -79,7 +79,7 @@ if __name__ == "__main__":
         directory=dataset_path,
         dataframe=dataframe,
         x_col='id',
-        y_col=[str(i) for i in range(1, 11)],
+        y_col=['label'],
         class_mode='multi_output',
         target_size=(224, 224),
         color_mode='rgb',
@@ -91,14 +91,14 @@ if __name__ == "__main__":
         log_dir=LOG_PATH, update_freq='batch'
     )
 
-    model_save_name = ('weights_dist_' + model_name_tag + '_' + base_model_name.lower() + '_{epoch:02d}_{val_loss:.3f}.hdf5')
+    model_save_name = ('weights_dist_' + model_name_tag + '_' + base_model_name.lower() + '_{epoch:02d}_{val_loss:.3f}_as_model.hdf5')
     model_file_path = os.path.join(MODELS_PATH, model_save_name)
     model_checkpointer = ModelCheckpoint(
         filepath=model_file_path,
         monitor='val_loss',
         verbose=1,
         save_best_only=True,
-        save_weights_only=True,
+        save_weights_only=False,
     )
 
     for layer in nima.base_model.layers:

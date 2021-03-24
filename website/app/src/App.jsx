@@ -4,7 +4,7 @@ import Clusters from "./Components/Clusters";
 export default function App() {
   const imageFileArr = [];
   const images2DArray = [];
-  const [imageArr, setImageArr] = useState([[null]]);
+  const [imageBlobArr, setimageBlobArr] = useState([]);
 
   function loadImages(e) {
     imageFileArr.push(e.target.files); // gets a file object with all files
@@ -18,10 +18,9 @@ export default function App() {
         String(imageFileArr[0][i].lastModified),
       ]);
       // use this to cluster, it represents milliseconds since 1 January 1970 UTC for some reason. 🤷
-      //console.log(imageLastModified);
     }
-    //setImageArr(...imageObj, [imageBlobs, imageLastModified]); //  set the dynamic state array equal to the blobs we just made
-    console.log(images2DArray);
+    setimageBlobArr(...imageBlobArr, images2DArray); //  set the dynamic state array equal to the blobs we just made
+    console.log(imageBlobArr);
   }
 
   return (
@@ -44,7 +43,7 @@ export default function App() {
 
           {/* This section will need to be a JSX component soon but for now it dynamically loads the images */}
           <div className="uploadedImages row">
-            <Clusters imageArr={imageObj} imageLastModified={imageObj} />
+            <Clusters imageBlobArr={imageBlobArr} />
           </div>
         </div>
       </div>
@@ -54,6 +53,4 @@ export default function App() {
 
 // the tasks
 // render imagecards based on the amount of images withing a specific modified date
-// Make sure the state array isnt reset everytime an image is uploaded
-
-// sort images based on lastmodified data. if milisec < 10 between the two they are in a cluster.
+//

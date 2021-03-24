@@ -3,9 +3,8 @@ import Clusters from "./Components/Clusters";
 
 export default function App() {
   const imageFileArr = [];
-  const imageBlobs = [];
-  const imageLastModified = [];
-  const [imageObj, setImageObj] = useState({ blobs: [], lastModified: [] });
+  const images2DArray = [];
+  const [imageArr, setImageArr] = useState([[null]]);
 
   function loadImages(e) {
     imageFileArr.push(e.target.files); // gets a file object with all files
@@ -14,17 +13,15 @@ export default function App() {
 
     // Loop trough all the local images and creat blob elements for later use
     for (let i = 0; i < imageFileArr[0].length; i++) {
-      imageBlobs.push(URL.createObjectURL(imageFileArr[0][i]));
-      // console.log(imageFileArr[0][i].lastModified);
-      imageLastModified.push(String(imageFileArr[0][i].lastModified)); // use this to cluster, it represents milliseconds since 1 January 1970 UTC for some reason. 🤷
+      images2DArray.push([
+        URL.createObjectURL(imageFileArr[0][i]),
+        String(imageFileArr[0][i].lastModified),
+      ]);
+      // use this to cluster, it represents milliseconds since 1 January 1970 UTC for some reason. 🤷
       //console.log(imageLastModified);
     }
-    setImageObj({
-      ...imageObj,
-      blobs: imageBlobs,
-      lastModified: imageLastModified,
-    }); //  set the dynamic state array equal to the blobs we just made
-    console.log(imageObj);
+    //setImageArr(...imageObj, [imageBlobs, imageLastModified]); //  set the dynamic state array equal to the blobs we just made
+    console.log(images2DArray);
   }
 
   return (
@@ -47,10 +44,7 @@ export default function App() {
 
           {/* This section will need to be a JSX component soon but for now it dynamically loads the images */}
           <div className="uploadedImages row">
-            <Clusters
-              imageArr={imageObj.blobs}
-              imageLastModified={imageObj.lastModified}
-            />
+            <Clusters imageArr={imageObj} imageLastModified={imageObj} />
           </div>
         </div>
       </div>

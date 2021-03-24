@@ -12,7 +12,6 @@ function ImageCard(props) {
   return (
     <div
       className={"card " + (isSelected ? "cardSelected" : "")}
-      id={isSelected ? "cardSelected" : "cardSelected"}
       style={{ width: "18rem", margin: "3px" }}
     >
       <img

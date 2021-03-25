@@ -12,16 +12,18 @@ function ImageCard(props) {
   return (
     <div
       className={"card " + (isSelected ? "cardSelected" : "")}
-      id={isSelected ? "cardSelected" : "cardSelected"}
       style={{ width: "18rem", margin: "3px" }}
     >
       <img
-        key={props.index}
-        src={props.index}
+        key={props.blob}
+        src={props.blob}
         alt=""
         className="card-img-top"
         onClick={selectImage}
       />
+      {/* <div className="card-body">
+        <button className="btn btn-danger">Select</button>
+      </div> */}
     </div>
   );
 }

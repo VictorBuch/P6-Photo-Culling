@@ -27,11 +27,12 @@ export default function App() {
     for (let i = 0; i < imageFileArr[0].length; i++) {
       images2DArray.push([
         URL.createObjectURL(imageFileArr[0][i]),
-        String(imageFileArr[0][i].lastModified),
+        imageFileArr[0][i].lastModified,
       ]);
+      //console.log(imageFileArr[0][i].lastModified);
       // use this to cluster, it represents milliseconds since 1 January 1970 UTC for some reason. 🤷
     }
-    console.log("unsorted: " + images2DArray);
+
     sortByLastModified(images2DArray);
     setimageBlobArr(images2DArray); //  set the dynamic state array equal to the blobs we just made
   }

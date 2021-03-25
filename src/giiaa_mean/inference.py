@@ -1,16 +1,20 @@
-from src.giiaa_distribution.nima import *
+"""
+Using mean-based GIIAA to make inference on a few random samples from the subset of images.
+"""
+
+import tensorflow as tf
 import numpy as np
 import cv2
 import os
 import random
 
 
-WEIGHTS_FILE = "../../models/giiaa_dist/weights_dist_reference_0.070.hdf5"
-AVA_DATASET_SUBSET_PATH = "../../ava/train_subset/"
+MODEL_PATH = "../../models/giiaa_dist/weights_dist_reference_0.070.hdf5"
+AVA_DATASET_SUBSET_PATH = "../../ava/subset/"
 
 if __name__ == "__main__":
 
-    model = None
+    model = tf.keras.models.load_model(MODEL_PATH)
 
     for _ in range(20):
         random_file = os.path.join(AVA_DATASET_SUBSET_PATH, random.choice(os.listdir(AVA_DATASET_SUBSET_PATH)))

@@ -56,7 +56,6 @@ def prepare_dataframe(image_dataset_path, image_info_path):
         # Get the histogram distribution of annotated scores as a list.
         data['id'].append(filename)
 
-
         num_annotations = 0.0
         for i in range(1, 11):
             num_annotations += image_data[str(i)]

@@ -5,7 +5,7 @@ import os
 import random
 
 
-WEIGHTS_FILE = "../../models/weights_dist_reference_0.070.hdf5"
+WEIGHTS_FILE = "../../models/giiaa_dist/weights_dist_reference_0.070.hdf5"
 AVA_DATASET_SUBSET_PATH = "../../ava/train_subset/"
 
 if __name__ == "__main__":

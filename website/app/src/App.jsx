@@ -66,8 +66,11 @@ export default function App() {
       {/* This section will need to be a JSX component soon but for now it dynamically loads the images */}
       {areImagesLoaded && (
         <div className="container-fluid m-2">
+          <h1>
+            Accepted {Math.ceil(Math.random() * imageBlobArr.length)} of{" "}
+            {imageBlobArr.length}
+          </h1>
           <div className="col">
-            <h1>Accepted 0 of {imageBlobArr.length}</h1>
             <div className="row">
               <Clusters imageBlobArr={imageBlobArr} />
             </div>

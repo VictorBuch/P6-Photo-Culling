@@ -6,6 +6,13 @@
 
 body {
   background-color: var(--background-color);
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+h1 {
+  color: white;
 }
 
 .file-upload {
@@ -25,5 +32,17 @@ body {
 
 .cardSelected {
   border: 3px solid var(--selected-image-color);
+}
+
+.scrollMenu {
+  overflow-x: scroll;
+  overflow-y: hidden;
+  white-space: nowrap;
+}
+
+.clusterNum {
+  position: -webkit-sticky;
+  position: sticky;
+  left: 0px;
 }
 /*# sourceMappingURL=style.css.map */

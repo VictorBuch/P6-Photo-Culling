@@ -7,6 +7,12 @@
 
 body {
   background-color: var(--background-color);
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+h1 {
+  color: white;
 }
 
 // For the Upload Button, hides the input
@@ -34,4 +40,16 @@ body {
 
 .cardSelected {
   border: 3px solid var(--selected-image-color);
+}
+
+.scrollMenu {
+  overflow-x: scroll;
+  overflow-y: hidden;
+  white-space: nowrap;
+}
+
+.clusterNum {
+  position: -webkit-sticky;
+  position: sticky;
+  left: 0px;
 }

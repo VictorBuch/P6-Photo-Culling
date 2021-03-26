@@ -5,6 +5,7 @@ export default function App() {
   const imageFileArr = [];
   const images2DArray = [];
   const [imageBlobArr, setimageBlobArr] = useState([]);
+  const [areImagesLoaded, setAreImagesLoaded] = useState(false);
 
   function compareSecondColumn(a, b) {
     if (a[1] === b[1]) {
@@ -29,21 +30,26 @@ export default function App() {
         URL.createObjectURL(imageFileArr[0][i]),
         imageFileArr[0][i].lastModified,
       ]);
-      //console.log(imageFileArr[0][i].lastModified);
       // use this to cluster, it represents milliseconds since 1 January 1970 UTC for some reason. 🤷
     }
 
     sortByLastModified(images2DArray);
     setimageBlobArr(images2DArray); //  set the dynamic state array equal to the blobs we just made
+    if (imageBlobArr) {
+      console.log("setImages to True");
+      setAreImagesLoaded(true);
+    }
   }
 
   return (
-    <div className="container mt-5">
-      <div className="row">
-        <div className="col md-12">
-          <h1 style={{ color: "white" }}>Test area</h1>
-
-          <label className="btn btn-danger">
+    <>
+      {/* Make the code below into a Component, will be difficult :) */}
+      {!areImagesLoaded && (
+        <div
+          className="container d-flex flex-row justify-content-center align-items-center align-items-center"
+          style={{ height: "100vh" }}
+        >
+          <label className="btn-lg btn-danger">
             <div>Upload Images</div>
             <input
               id="inputFile"
@@ -54,14 +60,21 @@ export default function App() {
               multiple
             />
           </label>
+        </div>
+      )}
 
-          {/* This section will need to be a JSX component soon but for now it dynamically loads the images */}
-          <div className="uploadedImages row">
-            <Clusters imageBlobArr={imageBlobArr} />
+      {/* This section will need to be a JSX component soon but for now it dynamically loads the images */}
+      {areImagesLoaded && (
+        <div className="container-fluid m-2">
+          <div className="col">
+            <h1>Accepted 0 of {imageBlobArr.length}</h1>
+            <div className="row">
+              <Clusters imageBlobArr={imageBlobArr} />
+            </div>
           </div>
         </div>
-      </div>
-    </div>
+      )}
+    </>
   );
 }
 

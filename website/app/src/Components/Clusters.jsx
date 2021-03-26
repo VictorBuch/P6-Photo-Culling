@@ -32,9 +32,7 @@ export default function Clusters(props) {
       // // // ----------- use element[1] to get the last modified data of the current blob! ------------
 
       return (
-        <div style={{ display: "flex", flexDirection: "row" }}>
-          <hr></hr>
-          {/* <h1 style={{ color: "white" }}>New Cluster</h1> */}
+        <div className="d-flex flex-row m-2 scrollMenu">
           <Cluster
             imageBlobArr={props.imageBlobArr.slice(
               clusterArray[clusterNum][0],
@@ -47,16 +45,16 @@ export default function Clusters(props) {
     if (index === props.imageBlobArr.length - 1) {
       console.log("New Cluster Last");
 
-      clusterArray.push([prevClusterIndex, index]);
+      clusterArray.push([prevClusterIndex, index + 1]);
       //console.log("Cluster Array: " + clusterArray);
       prevClusterIndex = index;
       //console.log("Prev Cluster Index: " + prevClusterIndex);
       clusterNum++;
+      prevLastModified = element[1];
       return (
-        <div style={{ display: "flex", flexDirection: "row" }}>
-          <hr></hr>
-          {/* <h1 style={{ color: "white" }}>New Cluster</h1> */}
+        <div className="d-flex flex-row m-2 scrollMenu">
           <Cluster
+            test={() => props.test}
             imageBlobArr={props.imageBlobArr.slice(
               clusterArray[clusterNum][0],
               clusterArray[clusterNum][1]

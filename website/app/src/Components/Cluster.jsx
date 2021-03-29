@@ -7,7 +7,7 @@ export default function Cluster(props) {
   return (
     <div className="d-flex flex-column">
       <div
-        className="d-inline-flex flex-row clusterNum"
+        className="d-inline-flex flex-row clusterNum "
         style={{
           backgroundColor: "grey",
           borderRadius: "3px 3px 0px 0px",

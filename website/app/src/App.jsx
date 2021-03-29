@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import Clusters from "./Components/Clusters";
+import ImageUploadBtn from "./Components/ImageUploadBtn";
+import Nav from "./Components/Nav";
+import { NavProvider } from "./Components/NavContext";
 
 export default function App() {
   const imageFileArr = [];
@@ -44,37 +47,17 @@ export default function App() {
   return (
     <>
       {/* Make the code below into a Component, will be difficult :) */}
-      {!areImagesLoaded && (
-        <div
-          className="container d-flex flex-row justify-content-center align-items-center align-items-center"
-          style={{ height: "100vh" }}
-        >
-          <label className="btn-lg btn-danger">
-            <div>Upload Images</div>
-            <input
-              id="inputFile"
-              className="file-upload"
-              type="file"
-              accept="image/*"
-              onChange={loadImages}
-              multiple
-            />
-          </label>
-        </div>
-      )}
+      {!areImagesLoaded && <ImageUploadBtn loadImages={loadImages} />}
 
       {/* This section will need to be a JSX component soon but for now it dynamically loads the images */}
       {areImagesLoaded && (
         <div className="container-fluid m-2">
-          <h1>
-            Accepted {Math.ceil(Math.random() * imageBlobArr.length)} of{" "}
-            {imageBlobArr.length}
-          </h1>
-          <div className="col">
-            <div className="row">
+          <NavProvider>
+            <Nav imageBlobArr={imageBlobArr} />
+            <div className="d-flex flex-column">
               <Clusters imageBlobArr={imageBlobArr} />
             </div>
-          </div>
+          </NavProvider>
         </div>
       )}
     </>

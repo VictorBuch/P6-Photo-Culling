@@ -1,13 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { NavContext } from "./NavContext";
 
 function ImageCard(props) {
   const [isSelected, setIsSelected] = useState(false);
 
+  const [totalNumSelectedImages, setTotalNumSelectedImages] = useContext(
+    NavContext
+  );
+
   function selectImage() {
     if (isSelected) {
       props.setNumberOfSelectedImages((prev) => prev - 1);
+      setTotalNumSelectedImages((prev) => prev - 1);
     } else {
       props.setNumberOfSelectedImages((prev) => prev + 1);
+      setTotalNumSelectedImages((prev) => prev + 1);
     }
     return setIsSelected(!isSelected);
   }

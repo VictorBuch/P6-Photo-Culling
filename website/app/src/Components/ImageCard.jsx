@@ -20,19 +20,16 @@ function ImageCard(props) {
   }
 
   return (
-    <div
-      className={"card " + (isSelected ? "cardSelected" : "")}
-      style={{ width: "18rem", margin: "5px" }}
-    >
+    <div className="card" style={{ width: "18rem", margin: "5px" }}>
       <img
         key={props.blob}
         src={props.blob}
         alt=""
-        className="card-img-top"
+        className={isSelected ? "cardSelected" : ""}
         onClick={selectImage}
       />
       {/* <div className="card-body">
-        <button className="btn btn-danger">Select</button>
+        <p>10/10</p>
       </div> */}
     </div>
   );

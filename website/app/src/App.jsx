@@ -1,4 +1,9 @@
 import React, { useState } from "react";
+
+// Styles
+import "./Styles/App.scss";
+
+// Components
 import Clusters from "./Components/Clusters";
 import ImageUploadBtn from "./Components/ImageUploadBtn";
 import Nav from "./Components/Nav";

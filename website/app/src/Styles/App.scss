@@ -1,0 +1,20 @@
+// make all the css styles in here plz sass is smart
+:root {
+  --background-color: #2d2d2d;
+  --card-background-color: #414141;
+  --selected-image-color: #3f8a4b;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--background-color);
+  overflow-x: hidden;
+}
+
+@import "_imageUploadBtn.scss";
+@import "_Clusters.scss";
+@import "_Cluster.scss";
+@import "_ImageCard.scss";

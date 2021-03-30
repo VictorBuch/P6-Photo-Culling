@@ -32,14 +32,12 @@ export default function Clusters(props) {
       // // // ----------- use element[1] to get the last modified data of the current blob! ------------
 
       return (
-        <div className="d-flex flex-row m-2 scrollMenu">
-          <Cluster
-            imageBlobArr={props.imageBlobArr.slice(
-              clusterArray[clusterNum][0],
-              clusterArray[clusterNum][1]
-            )}
-          />
-        </div>
+        <Cluster
+          imageBlobArr={props.imageBlobArr.slice(
+            clusterArray[clusterNum][0],
+            clusterArray[clusterNum][1]
+          )}
+        />
       );
     }
     if (index === props.imageBlobArr.length - 1) {

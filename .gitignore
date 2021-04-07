@@ -1,4 +1,9 @@
 .idea
 .vscode/settings.json
-datasets/images
-datasets/images_subset
+ava/train
+ava/test
+ava/subset
+models
+src/giiaa_dist/__pycache__
+src/giiaa_mean/__pycache__
+src/utils/__pycache__

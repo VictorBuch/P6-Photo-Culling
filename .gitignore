@@ -2,3 +2,6 @@
 .vscode/settings.json
 datasets/images
 datasets/images_subset
+website/app/package-lock.json
+*.json
+*.bin

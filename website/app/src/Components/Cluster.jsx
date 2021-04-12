@@ -1,8 +1,23 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ImageCard from "./ImageCard";
+
+// import tensorflow
+const tf = require("@tensorflow/tfjs");
 
 export default function Cluster(props) {
   const [numberOfSelectedImages, setNumberOfSelectedImages] = useState(0);
+  // const [clusterModel, setClusterModel] = useState();
+
+  // useEffect(() => {
+  //   const fetchModel = async () => {
+  //     const model = await tf.loadLayersModel(
+  //       "http://localhost:8000/model.json"
+  //     );
+  //     setClusterModel(model);
+  //     console.log("Model: " + clusterModel);
+  //   };
+  //   fetchModel();
+  // }, []);
 
   return (
     <div className="d-flex flex-row m-2 scrollMenu">

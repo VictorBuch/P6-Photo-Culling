@@ -8,12 +8,24 @@ import Clusters from "./Components/Clusters";
 import ImageUploadBtn from "./Components/ImageUploadBtn";
 import Nav from "./Components/Nav";
 import { NavProvider } from "./Components/NavContext";
+import Loader from "./Components/Loader";
+
+import exifr from "exifr";
 
 export default function App() {
   const imageFileArr = [];
   const images2DArray = [];
   const [imageBlobArr, setimageBlobArr] = useState([]);
   const [areImagesLoaded, setAreImagesLoaded] = useState(false);
+  const [areImagesUploaded, setAreImagesUploaded] = useState(false);
+
+  // check if we need to show the loading icon or the upload button
+  var uploadBtn;
+  if (areImagesUploaded) {
+    uploadBtn = <Loader />;
+  } else {
+    uploadBtn = <ImageUploadBtn loadImages={loadImages} />;
+  }
 
   function compareSecondColumn(a, b) {
     if (a[1] === b[1]) {
@@ -25,36 +37,45 @@ export default function App() {
 
   function sortByLastModified(img2DArr) {
     img2DArr.sort(compareSecondColumn);
+    console.log("Sorted!");
   }
 
-  function loadImages(e) {
-    imageFileArr.push(e.target.files); // gets a file object with all files
-    // console.log(imageFileArr[0]); // this gives an image file
-    // console.log("File arr length: " + imageFileArr[0].length);
+  async function getMetaData(file) {
+    const tags = await exifr.parse(file, ["DateTimeOriginal"]);
+    const { DateTimeOriginal } = tags;
+    return DateTimeOriginal.valueOf();
+  }
 
+  async function loadImages(e) {
+    setAreImagesUploaded(true);
+    //console.log(e.target.files); // this gives an image file
+
+    imageFileArr.push(e.target.files); // gets a file object with all files
     // Loop trough all the local images and creat blob elements for later use
     for (let i = 0; i < imageFileArr[0].length; i++) {
+      // get the created date from the meta data of the images
+      const createdTimeInMilisecs = await getMetaData(imageFileArr[0][i]);
       images2DArray.push([
         URL.createObjectURL(imageFileArr[0][i]),
-        imageFileArr[0][i].lastModified,
+        createdTimeInMilisecs,
       ]);
-      // use this to cluster, it represents milliseconds since 1 January 1970 UTC for some reason. 🤷
     }
 
     sortByLastModified(images2DArray);
+    console.log("Set image Array");
     setimageBlobArr(images2DArray); //  set the dynamic state array equal to the blobs we just made
+
     if (imageBlobArr) {
-      console.log("setImages to True");
+      console.log("setImages state to True");
       setAreImagesLoaded(true);
+      setAreImagesUploaded(false);
     }
   }
 
   return (
     <>
-      {/* Make the code below into a Component, will be difficult :) */}
-      {!areImagesLoaded && <ImageUploadBtn loadImages={loadImages} />}
+      {!areImagesLoaded && uploadBtn}
 
-      {/* This section will need to be a JSX component soon but for now it dynamically loads the images */}
       {areImagesLoaded && (
         <div className="container-fluid m-2">
           <NavProvider>
@@ -68,7 +89,3 @@ export default function App() {
     </>
   );
 }
-
-// the tasks
-// render imagecards based on the amount of images withing a specific modified date
-//

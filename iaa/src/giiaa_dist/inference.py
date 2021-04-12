@@ -15,7 +15,7 @@ import tensorflow.keras as keras
 MODEL_PATH = "../../models/giiaa_dist/model_dist_2k_inceptionresnetv2_0.181.hdf5"
 
 AVA_DATASET_SUBSET_PATH = "../../ava/subset/"
-AVA_DATAFRAME_SUBSET_PATH = "../../ava/AVA_dist_subset_dataframe.csv"
+AVA_DATAFRAME_SUBSET_PATH = "../../ava/giiaa/AVA_dist_subset_dataframe.csv"
 
 
 def get_mean(distribution):
@@ -38,11 +38,12 @@ if __name__ == "__main__":
 
     dataframe = pd.read_csv(AVA_DATAFRAME_SUBSET_PATH, converters={'label': eval})
 
-    for _ in range(20):
+    for _ in range(1):
 
         random_file = os.path.join(AVA_DATASET_SUBSET_PATH, random.choice(os.listdir(AVA_DATASET_SUBSET_PATH)))
         image = cv2.resize(cv2.imread(random_file), (224, 224)) / 255.0
         image = np.asarray(image)[np.newaxis, ...]
+        (1, 224, 244, 3)
 
         gt = dataframe[dataframe["id"] == random_file.split('/')[-1]].iloc[0]['label']
         prediction = model.predict(image)[0]

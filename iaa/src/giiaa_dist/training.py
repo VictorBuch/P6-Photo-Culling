@@ -14,12 +14,12 @@ FULL_DATASET_TRAINING = True
 
 
 AVA_DATASET_PATH = "../../ava/train"
-AVA_DATAFRAME_PATH = "../../ava/AVA_dist_train_dataframe.csv"
+AVA_DATAFRAME_PATH = "../../ava/giiaa/AVA_dist_train_dataframe.csv"
 
 AVA_DATASET_SUBSET_PATH = "../../ava/subset/"
-AVA_DATAFRAME_SUBSET_PATH = "../../ava/AVA_dist_subset_dataframe.csv"
+AVA_DATAFRAME_SUBSET_PATH = "../../ava/giiaa/AVA_dist_subset_dataframe.csv"
 
-LOG_PATH = "../../ava/logs"
+LOG_PATH = "../../ava/giiaa/logs"
 MODELS_PATH = "../../models/giiaa_dist/"
 
 

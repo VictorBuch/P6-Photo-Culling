@@ -6,8 +6,8 @@ import tensorflowjs as tfjs
 import tensorflow as tf
 from iaa.src.giiaa_dist._nima import earth_movers_distance
 
-INPUT_MODEL_PATH = "../../models/giiaa_dist/model_dist_2k_inceptionresnetv2_0.181.hdf5"
-OUTPUT_MODEL_PATH = "../../models/giiaa_dist/model_dist_2k_inceptionresnetv2_0.181"
+INPUT_MODEL_PATH = "../../models/giiaa_dist/model_dist_200k_inceptionresnetv2_0.078.hdf5"
+OUTPUT_MODEL_PATH = "../../models/giiaa_dist/model_dist_200k_inceptionresnetv2_0.078"
 
 
 if __name__ == "__main__":

@@ -7,27 +7,29 @@ a dataframe of two columns: image filename (for data generator to access it dyna
 import os
 import pandas as pd
 from tqdm import tqdm
-
-
-AVA_DATASET_TRAIN_PATH = "../../ava/train"
-AVA_DATAFRAME_TRAIN_PATH = "../../ava/AVA_dist_train_dataframe.csv"
-
-AVA_DATASET_SUBSET_PATH = "../../ava/subset/"
-AVA_DATAFRAME_SUBSET_PATH = "../../ava/AVA_dist_subset_dataframe.csv"
-
-AVA_DATASET_TEST_PATH = "../../ava/test"
-AVA_DATAFRAME_TEST_PATH = "../../ava/AVA_dist_test_dataframe.csv"
-
+import random
 
 AVA_TEXT_PATH = "../../ava/AVA.txt"
 
+AVA_DATASET_TRAIN_PATH = "../../ava/train"
+AVA_DATASET_TEST_PATH = "../../ava/test"
+AVA_DATASET_SUBSET_PATH = "../../ava/subset/"
 
-def prepare_dataframe_mean(image_dataset_path, image_info_path):
+AVA_DATAFRAME_GIIAA_TRAIN_PATH = "../../ava/giiaa/AVA_dist_train_dataframe.csv"
+AVA_DATAFRAME_GIIAA_TEST_PATH = "../../ava/giiaa/AVA_dist_test_dataframe.csv"
+AVA_DATAFRAME_GIIAA_SUBSET_PATH = "../../ava/giiaa/AVA_dist_subset_dataframe.csv"
+
+AVA_DATAFRAME_GCIAA_TRAIN_PATH = "../../ava/gciaa/AVA_gciaa_train_dataframe.csv"
+AVA_DATAFRAME_GCIAA_TEST_PATH = "../../ava/gciaa/AVA_gciaa_test_dataframe.csv"
+AVA_DATAFRAME_GCIAA_SUBSET_PATH = "../../ava/gciaa/AVA_gciaa_subset_dataframe.csv"
+
+
+def prepare_dataframe_giiaa_mean(image_dataset_path, image_info_path):
     original_dataframe = pd.read_csv(image_info_path, sep=' ')
 
     data = {
         "id": [],
-        "score": []
+        "label": []
     }
 
     count = 0
@@ -61,7 +63,7 @@ def prepare_dataframe_mean(image_dataset_path, image_info_path):
         average_rank = rank_sum / num_annotations
 
         data["id"].append(filename)
-        data["score"].append(average_rank / 10)
+        data["label"].append(average_rank / 10)
 
         if count % 500 == 0:
             print("Count: {}".format(count))
@@ -71,7 +73,7 @@ def prepare_dataframe_mean(image_dataset_path, image_info_path):
     return pd.DataFrame(data)
 
 
-def prepare_dataframe_dist(image_dataset_path, image_info_path):
+def prepare_dataframe_giiaa_dist(image_dataset_path, image_info_path):
 
     original_dataframe = pd.read_csv(image_info_path, sep=' ')
 
@@ -114,6 +116,58 @@ def prepare_dataframe_dist(image_dataset_path, image_info_path):
     return pd.DataFrame(data)
 
 
+def prepare_dataframe_gciaa(image_dataset_path, image_info_path, num_categories=66, pairs_per_category_scalar=2):
+    original_dataframe = pd.read_csv(image_info_path, sep=' ')
+
+    relevant_filenames = []
+    for filename in os.listdir(image_dataset_path):
+        image_index = filename.split('.')[0]
+        if image_index.isdigit():
+            relevant_filenames.append(image_index)
+
+    filtered_dataframe = original_dataframe.loc[original_dataframe['index'].isin(relevant_filenames)
+                                                & ((original_dataframe['tag1'] > 0) | (original_dataframe['tag2'] > 0))]
+
+    data = {
+        'id_a': [],
+        'id_b': [],
+        'label': []
+    }
+
+    for i in tqdm(range(1, num_categories)):
+
+        images_per_category = filtered_dataframe.loc[(filtered_dataframe['tag1'] == i) | (filtered_dataframe['tag2'] == i)]
+
+        print("Number of images for category {}: {}".format(i, len(images_per_category)))
+
+        for ii in range(len(images_per_category) * pairs_per_category_scalar):
+
+            try:
+                random_pair = images_per_category.sample(2)
+            except ValueError:
+                print("Category {} has too few images.".format(i))
+                break
+
+            average_ranks = []
+
+            for iii in range(2):
+                num_annotations = 0
+                rank_sum = 0
+                image_in_pair = random_pair.iloc[iii]
+
+                for iv in range(1, 11):
+                    rank_sum += image_in_pair[str(iv)] * iv
+                    num_annotations += image_in_pair[str(iv)]
+
+                average_ranks.append(rank_sum / num_annotations)
+
+            data['id_a'].append(random_pair.iloc[0]['index'])
+            data['id_b'].append(random_pair.iloc[1]['index'])
+            data['label'].append(average_ranks[0] - average_ranks[1])
+
+    return pd.DataFrame(data)
+
+
 if __name__ == "__main__":
-    dataframe = prepare_dataframe_dist(AVA_DATASET_TRAIN_PATH, AVA_TEXT_PATH)
-    dataframe.to_csv(AVA_DATAFRAME_TRAIN_PATH)
+    dataframe = prepare_dataframe_gciaa(AVA_DATASET_SUBSET_PATH, AVA_TEXT_PATH)
+    dataframe.to_csv(AVA_DATAFRAME_GCIAA_SUBSET_PATH)

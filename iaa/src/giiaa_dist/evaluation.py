@@ -12,7 +12,7 @@ from tensorflow.keras.preprocessing.image import ImageDataGenerator
 MODEL_PATH = "../../models/giiaa_dist/weights_dist_2k_mobilenet_0.166.hdf5"
 
 AVA_DATASET_TEST_PATH = "../../ava/test/"
-AVA_DATAFRAME_TEST_PATH = "../../ava/AVA_dist_test_dataframe.csv"
+AVA_DATAFRAME_TEST_PATH = "../../ava/giiaa/AVA_dist_test_dataframe.csv"
 
 BATCH_SIZE = 1
 

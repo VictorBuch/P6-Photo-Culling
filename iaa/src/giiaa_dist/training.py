@@ -23,7 +23,7 @@ LOG_PATH = "../../ava/giiaa/logs"
 MODELS_PATH = "../../models/giiaa_dist/"
 
 
-BASE_MODEL_NAMES = ["MobileNet", "InceptionResNetV2", "InceptionV3"]
+BASE_MODEL_NAME = "InceptionResNetV2"
 N_CLASSES = 10
 BATCH_SIZE = 96
 DROPOUT_RATE = 0.75
@@ -50,7 +50,7 @@ if __name__ == "__main__":
         dataframe_path = AVA_DATAFRAME_SUBSET_PATH
         model_name_tag = 'model_dist_2k_'
 
-    base_model_name = BASE_MODEL_NAMES[1]
+    base_model_name = BASE_MODEL_NAME
     nima = NimaModule(base_model_name, N_CLASSES, LEARNING_RATE_DENSE, DECAY_DENSE, DROPOUT_RATE)
     nima.build()
 

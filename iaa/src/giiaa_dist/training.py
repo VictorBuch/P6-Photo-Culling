@@ -23,6 +23,7 @@ LOG_PATH = "../../ava/giiaa/logs"
 MODELS_PATH = "../../models/giiaa_dist/"
 
 
+
 BASE_MODEL_NAME = "InceptionResNetV2"
 N_CLASSES = 10
 BATCH_SIZE = 96

@@ -43,7 +43,6 @@ if __name__ == "__main__":
         random_file = os.path.join(AVA_DATASET_SUBSET_PATH, random.choice(os.listdir(AVA_DATASET_SUBSET_PATH)))
         image = cv2.resize(cv2.imread(random_file), (224, 224)) / 255.0
         image = np.asarray(image)[np.newaxis, ...]
-        (1, 224, 244, 3)
 
         gt = dataframe[dataframe["id"] == random_file.split('/')[-1]].iloc[0]['label']
         prediction = model.predict(image)[0]

@@ -10,7 +10,8 @@ import Nav from "./Components/Nav";
 import { NavProvider } from "./Components/NavContext";
 import Loader from "./Components/Loader";
 
-import exifr from "exifr";
+// extra dependecies
+import exifr from "exifr"; // for getting image metadata
 
 export default function App() {
   const imageFileArr = [];
@@ -35,7 +36,7 @@ export default function App() {
     }
   }
 
-  function sortByLastModified(img2DArr) {
+  function sortByDateTimeOriginal(img2DArr) {
     img2DArr.sort(compareSecondColumn);
     console.log("Sorted!");
   }
@@ -61,7 +62,7 @@ export default function App() {
       ]);
     }
 
-    sortByLastModified(images2DArray);
+    sortByDateTimeOriginal(images2DArray);
     console.log("Set image Array");
     setimageBlobArr(images2DArray); //  set the dynamic state array equal to the blobs we just made
 

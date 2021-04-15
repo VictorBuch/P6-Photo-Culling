@@ -1,3 +1,4 @@
+import { nanoid } from "nanoid";
 import React, { useEffect, useState } from "react";
 import ImageCard from "./ImageCard";
 
@@ -18,10 +19,20 @@ export default function Cluster(props) {
   //   };
   //   fetchModel();
   // }, []);
+  const imageCards = props.imageBlobArr.map((blob) => {
+    return (
+      <ImageCard
+        key={blob}
+        blob={blob[0]}
+        setNumberOfSelectedImages={setNumberOfSelectedImages}
+      />
+    );
+  });
 
   return (
     <div className="d-flex flex-row m-2 scrollMenu">
       <div className="d-flex flex-column">
+        {/* Selected Text above images */}
         <div
           className="d-inline-flex flex-row clusterNum "
           style={{
@@ -36,6 +47,7 @@ export default function Cluster(props) {
           </p>
         </div>
 
+        {/* Horizontal Image Div */}
         <div
           className="d-flex flex-row"
           style={{
@@ -43,14 +55,8 @@ export default function Cluster(props) {
             borderRadius: "0px 3px 3px 3px",
           }}
         >
-          {props.imageBlobArr.map((blob) => {
-            return (
-              <ImageCard
-                blob={blob[0]}
-                setNumberOfSelectedImages={setNumberOfSelectedImages}
-              />
-            );
-          })}
+          {/* Creates all the image cards */}
+          {imageCards}
         </div>
       </div>
     </div>

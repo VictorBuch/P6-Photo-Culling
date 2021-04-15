@@ -22,7 +22,7 @@ export default function Clusters(props) {
 
     // if the new image element is bigger that means 10 seconds have passed and it should create a new cluster
     if (
-      Math.abs(element[1] - prevDateTimeOriginal) > 100000 ||
+      Math.abs(element[1] - prevDateTimeOriginal) > 10000 ||
       index === props.imageBlobArr.length - 1
     ) {
       // the image element is not withing the threshold so make a new cluster
@@ -38,6 +38,7 @@ export default function Clusters(props) {
 
       return (
         <Cluster
+          id="cluster"
           key={nanoid()}
           imageBlobArr={props.imageBlobArr.slice(
             clusterArray[clusterNum][0],

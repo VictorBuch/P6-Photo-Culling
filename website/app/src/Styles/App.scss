@@ -13,8 +13,10 @@ body {
   overflow-x: hidden;
 }
 
-@import "_ImageUploadBtn.scss";
-@import "_Loader.scss";
-@import "_Clusters.scss";
-@import "_Cluster.scss";
-@import "_ImageCard.scss";
+@import "ImageUploadBtn";
+@import "Loader";
+@import "Nav";
+@import "FullscreenView";
+@import "Clusters";
+@import "Cluster";
+@import "ImageCard";

@@ -11,6 +11,11 @@ from tensorflow.keras import backend as K
 import pandas as pd
 import os
 
+# from tensorflow.keras.utils import plot_model
+# import pydot
+# pydot.find_graphviz = lambda: True
+# plot_model(base.base_model, show_shapes=True, to_file=MODELS_PATH+"model.pdf")
+
 FULL_DATASET_TRAINING = False
 
 
@@ -69,24 +74,24 @@ if __name__ == "__main__":
         validation_split=0.2
     )
 
-    train_generator = get_pairwise_flow_from_dataframe(
+    train_generator = SiameseGenerator(
         generator=data_generator,
         dataframe=dataframe,
         subset='training')
 
-    validation_generator = get_pairwise_flow_from_dataframe(
+    validation_generator = SiameseGenerator(
         generator=data_generator,
         dataframe=dataframe,
         subset='validation')
 
     base.compile()
-    base.pairwise_model.summary()
+    base.siamese_model.summary()
 
-    base.pairwise_model.fit_generator(
-        generator=train_generator,
-        steps_per_epoch=train_generator.samples // train_generator.batch_size,
-        validation_data=validation_generator,
-        validation_steps=validation_generator.samples // validation_generator.batch_size,
+    base.siamese_model.fit_generator(
+        generator=train_generator.get_pairwise_flow_from_dataframe(),
+        steps_per_epoch=train_generator.samples_per_epoch // train_generator.batch_size,
+        validation_data=validation_generator.get_pairwise_flow_from_dataframe(),
+        validation_steps=validation_generator.samples_per_epoch // validation_generator.batch_size,
         epochs=EPOCHS,
         use_multiprocessing=USE_MULTIPROCESSING,
         workers=N_WORKERS,

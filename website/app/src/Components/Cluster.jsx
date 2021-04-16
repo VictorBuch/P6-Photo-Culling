@@ -32,7 +32,11 @@ export default function Cluster(props) {
   });
 
   return (
-    <div className="d-flex flex-row m-2 scrollMenu">
+    <div
+      className={
+        "d-flex flex-row scrollMenu" + (props.isFullScreen ? "" : " m-2")
+      }
+    >
       {!props.isFullScreen && (
         <div className="d-flex flex-column">
           {/* Selected Text above images */}

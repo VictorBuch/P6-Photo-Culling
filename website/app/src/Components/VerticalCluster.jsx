@@ -16,19 +16,12 @@ export default function Cluster(props) {
 
   return (
     <div
-      className="d-flex flex-column m-2 scrollMenuVertical"
+      className="d-flex flex-column scrollMenuVertical"
       style={{ alignItems: "center", justifyContent: "center" }}
     >
       {/* Vertical Image Div */}
-      <div
-        style={{
-          backgroundColor: "grey",
-          borderRadius: "0px 3px 3px 3px",
-        }}
-      >
-        {/* Creates all the image cards */}
-        {imageCards}
-      </div>
+      {/* Creates all the image cards */}
+      {imageCards}
     </div>
   );
 }

@@ -20,6 +20,12 @@
   white-space: nowrap;
 }
 
+.scrollMenuVertical {
+  overflow-y: scroll;
+  overflow-x: hidden;
+  white-space: nowrap;
+}
+
 .clusterNum {
   position: -webkit-sticky;
   position: sticky;

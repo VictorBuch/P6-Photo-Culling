@@ -38,10 +38,10 @@ class SiameseGenerator:
             image_b = self.generator_b.next()
 
             print(type(image_a))
-            print(image_a[0])
             print(image_a[0].shape)
             print(image_a[1].shape)
 
+            # Learn how exactly these custom generators, work, should I yield a batch or one at a time, what about the label, excetra..
             print("Generated.")
 
-            yield [image_a, image_b]
+            yield [image_a[0], image_b[0], image_a[1] - image_b[1]]

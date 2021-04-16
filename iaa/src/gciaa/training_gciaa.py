@@ -11,11 +11,6 @@ from tensorflow.keras import backend as K
 import pandas as pd
 import os
 
-# from tensorflow.keras.utils import plot_model
-# import pydot
-# pydot.find_graphviz = lambda: True
-# plot_model(base.base_model, show_shapes=True, to_file=MODELS_PATH+"model.pdf")
-
 FULL_DATASET_TRAINING = False
 
 

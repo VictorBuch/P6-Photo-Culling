@@ -2,6 +2,8 @@ import { nanoid } from "nanoid";
 import React, { useEffect, useState } from "react";
 import ImageCard from "./ImageCard";
 
+import styled from "styled-components";
+
 // import tensorflow
 const tf = require("@tensorflow/tfjs");
 
@@ -31,23 +33,37 @@ export default function Cluster(props) {
 
   return (
     <div className="d-flex flex-row m-2 scrollMenu">
-      <div className="d-flex flex-column">
-        {/* Selected Text above images */}
-        <div
-          className="d-inline-flex flex-row clusterNum "
-          style={{
-            backgroundColor: "grey",
-            borderRadius: "3px 3px 0px 0px",
-            padding: "3px",
-            width: "min-content",
-          }}
-        >
-          <p className="" style={{ color: "white", display: "inline-block" }}>
-            {numberOfSelectedImages} out of {props.imageBlobArr.length}
-          </p>
+      {!props.isFullScreen && (
+        <div className="d-flex flex-column">
+          {/* Selected Text above images */}
+          <div
+            className="d-inline-flex flex-row clusterNum "
+            style={{
+              backgroundColor: "grey",
+              borderRadius: "3px 3px 0px 0px",
+              padding: "3px",
+              width: "min-content",
+            }}
+          >
+            <p className="" style={{ color: "white", display: "inline-block" }}>
+              {numberOfSelectedImages} out of {props.imageBlobArr.length}
+            </p>
+          </div>
+          {/* Horizontal Image Div */}
+          <div
+            className="d-flex flex-row"
+            style={{
+              backgroundColor: "grey",
+              borderRadius: "0px 3px 3px 3px",
+            }}
+          >
+            {/* Creates all the image cards */}
+            {imageCards}
+          </div>
         </div>
+      )}
 
-        {/* Horizontal Image Div */}
+      {props.isFullScreen && (
         <div
           className="d-flex flex-row"
           style={{
@@ -58,7 +74,7 @@ export default function Cluster(props) {
           {/* Creates all the image cards */}
           {imageCards}
         </div>
-      </div>
+      )}
     </div>
   );
 }

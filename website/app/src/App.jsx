@@ -1,70 +1,51 @@
 import React, { useState } from "react";
-import Clusters from "./Components/Clusters";
+
+// Styles
+import "./Styles/App.scss";
+
+// Components
+import ImageUploadBtn from "./Components/ImageUploadBtn";
+import Nav from "./Components/Nav";
+import { NavProvider } from "./Components/NavContext";
+import Loader from "./Components/Loader";
+import CullingView from "./Components/CullingView";
+
+
 
 export default function App() {
-  const imageFileArr = [];
-  const images2DArray = [];
   const [imageBlobArr, setimageBlobArr] = useState([]);
+  const [areImagesLoaded, setAreImagesLoaded] = useState(false);
+  const [areImagesUploaded, setAreImagesUploaded] = useState(false);
 
-  function compareSecondColumn(a, b) {
-    if (a[1] === b[1]) {
-      return 0;
-    } else {
-      return a[1] < b[1] ? -1 : 1;
-    }
-  }
-
-  function sortByLastModified(img2DArr) {
-    img2DArr.sort(compareSecondColumn);
-  }
-
-  function loadImages(e) {
-    imageFileArr.push(e.target.files); // gets a file object with all files
-    // console.log(imageFileArr[0]); // this gives an image file
-    // console.log("File arr length: " + imageFileArr[0].length);
-
-    // Loop trough all the local images and creat blob elements for later use
-    for (let i = 0; i < imageFileArr[0].length; i++) {
-      images2DArray.push([
-        URL.createObjectURL(imageFileArr[0][i]),
-        imageFileArr[0][i].lastModified,
-      ]);
-      //console.log(imageFileArr[0][i].lastModified);
-      // use this to cluster, it represents milliseconds since 1 January 1970 UTC for some reason. 🤷
-    }
-
-    sortByLastModified(images2DArray);
-    setimageBlobArr(images2DArray); //  set the dynamic state array equal to the blobs we just made
+  // check if we need to show the loading icon or the upload button
+  var uploadBtn;
+  if (areImagesUploaded) {
+    uploadBtn = <Loader />;
+  } else {
+    uploadBtn = (
+      <ImageUploadBtn
+        imageBlobArr={imageBlobArr}
+        setimageBlobArr={setimageBlobArr}
+        setAreImagesUploaded={setAreImagesUploaded}
+        setAreImagesLoaded={setAreImagesLoaded}
+      />
+    );
   }
 
   return (
-    <div className="container mt-5">
-      <div className="row">
-        <div className="col md-12">
-          <h1 style={{ color: "white" }}>Test area</h1>
+    <>
+      {/* While the images have not been processed display either the upload btn or the loading page */}
+      {!areImagesLoaded && uploadBtn}
 
-          <label className="btn btn-danger">
-            <div>Upload Images</div>
-            <input
-              id="inputFile"
-              className="file-upload"
-              type="file"
-              accept="image/*"
-              onChange={loadImages}
-              multiple
-            />
-          </label>
+      {/* Images have now been processed and show the culing interface */}
+      {areImagesLoaded && (
+        <NavProvider>
+          <Nav imageBlobArr={imageBlobArr} />
 
-          {/* This section will need to be a JSX component soon but for now it dynamically loads the images */}
-          <div className="uploadedImages row">
-            <Clusters imageBlobArr={imageBlobArr} />
-          </div>
-        </div>
-      </div>
-    </div>
+          {/* Component that is resposible for drawing the netflix or fullscreen view */}
+          <CullingView imageBlobArr={imageBlobArr} />
+        </NavProvider>
+      )}
+    </>
   );
 }
-
-// the tasks
-// render imagecards based on the amount of images withing a specific modified date
-//

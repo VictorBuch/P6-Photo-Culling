@@ -1,0 +1,22 @@
+:root {
+  --background-color: #2d2d2d;
+  --card-background-color: #414141;
+  --selected-image-color: #3f8a4b;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--background-color);
+  overflow-x: hidden;
+}
+
+@import "ImageUploadBtn";
+@import "Loader";
+@import "_FullscreenView.scss";
+@import "Nav";
+@import "Clusters";
+@import "Cluster";
+@import "ImageCard";

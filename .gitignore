@@ -1,5 +1,8 @@
 .idea
 .vscode/settings.json
+website/app/package-lock.json
+*.json
+*.bin
 iaa/ava/train
 iaa/ava/test
 iaa/ava/subset
@@ -7,3 +10,4 @@ iaa/models
 iaa/src/giiaa_dist/__pycache__
 iaa/src/giiaa_mean/__pycache__
 iaa/src/utils/__pycache__
+

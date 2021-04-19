@@ -54,6 +54,7 @@ export default function ImageUploadBtn({
       setAreImagesUploaded(false);
     }
   }
+
   return (
     <div
       className="container d-flex flex-row justify-content-center align-items-center"

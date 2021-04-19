@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { NavContext } from "./NavContext";
 
-function ImageCard(props) {
+export default function ImageCard(props) {
   const [isSelected, setIsSelected] = useState(false);
 
   const [totalNumSelectedImages, setTotalNumSelectedImages] = useContext(
@@ -35,4 +35,4 @@ function ImageCard(props) {
   );
 }
 
-export default ImageCard;
+

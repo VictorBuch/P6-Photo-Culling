@@ -10,7 +10,7 @@ import { NavProvider } from "./Components/NavContext";
 import Loader from "./Components/Loader";
 import CullingView from "./Components/CullingView";
 
-// extra dependecies
+
 
 export default function App() {
   const [imageBlobArr, setimageBlobArr] = useState([]);

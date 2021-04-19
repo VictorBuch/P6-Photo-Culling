@@ -39,7 +39,7 @@ export default function Clusters(props) {
       return (
         <Cluster
           id="cluster"
-          key={nanoid()}
+          key={clusterNum}
           imageBlobArr={props.imageBlobArr.slice(
             clusterArray[clusterNum][0],
             clusterArray[clusterNum][1]

@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
+import {NavContext} from './NavContext'
 import ImageCard from "./ImageCard";
 
 import styled from "styled-components";
@@ -8,18 +9,27 @@ const tf = require("@tensorflow/tfjs");
 
 export default function Cluster(props) {
   const [numberOfSelectedImages, setNumberOfSelectedImages] = useState(0);
+  const {selectedImages} = useContext(NavContext)
+  const [selectedImagesKeys, setSelecedImagesKeys] = selectedImages;
   // const [clusterModel, setClusterModel] = useState();
 
-  // useEffect(() => {
-  //   const fetchModel = async () => {
-  //     const model = await tf.loadLayersModel(
-  //       "http://localhost:8000/model.json"
-  //     );
-  //     setClusterModel(model);
-  //     console.log("Model: " + clusterModel);
-  //   };
-  //   fetchModel();
-  // }, []);
+  // checks if any of the images in the cluster are in the global selected images array and modify the counter state based on it
+  useEffect(() => {
+    props.imageBlobArr.map((blob) => {
+      if(selectedImagesKeys.includes(blob[0])){
+        setNumberOfSelectedImages(prev=>prev+1);
+      }
+    })
+  
+    // const fetchModel = async () => {
+    //   const model = await tf.loadLayersModel(
+    //     "http://localhost:8000/model.json"
+    //   );
+    //   setClusterModel(model);
+    //   console.log("Model: " + clusterModel);
+    // };
+    // fetchModel();
+  }, []);
   
   const imageCards = props.imageBlobArr.map((blob) => {
     return (

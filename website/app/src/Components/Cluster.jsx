@@ -25,7 +25,7 @@ export default function Cluster(props) {
     return (
       <ImageCard
         key={blob}
-        blob={blob[0]}
+        blob={blob}
         setNumberOfSelectedImages={setNumberOfSelectedImages}
       />
     );

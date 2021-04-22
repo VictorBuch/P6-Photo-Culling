@@ -7,6 +7,7 @@ export default function ImageCard(props) {
   const [totalNumSelectedImages, setTotalNumSelectedImages] = useContext(
     NavContext
   );
+  
 
   function selectImage() {
     if (isSelected) {
@@ -16,21 +17,23 @@ export default function ImageCard(props) {
       props.setNumberOfSelectedImages((prev) => prev + 1);
       setTotalNumSelectedImages((prev) => prev + 1);
     }
+
     return setIsSelected(!isSelected);
   }
 
   return (
     <div className="card" style={{ width: "18rem", margin: "5px" }}>
       <img
-        key={props.blob}
-        src={props.blob}
+        key={props.blob[0]}
+        src={props.blob[0]}
         alt=""
         className={isSelected ? "cardSelected" : ""}
         onClick={selectImage}
+        
       />
-      {/* <div className="card-body">
-        <p>10/10</p>
-      </div> */}
+      <div className="card-body">
+        <p>{props.blob[1]} </p>
+      </div>
     </div>
   );
 }

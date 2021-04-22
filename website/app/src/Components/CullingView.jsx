@@ -7,7 +7,7 @@ export default function CullingView({ imageBlobArr }) {
   const [isFullScreen, setIsFullScreen] = useState(false);
   function handleKeyDown(e) {
     switch (e.key) {
-      case "f":
+      case "t":
         setIsFullScreen(true);
         break;
       case "Escape":

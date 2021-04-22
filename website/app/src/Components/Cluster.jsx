@@ -1,4 +1,3 @@
-import { nanoid } from "nanoid";
 import React, { useEffect, useState } from "react";
 import ImageCard from "./ImageCard";
 
@@ -21,6 +20,7 @@ export default function Cluster(props) {
   //   };
   //   fetchModel();
   // }, []);
+  
   const imageCards = props.imageBlobArr.map((blob) => {
     return (
       <ImageCard

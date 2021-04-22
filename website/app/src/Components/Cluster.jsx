@@ -1,26 +1,29 @@
 import React, { useEffect, useState, useContext } from "react";
-import {NavContext} from './NavContext'
+import { NavContext } from "./NavContext";
 import ImageCard from "./ImageCard";
-
-import styled from "styled-components";
 
 // import tensorflow
 const tf = require("@tensorflow/tfjs");
 
 export default function Cluster(props) {
+  // Global variables
+  const { globalyStoredClusters } = useContext(NavContext);
+  const [storedClusters, setStoredClusters] = globalyStoredClusters;
+
+  // local variables
   const [numberOfSelectedImages, setNumberOfSelectedImages] = useState(0);
-  const {selectedImages} = useContext(NavContext)
+  const { selectedImages } = useContext(NavContext);
   const [selectedImagesKeys, setSelecedImagesKeys] = selectedImages;
   // const [clusterModel, setClusterModel] = useState();
 
   // checks if any of the images in the cluster are in the global selected images array and modify the counter state based on it
   useEffect(() => {
     props.imageBlobArr.map((blob) => {
-      if(selectedImagesKeys.includes(blob[0])){
-        setNumberOfSelectedImages(prev=>prev+1);
+      if (selectedImagesKeys.includes(blob[0])) {
+        setNumberOfSelectedImages((prev) => prev + 1);
       }
-    })
-  
+    });
+
     // const fetchModel = async () => {
     //   const model = await tf.loadLayersModel(
     //     "http://localhost:8000/model.json"
@@ -30,7 +33,7 @@ export default function Cluster(props) {
     // };
     // fetchModel();
   }, []);
-  
+
   const imageCards = props.imageBlobArr.map((blob) => {
     return (
       <ImageCard

@@ -1,3 +1,6 @@
+import numpy as np
+
+
 class SiameseGenerator:
 
     def __init__(self, generator, dataframe, subset, target_size=(224, 224), color_mode='rgb', shuffle=True, batch_size=64):
@@ -8,6 +11,7 @@ class SiameseGenerator:
             color_mode=color_mode,
             batch_size=batch_size,
             shuffle=shuffle,
+            seed=35,
             x_col='id_a',
             y_col='label',
             class_mode='raw',
@@ -20,6 +24,7 @@ class SiameseGenerator:
             color_mode=color_mode,
             batch_size=batch_size,
             shuffle=shuffle,
+            seed=35,
             x_col='id_b',
             y_col='label',
             class_mode='raw',
@@ -34,14 +39,12 @@ class SiameseGenerator:
         while True:
 
             print("Generating...")
-            image_a = self.generator_a.next()
-            image_b = self.generator_b.next()
-
-            print(type(image_a))
-            print(image_a[0].shape)
-            print(image_a[1].shape)
+            (image_batch_a, label_batch) = self.generator_a.next()
+            (image_batch_b, _) = self.generator_b.next()
 
             # Learn how exactly these custom generators, work, should I yield a batch or one at a time, what about the label, excetra..
+
             print("Generated.")
 
-            yield [image_a[0], image_b[0], image_a[1] - image_b[1]]
+            yield [image_batch_a, image_batch_b], [label_batch]
+

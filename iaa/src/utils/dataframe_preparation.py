@@ -161,19 +161,9 @@ def prepare_dataframe_gciaa(image_dataset_path, image_info_path, num_categories=
 
                 average_ranks.append(rank_sum / num_annotations)
 
-            # filename_a = None
-            # filename_b = None
-            #
-            # for filename in os.listdir(image_dataset_path):
-            #     if random_pair.iloc[0]['index'] == filename.split('.')[0]:
-            #         filename_a = filename
-            #     elif random_pair.iloc[1]['index'] == filename.split('.')[0]:
-            #         filename_b = filename
-
-            # if filename_a and filename_b:
             data['id_a'].append(os.path.join(image_dataset_path, "{}.jpg".format(random_pair.iloc[0]['index'])))
             data['id_b'].append(os.path.join(image_dataset_path, "{}.jpg".format(random_pair.iloc[1]['index'])))
-            data['label'].append(average_ranks[0] - average_ranks[1])
+            data['label'].append(float(average_ranks[0] < average_ranks[1]))
 
     return pd.DataFrame(data)
 

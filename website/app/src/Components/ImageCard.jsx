@@ -8,7 +8,7 @@ export default function ImageCard(props) {
     NavContext
   );
 
-  function selectImage() {
+  function selectImage(e) {
     if (isSelected) {
       props.setNumberOfSelectedImages((prev) => prev - 1);
       setTotalNumSelectedImages((prev) => prev - 1);

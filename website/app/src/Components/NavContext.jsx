@@ -7,9 +7,10 @@ export function NavProvider(props) {
     numberOfSelectedImagesTotal,
     setNumberOfSelectedImagesTotal,
   ] = useState(0);
+  const [selectedImageKeys, setSelectedImageKeys] = useState([])
   return (
     <NavContext.Provider
-      value={[numberOfSelectedImagesTotal, setNumberOfSelectedImagesTotal]}
+      value={{numberOfSelectedImages:[numberOfSelectedImagesTotal, setNumberOfSelectedImagesTotal], selectedImages:[selectedImageKeys, setSelectedImageKeys]}}
     >
       {props.children}
     </NavContext.Provider>

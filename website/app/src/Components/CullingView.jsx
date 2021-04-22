@@ -22,9 +22,9 @@ export default function CullingView({ imageBlobArr }) {
   useEffect(() => {
     document.addEventListener("keydown", handleKeyDown);
   });
-  return (
-    <StyledCullingView>
-      <div className={isFullScreen ? "" : "hidden"}>
+
+  const fullscreen =(
+      <div >
         <StyledFullscreenSection
           className="container-fluid m-2"
           id="fullscreenView"
@@ -40,14 +40,23 @@ export default function CullingView({ imageBlobArr }) {
           <h1>Info and shit</h1>
         </StyledFullscreenSection>
       </div>
+      )
 
-      <div className={isFullScreen ? "hidden" : ""}>
+  const netflix = (
+      <div >
         <div className="container-fluid m-2">
           <div className="d-flex flex-column">
             <Clusters imageBlobArr={imageBlobArr} />
           </div>
         </div>
       </div>
+  )
+  return (
+    <StyledCullingView>
+      {isFullScreen ? fullscreen : netflix}
+      
+
+     
     </StyledCullingView>
   );
 }

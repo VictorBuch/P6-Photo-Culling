@@ -2,7 +2,7 @@
 Training script for distribution-based GIIAA.
 """
 
-from iaa.src.giiaa_dist._nima import *
+from iaa.src.giiaa._nima import *
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from tensorflow.keras.callbacks import ModelCheckpoint, TensorBoard
 from tensorflow.keras import backend as K
@@ -20,7 +20,7 @@ AVA_DATASET_SUBSET_PATH = "../../ava/subset/"
 AVA_DATAFRAME_SUBSET_PATH = "../../ava/giiaa/AVA_dist_subset_dataframe.csv"
 
 LOG_PATH = "../../ava/giiaa/logs"
-MODELS_PATH = "../../models/giiaa_dist/"
+MODELS_PATH = "../../models/giiaa/"
 
 
 

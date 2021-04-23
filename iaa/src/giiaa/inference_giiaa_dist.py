@@ -8,11 +8,11 @@ import cv2
 import os
 import random
 from scipy.stats import wasserstein_distance
-from iaa.src.giiaa_dist._nima import earth_movers_distance
+from iaa.src.giiaa._nima import earth_movers_distance
 import tensorflow.keras as keras
 
 
-MODEL_PATH = "../../models/giiaa_dist/model_dist_2k_inceptionresnetv2_0.181.hdf5"
+MODEL_PATH = "../../models/giiaa/model_dist_2k_inceptionresnetv2_0.181.hdf5"
 
 AVA_DATASET_SUBSET_PATH = "../../ava/subset/"
 AVA_DATAFRAME_SUBSET_PATH = "../../ava/giiaa/AVA_dist_subset_dataframe.csv"

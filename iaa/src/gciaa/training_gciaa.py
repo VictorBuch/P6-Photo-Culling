@@ -20,12 +20,12 @@ AVA_DATAFRAME_PATH = "../../ava/giiaa/AVA_gciaa_train_dataframe.csv"
 AVA_DATASET_SUBSET_PATH = "../../ava/subset/"
 AVA_DATAFRAME_SUBSET_PATH = "../../ava/gciaa/AVA_gciaa_subset_dataframe.csv"
 
-GIIAA_MODEL = "../../models/giiaa_dist/model_dist_200k_inceptionresnetv2_0.078.hdf5"
+GIIAA_MODEL = "../../models/giiaa/model_giiaa-dist_200k_inceptionresnetv2_0.078.hdf5"
 LOG_PATH = "../../ava/gciaa/logs"
 MODELS_PATH = "../../models/gciaa/"
 
 BASE_MODEL_NAME = "InceptionResNetV2"
-BATCH_SIZE = 96
+BATCH_SIZE = 32
 DROPOUT_RATE = 0.75
 USE_MULTIPROCESSING = False
 N_WORKERS = 1

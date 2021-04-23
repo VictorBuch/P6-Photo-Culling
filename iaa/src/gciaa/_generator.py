@@ -1,5 +1,3 @@
-import numpy as np
-
 
 class SiameseGenerator:
 
@@ -11,7 +9,7 @@ class SiameseGenerator:
             color_mode=color_mode,
             batch_size=batch_size,
             shuffle=shuffle,
-            seed=35,
+            seed=91,
             x_col='id_a',
             y_col='label',
             class_mode='raw',
@@ -24,7 +22,7 @@ class SiameseGenerator:
             color_mode=color_mode,
             batch_size=batch_size,
             shuffle=shuffle,
-            seed=35,
+            seed=91,
             x_col='id_b',
             y_col='label',
             class_mode='raw',
@@ -37,14 +35,8 @@ class SiameseGenerator:
     def get_pairwise_flow_from_dataframe(self):
 
         while True:
-
-            print("Generating...")
             (image_batch_a, label_batch) = self.generator_a.next()
             (image_batch_b, _) = self.generator_b.next()
-
-            # Learn how exactly these custom generators, work, should I yield a batch or one at a time, what about the label, excetra..
-
-            print("Generated.")
 
             yield [image_batch_a, image_batch_b], [label_batch]
 

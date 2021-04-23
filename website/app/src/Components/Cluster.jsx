@@ -5,7 +5,7 @@ import ImageCard from "./ImageCard";
 // import tensorflow
 const tf = require("@tensorflow/tfjs");
 
-export default function Cluster(props) {
+export default function Cluster({ imageBlobArr, isFullScreen }) {
   // Global variables
   const { globalyStoredClusters } = useContext(NavContext);
   const [storedClusters, setStoredClusters] = globalyStoredClusters;
@@ -16,13 +16,21 @@ export default function Cluster(props) {
   const [selectedImagesKeys, setSelecedImagesKeys] = selectedImages;
   // const [clusterModel, setClusterModel] = useState();
 
+  const clustersArray = [];
+
   // checks if any of the images in the cluster are in the global selected images array and modify the counter state based on it
   useEffect(() => {
-    props.imageBlobArr.map((blob) => {
+    imageBlobArr.map((blob) => {
+      clustersArray.push(blob[0]);
       if (selectedImagesKeys.includes(blob[0])) {
         setNumberOfSelectedImages((prev) => prev + 1);
       }
     });
+
+    // get a copy of the clusters array
+    const copy = storedClusters;
+    copy.push(clustersArray); // add the cluster array to the copy of the global array
+    setStoredClusters(copy); // set the global array to the modified cluster array
 
     // const fetchModel = async () => {
     //   const model = await tf.loadLayersModel(
@@ -34,7 +42,7 @@ export default function Cluster(props) {
     // fetchModel();
   }, []);
 
-  const imageCards = props.imageBlobArr.map((blob) => {
+  const imageCards = imageBlobArr.map((blob) => {
     return (
       <ImageCard
         key={blob}
@@ -46,11 +54,9 @@ export default function Cluster(props) {
 
   return (
     <div
-      className={
-        "d-flex flex-row scrollMenu" + (props.isFullScreen ? "" : " m-2")
-      }
+      className={"d-flex flex-row scrollMenu" + (isFullScreen ? "" : " m-2")}
     >
-      {!props.isFullScreen && (
+      {!isFullScreen && (
         <div className="d-flex flex-column">
           {/* Selected Text above images */}
           <div
@@ -63,7 +69,7 @@ export default function Cluster(props) {
             }}
           >
             <p className="" style={{ color: "white", display: "inline-block" }}>
-              {numberOfSelectedImages} out of {props.imageBlobArr.length}
+              {numberOfSelectedImages} out of {imageBlobArr.length}
             </p>
           </div>
           {/* Horizontal Image Div */}
@@ -80,7 +86,7 @@ export default function Cluster(props) {
         </div>
       )}
 
-      {props.isFullScreen && (
+      {isFullScreen && (
         <div
           className="d-flex flex-row"
           style={{

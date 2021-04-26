@@ -41,7 +41,7 @@ if __name__ == "__main__":
     else:
         dataset_path = AVA_DATASET_SUBSET_PATH
         dataframe_path = AVA_DATAFRAME_SUBSET_PATH
-        model_name_tag = 'model_gciaa_2k_'
+        model_name_tag = 'model_gciaa_'
 
     tensorboard = TensorBoard(
         log_dir=LOG_PATH, update_freq='batch'
@@ -54,13 +54,16 @@ if __name__ == "__main__":
         monitor='val_loss',
         verbose=1,
         save_best_only=True,
-        save_weights_only=False,
+        save_weights_only=True,
     )
 
     base = BaseModule(
         base_model_name=BASE_MODEL_NAME,
         weights=GIIAA_MODEL)
     base.build()
+    base.compile()
+
+    # This file should be used to further fine tune the model with generated images or similar, if we want to do that.
 
     dataframe = pd.read_csv(dataframe_path, converters={'label': eval})
 
@@ -78,9 +81,6 @@ if __name__ == "__main__":
         generator=data_generator,
         dataframe=dataframe,
         subset='validation')
-
-    base.compile()
-    base.siamese_model.summary()
 
     base.siamese_model.fit_generator(
         generator=train_generator.get_pairwise_flow_from_dataframe(),

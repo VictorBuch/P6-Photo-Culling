@@ -9,11 +9,11 @@ from tensorflow.keras.optimizers import Adam
 from tensorflow.keras import backend as K
 
 
-def earth_movers_distance(y_true, y_pred):
+def earth_movers_distance(y_true, y_predicted):
 
     cdf_true = K.cumsum(y_true, axis=-1)
-    cdf_pred = K.cumsum(y_pred, axis=-1)
-    emd = K.sqrt(K.mean(K.square(cdf_true - cdf_pred), axis=-1))
+    cdf_predicted = K.cumsum(y_predicted, axis=-1)
+    emd = K.sqrt(K.mean(K.square(cdf_true - cdf_predicted), axis=-1))
     return K.mean(emd)
 
 

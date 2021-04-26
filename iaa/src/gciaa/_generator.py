@@ -1,3 +1,5 @@
+SEED = 35
+
 
 class SiameseGenerator:
 
@@ -9,7 +11,7 @@ class SiameseGenerator:
             color_mode=color_mode,
             batch_size=batch_size,
             shuffle=shuffle,
-            seed=91,
+            seed=SEED,
             x_col='id_a',
             y_col='label',
             class_mode='raw',
@@ -22,7 +24,7 @@ class SiameseGenerator:
             color_mode=color_mode,
             batch_size=batch_size,
             shuffle=shuffle,
-            seed=91,
+            seed=SEED,
             x_col='id_b',
             y_col='label',
             class_mode='raw',

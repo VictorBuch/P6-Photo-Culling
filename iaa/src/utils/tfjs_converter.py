@@ -4,13 +4,15 @@ Converts hdf5 model into JS model.
 
 import tensorflowjs as tfjs
 import tensorflow as tf
-from iaa.src.giiaa._nima import earth_movers_distance
+from iaa.src.gciaa._base import *
 
-INPUT_MODEL_PATH = "../../models/giiaa/model_dist_200k_inceptionresnetv2_0.078.hdf5"
-OUTPUT_MODEL_PATH = "../../models/giiaa/model_giiaa-dist_200k_inceptionresnetv2_0.078"
+INPUT_MODEL_PATH = "../../models/gciaa/model_gciaa_siamese_base.hdf5"
+OUTPUT_MODEL_PATH = "../../models/gciaa/model_gciaa_2k_siamese_model"
 
 
 if __name__ == "__main__":
 
-    model = tf.keras.models.load_model(INPUT_MODEL_PATH, custom_objects={"earth_movers_distance": earth_movers_distance})
+    model = tf.keras.models.load_model(INPUT_MODEL_PATH,
+                                       custom_objects={"mapped_comparison_layer": mapped_comparison_layer,
+                                                       "contrastive_loss": contrastive_loss})
     tfjs.converters.save_keras_model(model, OUTPUT_MODEL_PATH)

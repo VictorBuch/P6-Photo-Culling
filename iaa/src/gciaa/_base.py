@@ -11,39 +11,23 @@ from tensorflow.keras.layers import Lambda
 
 def contrastive_loss(y_true, y_predicted):
     margin = 1
-
     return K.mean(y_true * 0.5 * K.square(y_predicted) + (1 - y_true) * 0.5 * K.square(K.maximum(margin - y_predicted, 0)))
 
 
 def accuracy(y_true, y_predicted):
-    return K.mean(K.equal(y_true, K.cast(y_predicted < 0.5, y_true.dtype)))
-
-
-def predictions(y_true, y_predicted):
-    return y_predicted[0]
+    return K.mean(K.equal(y_true, K.cast(y_predicted > 0.5, y_true.dtype)))
 
 
 def mapped_comparison_layer(vectors):
-    # This is a custom comparison function I made up for our use case.
-    # All Siamese networks I researched are used for similarity checking (of similar and dissimilar pairs),
-    # but... but reasons...
-
-    # The thinking here is something like:
-    # 1, If Image A > Image B, then output should be close to 0, otherwise close to 1.
-    # 2, If Image A > Image B, this layer should output a large negative number, and vice versa,
-    # which is then mapped by sigmoid into range 0 and 1
-    # 3, Magnitude of the feature vector is (read as "probably isn't", since it's my rushed unproven theory) the model's
-    # estimation of the image's aesthetics, so that's what we'll use.
-    # 4, next layer is the sigmoid, if you don't know what this one does, google image of sigmoid function you'll get it
-    # 5, sigmoid(Magnitude B - Mangitude A) happens to output ~0 if A > B, and ~1 if B > A, just like we want
-    # 6, this return value could maybe be "decorated" by square rooting it or whatnot, but I'll take it raw
-
     (features_a, features_b) = vectors
+    rank_vector = K.constant(np.array([i for i in range(1, 11)]).reshape(1, 10))
 
-    magnitude_a = K.sqrt(K.sum(K.square(features_a), axis=1, keepdims=True))
-    magnitude_b = K.sqrt(K.sum(K.square(features_b), axis=1, keepdims=True))
+    means_a = K.dot(rank_vector, K.transpose(features_a))
+    means_b = K.dot(rank_vector, K.transpose(features_b))
 
-    return magnitude_b - magnitude_a
+    distance = K.transpose(means_b - means_a)
+
+    return distance
 
 
 class BaseModule:
@@ -77,37 +61,26 @@ class BaseModule:
         x = Dropout(self.dropout_rate)(imagenet_model.output)
         x = Dense(units=10, activation='softmax')(x)
 
-        giiaa_model = Model(imagenet_model.inputs, x)
-        giiaa_model.load_weights(self.weights)
-        giiaa_weights = giiaa_model.get_weights()
-
-        self.image_encoder_model = Model(imagenet_model.inputs, imagenet_model.output)
-        self.image_encoder_model.set_weights(giiaa_weights[:-2])
-
-        # x = Dense(units=10, activation='relu')(imagenet_model.output)
-        # base_model = Model(imagenet_model.inputs, x)
-        # image_encoder_weights = giiaa_weights[:-2]
-        # image_encoder_weights.append(np.random.rand(1536, 512))
-        # image_encoder_weights.append(np.random.rand(512,))
-        # self.image_encoder_model = Model(imagenet_model.inputs, base_model.output)
-        # self.image_encoder_model.set_weights(image_encoder_weights)
+        # Set image encode model to the trained GIIAA model.
+        self.image_encoder_model = Model(imagenet_model.inputs, x)
+        self.image_encoder_model.load_weights(self.weights)
 
         # Build the siamese model.
-
-        for layer in self.image_encoder_model.layers:
-            layer.trainable = False
-
         image_a = Input(shape=(224, 224, 3), dtype='float32')
         image_b = Input(shape=(224, 224, 3), dtype='float32')
         encoding_a = self.image_encoder_model(image_a)
         encoding_b = self.image_encoder_model(image_b)
 
-        x = Lambda(mapped_comparison_layer)([encoding_a, encoding_b])
+        x = Lambda(mapped_comparison_layer, name="mapped_comparison_layer")([encoding_a, encoding_b])
         x = Dense(units=1, activation="sigmoid")(x)
 
         self.siamese_model = Model(inputs=[image_a, image_b], outputs=x)
+
+        for layer in self.siamese_model.layers:
+            layer.trainable = False
+
         self.siamese_model.summary()
 
     def compile(self):
-        self.siamese_model.compile(optimizer=RMSprop(lr=self.learning_rate), loss=self.loss, metrics=[accuracy, predictions])
+        self.siamese_model.compile(optimizer=RMSprop(lr=self.learning_rate), loss=self.loss, metrics=[accuracy])
 

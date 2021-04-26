@@ -12,13 +12,17 @@ export function NavProvider(props) {
 
   const [storedClusters, setStoredClusters] = useState([]);
 
+  const [orange, setOrange] = useState();
+
   // used for debugging
   useEffect(() => {
-    console.log("selectedImageKeys");
-    console.log(selectedImageKeys);
-    console.log("storedClusters");
-    console.log(storedClusters);
-  }, [selectedImageKeys, storedClusters]);
+    // console.log("selectedImageKeys");
+    // console.log(selectedImageKeys);
+    // console.log("storedClusters");
+    // console.log(storedClusters);
+    // console.log("orange: ");
+    // console.log(orange);
+  }, [selectedImageKeys, storedClusters, orange]);
 
   return (
     <NavContext.Provider
@@ -29,6 +33,7 @@ export function NavProvider(props) {
         ],
         selectedImages: [selectedImageKeys, setSelectedImageKeys],
         globalyStoredClusters: [storedClusters, setStoredClusters],
+        globalOrange: [orange, setOrange],
       }}
     >
       {props.children}

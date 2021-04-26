@@ -1,11 +1,20 @@
 import React, { useState, useContext } from "react";
 import { NavContext } from "./NavContext";
 
-export default function Cluster(props) {
+export default function Cluster({ index }) {
   const { globalyStoredClusters } = useContext(NavContext);
   const [storedClusters, setStoredClusters] = globalyStoredClusters;
+  let prevClusterIndex = index - 1;
+  let currentClusterIndex = index;
+  let nextClusterIndex = index + 1;
 
-  const index = 2; // Placeholder
+  if (currentClusterIndex === 0) {
+    prevClusterIndex = storedClusters.length - 1;
+  }
+  if (currentClusterIndex + 1 === storedClusters.length) {
+    nextClusterIndex = 0;
+  }
+
   return (
     <section
       className="d-flex flex-column scrollMenuVertical"
@@ -16,17 +25,21 @@ export default function Cluster(props) {
       <div className="card" style={{ width: "18rem", margin: "5px" }}>
         <img
           className="smallCluster"
-          src={storedClusters[index - 1][0]}
+          src={storedClusters[prevClusterIndex][0]}
           alt=""
         />
       </div>
       <div className="card" style={{ width: "18rem", margin: "5px" }}>
-        <img className="bigCluster" src={storedClusters[index][0]} alt="" />
+        <img
+          className="bigCluster"
+          src={storedClusters[currentClusterIndex][0]}
+          alt=""
+        />
       </div>
       <div className="card" style={{ width: "18rem", margin: "5px" }}>
         <img
           className="smallCluster"
-          src={storedClusters[index + 1][0]}
+          src={storedClusters[nextClusterIndex][0]}
           alt=""
         />
       </div>

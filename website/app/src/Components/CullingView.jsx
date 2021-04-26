@@ -9,17 +9,20 @@ export default function CullingView({ imageBlobArr }) {
   const [isFullScreen, setIsFullScreen] = useState(false);
   const { globalyStoredClusters } = useContext(NavContext);
   const [storedClusters, setStoredClusters] = globalyStoredClusters;
+  const { globalOrange, selectedImages } = useContext(NavContext);
+  const [selectedImagesKeys, setSelecedImagesKeys] = selectedImages;
+  const [orange, setOrange] = globalOrange;
+  let cluster = storedClusters.find((element) => element.includes(orange));
 
   function handleKeyDown(e) {
     switch (e.key) {
       case "f":
-        setIsFullScreen(true);
+        if (orange) {
+          setIsFullScreen(true);
+        }
         break;
       case "Escape":
         setIsFullScreen(false);
-        break;
-      case "p":
-        console.log(storedClusters);
         break;
       default:
         break;
@@ -37,13 +40,15 @@ export default function CullingView({ imageBlobArr }) {
         id="fullscreenView"
       >
         {/* Replace image with the currecnt clusters best image */}
-        <img className="" src={imageBlobArr[0][0]} alt="" />
-
+        <img className="" src={orange} alt="" />
         {/* Replace with an actual view of clusters with the best image being the representative one */}
-        <VerticalCluster imageBlobArr={imageBlobArr} isFullScreen={true} />
+        <VerticalCluster
+          index={globalyStoredClusters[0].findIndex((element) =>
+            element.includes(orange)
+          )}
+        />
 
-        {/* Replace with only the images from the current cluster */}
-        <Cluster imageBlobArr={imageBlobArr} isFullScreen={true} />
+        <Cluster imageBlobArr={cluster} isFullScreen={true} />
         <h1>Info and shit</h1>
       </StyledFullscreenSection>
     </div>

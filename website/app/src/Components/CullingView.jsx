@@ -16,7 +16,12 @@ export default function CullingView({ imageBlobArr }) {
   let clusterIndex = storedClusters.findIndex((element) =>
     element.includes(orange)
   );
-  let cluster = storedClusters[clusterIndex];
+
+  const [offset, setOffset] = useState(0);
+
+  function changeOffset(direction) {
+    setOffset((prev) => (prev += direction));
+  }
 
   function handleKeyDown(e) {
     switch (e.key) {
@@ -49,9 +54,15 @@ export default function CullingView({ imageBlobArr }) {
         {/* Replace image with the currecnt clusters best image */}
         <img className="" src={orange} alt="" />
         {/* Replace with an actual view of clusters with the best image being the representative one */}
-        <VerticalCluster index={clusterIndex} />
+        <VerticalCluster
+          index={clusterIndex + offset}
+          setOffset={changeOffset}
+        />
 
-        <Cluster imageBlobArr={cluster} isFullScreen={true} />
+        <Cluster
+          imageBlobArr={storedClusters[clusterIndex + offset]}
+          isFullScreen={true}
+        />
         <h1>Info and shit</h1>
       </StyledFullscreenSection>
     </div>

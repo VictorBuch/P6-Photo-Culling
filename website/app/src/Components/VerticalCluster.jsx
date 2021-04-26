@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { NavContext } from "./NavContext";
 
-export default function Cluster({ index }) {
+export default function Cluster({ index, setOffset }) {
   const { globalyStoredClusters } = useContext(NavContext);
   const [storedClusters, setStoredClusters] = globalyStoredClusters;
   let prevClusterIndex = index - 1;
@@ -28,6 +28,7 @@ export default function Cluster({ index }) {
           className="smallCluster"
           src={storedClusters[prevClusterIndex][0]}
           alt=""
+          onClick={() => setOffset(-1)}
         />
       </div>
       <div className="card" style={{ width: "18rem", margin: "5px" }}>
@@ -42,6 +43,7 @@ export default function Cluster({ index }) {
           className="smallCluster"
           src={storedClusters[nextClusterIndex][0]}
           alt=""
+          onClick={() => setOffset(+1)}
         />
       </div>
       {/* Use the classNames for styling the image previews */}

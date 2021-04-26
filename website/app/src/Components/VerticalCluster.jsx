@@ -11,7 +11,8 @@ export default function Cluster({ index }) {
   if (currentClusterIndex === 0) {
     prevClusterIndex = storedClusters.length - 1;
   }
-  if (currentClusterIndex + 1 === storedClusters.length) {
+
+  if (currentClusterIndex === storedClusters.length - 1) {
     nextClusterIndex = 0;
   }
 

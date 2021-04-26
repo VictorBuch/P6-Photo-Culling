@@ -30,7 +30,8 @@ export default function Cluster({ imageBlobArr, isFullScreen }) {
     if (
       !storedClusters.some((elements) =>
         elements.some((element) => clustersArray.includes(element))
-      )
+      ) &&
+      !isFullScreen
     ) {
       console.log("New Cluster added to the global array");
       // get a copy of the clusters array
@@ -47,7 +48,7 @@ export default function Cluster({ imageBlobArr, isFullScreen }) {
     //   console.log("Model: " + clusterModel);
     // };
     // fetchModel();
-  }, []);
+  });
 
   const imageCards = imageBlobArr.map((blob) => {
     return (

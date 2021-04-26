@@ -43,7 +43,12 @@ export default function Clusters(props) {
       );
 
       return (
-        <Cluster id="cluster" key={clusterNum} imageBlobArr={newCluster} />
+        <Cluster
+          id="cluster"
+          key={clusterNum}
+          imageBlobArr={newCluster}
+          isFullScreen={props.isFullScreen}
+        />
       );
     }
   });

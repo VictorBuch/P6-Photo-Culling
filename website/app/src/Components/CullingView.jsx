@@ -12,7 +12,11 @@ export default function CullingView({ imageBlobArr }) {
   const { globalOrange, selectedImages } = useContext(NavContext);
   const [selectedImagesKeys, setSelecedImagesKeys] = selectedImages;
   const [orange, setOrange] = globalOrange;
-  let cluster = storedClusters.find((element) => element.includes(orange));
+
+  let clusterIndex = storedClusters.findIndex((element) =>
+    element.includes(orange)
+  );
+  let cluster = storedClusters[clusterIndex];
 
   function handleKeyDown(e) {
     switch (e.key) {
@@ -23,6 +27,9 @@ export default function CullingView({ imageBlobArr }) {
         break;
       case "Escape":
         setIsFullScreen(false);
+        break;
+      case "p":
+        console.log();
         break;
       default:
         break;
@@ -42,11 +49,7 @@ export default function CullingView({ imageBlobArr }) {
         {/* Replace image with the currecnt clusters best image */}
         <img className="" src={orange} alt="" />
         {/* Replace with an actual view of clusters with the best image being the representative one */}
-        <VerticalCluster
-          index={globalyStoredClusters[0].findIndex((element) =>
-            element.includes(orange)
-          )}
-        />
+        <VerticalCluster index={clusterIndex} />
 
         <Cluster imageBlobArr={cluster} isFullScreen={true} />
         <h1>Info and shit</h1>
@@ -58,7 +61,7 @@ export default function CullingView({ imageBlobArr }) {
     <div>
       <div className="container-fluid m-2">
         <div className="d-flex flex-column">
-          <Clusters imageBlobArr={imageBlobArr} />
+          <Clusters imageBlobArr={imageBlobArr} isFullScreen={false} />
         </div>
       </div>
     </div>

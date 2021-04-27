@@ -20,7 +20,7 @@ export default function ImageUploadBtn({
 
   function sortByDateTimeOriginal(img2DArr) {
     img2DArr.sort(compareSecondColumn);
-    console.log("Sorted!");
+    // console.log("Sorted!");
   }
 
   async function getMetaData(file) {
@@ -45,11 +45,11 @@ export default function ImageUploadBtn({
     }
 
     sortByDateTimeOriginal(images2DArray);
-    console.log("Set image Array");
+    // console.log("Set image Array");
     setimageBlobArr(images2DArray); //  set the dynamic state array equal to the blobs we just made
 
     if (imageBlobArr) {
-      console.log("setImages state to True");
+      // console.log("setImages state to True");
       setAreImagesLoaded(true);
       setAreImagesUploaded(false);
     }

@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import { NavContext } from "./NavContext";
 import ImageCard from "./ImageCard";
+import styled from "styled-components";
 import { all } from "@tensorflow/tfjs";
 
 // import tensorflow
@@ -24,22 +25,14 @@ export default function Cluster({ imageBlobArr, isFullScreen }) {
     imageBlobArr.map((blob) => {
       clustersArray.push(blob[0]);
       if (selectedImagesKeys.includes(blob[0])) {
-        setNumberOfSelectedImages((prev) => (prev += 1));
+        setNumberOfSelectedImages((prev) => prev + 1);
       }
     });
 
-    if (
-      !storedClusters.some((elements) =>
-        elements.some((element) => clustersArray.includes(element))
-      ) &&
-      !isFullScreen
-    ) {
-      console.log("New Cluster added to the global array");
-      // get a copy of the clusters array
-      const copy = storedClusters;
-      copy.push(clustersArray); // add the cluster array to the copy of the global array
-      setStoredClusters(copy); // set the global array to the modified cluster array
-    }
+    // get a copy of the clusters array
+    const copy = storedClusters;
+    copy.push(clustersArray); // add the cluster array to the copy of the global array
+    setStoredClusters(copy); // set the global array to the modified cluster array
 
     // const fetchModel = async () => {
     //   const model = await tf.loadLayersModel(
@@ -55,7 +48,7 @@ export default function Cluster({ imageBlobArr, isFullScreen }) {
     return (
       <ImageCard
         key={blob}
-        blob={isFullScreen ? blob : blob[0]}
+        blob={blob[0]}
         setNumberOfSelectedImages={setNumberOfSelectedImages}
       />
     );

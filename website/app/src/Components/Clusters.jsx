@@ -1,8 +1,9 @@
-import { nanoid } from "nanoid";
-import React from "react";
+import { useContext } from "react";
 import Cluster from "./Cluster";
+import { NavContext } from "./NavContext";
 
 export default function Clusters(props) {
+  // local values
   const clusterArray = [[]];
   var prevClusterIndex = 0;
   var clusterNum = 0;
@@ -36,14 +37,17 @@ export default function Clusters(props) {
       clusterNum++;
       prevDateTimeOriginal = element[1];
 
+      const newCluster = props.imageBlobArr.slice(
+        clusterArray[clusterNum][0],
+        clusterArray[clusterNum][1]
+      );
+
       return (
         <Cluster
           id="cluster"
-          key={nanoid()}
-          imageBlobArr={props.imageBlobArr.slice(
-            clusterArray[clusterNum][0],
-            clusterArray[clusterNum][1]
-          )}
+          key={clusterNum}
+          imageBlobArr={newCluster}
+          isFullScreen={props.isFullScreen}
         />
       );
     }

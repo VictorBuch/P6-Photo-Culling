@@ -1,27 +1,48 @@
-import React, { useState } from "react";
-import ImageCard from "./ImageCard";
+import React, { useState, useContext } from "react";
+import { NavContext } from "./NavContext";
 
-export default function Cluster(props) {
-  const [numberOfSelectedImages, setNumberOfSelectedImages] = useState(0);
+export default function Cluster({ index, setOffset }) {
+  const { globalyStoredClusters } = useContext(NavContext);
+  const [storedClusters, setStoredClusters] = globalyStoredClusters;
+  let prevClusterIndex = index - 1;
+  let currentClusterIndex = index;
+  let nextClusterIndex = index + 1;
 
-  const imageCards = props.imageBlobArr.map((blob) => {
-    return (
-      <ImageCard
-        key={blob}
-        blob={blob[0]}
-        setNumberOfSelectedImages={setNumberOfSelectedImages}
-      />
-    );
-  });
+  if (currentClusterIndex === 0) {
+    prevClusterIndex = storedClusters.length - 1;
+  }
+
+  if (currentClusterIndex === storedClusters.length - 1) {
+    nextClusterIndex = 0;
+  }
 
   return (
-    <div
+    <section
       className="d-flex flex-column scrollMenuVertical"
-      style={{ alignItems: "center", justifyContent: "center" }}
+      style={{ alignItems: "center" }}
     >
-      {/* Vertical Image Div */}
-      {/* Creates all the image cards */}
-      {imageCards}
-    </div>
+      {/* Replace index with the index of the cluster */}
+
+      <div className="card" style={{ width: "12rem", margin: "5px" }}>
+        <img
+          className="smallCluster"
+          src={storedClusters[prevClusterIndex][0]}
+          alt=""
+          onClick={() => setOffset(-1)}
+        />
+      </div>
+      <div className="card" style={{ width: "12rem", margin: "5px" }}>
+        <img className="bigCluster" src={storedClusters[index][0]} alt="" />
+      </div>
+      <div className="card" style={{ width: "12rem", margin: "5px" }}>
+        <img
+          className="smallCluster"
+          src={storedClusters[nextClusterIndex][0]}
+          alt=""
+          onClick={() => setOffset(+1)}
+        />
+      </div>
+      {/* Use the classNames for styling the image previews */}
+    </section>
   );
 }

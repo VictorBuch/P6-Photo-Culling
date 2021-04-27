@@ -6,7 +6,7 @@ export default function Loader() {
     >
       <div className="loader"></div>
 
-      <h3>Please wait while the images load</h3>
+      <h3>Please wait, the robot is thinking &#129302;</h3>
     </div>
   );
 }

@@ -11,7 +11,6 @@ import Loader from "./Components/Loader";
 import CullingView from "./Components/CullingView";
 
 
-
 export default function App() {
   const [imageBlobArr, setimageBlobArr] = useState([]);
   const [areImagesLoaded, setAreImagesLoaded] = useState(false);

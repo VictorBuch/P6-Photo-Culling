@@ -2,9 +2,9 @@ import React, { useContext } from "react";
 import { NavContext } from "./NavContext";
 
 export default function Nav({imageBlobArr}) {
-  const [totalNumSelectedImages, setTotalNumSelectedImages] = useContext(
-    NavContext
-  );
+  const {numberOfSelectedImages} = useContext(NavContext)
+
+  const [totalNumSelectedImages, setTotalNumSelectedImages] = numberOfSelectedImages;
 
   return (
     <nav id="appNav">

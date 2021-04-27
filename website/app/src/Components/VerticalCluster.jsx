@@ -1,11 +1,21 @@
 import React, { useState, useContext } from "react";
 import { NavContext } from "./NavContext";
 
-export default function Cluster(props) {
+export default function Cluster({ index, setOffset }) {
   const { globalyStoredClusters } = useContext(NavContext);
   const [storedClusters, setStoredClusters] = globalyStoredClusters;
+  let prevClusterIndex = index - 1;
+  let currentClusterIndex = index;
+  let nextClusterIndex = index + 1;
 
-  const index = 2; // Placeholder
+  if (currentClusterIndex === 0) {
+    prevClusterIndex = storedClusters.length - 1;
+  }
+
+  if (currentClusterIndex === storedClusters.length - 1) {
+    nextClusterIndex = 0;
+  }
+
   return (
     <section
       className="d-flex flex-column scrollMenuVertical"
@@ -16,8 +26,9 @@ export default function Cluster(props) {
       <div className="card" style={{ width: "12rem", margin: "5px" }}>
         <img
           className="smallCluster"
-          src={storedClusters[index - 1][0]}
+          src={storedClusters[prevClusterIndex][0]}
           alt=""
+          onClick={() => setOffset(-1)}
         />
       </div>
       <div className="card" style={{ width: "12rem", margin: "5px" }}>
@@ -26,8 +37,9 @@ export default function Cluster(props) {
       <div className="card" style={{ width: "12rem", margin: "5px" }}>
         <img
           className="smallCluster"
-          src={storedClusters[index + 1][0]}
+          src={storedClusters[nextClusterIndex][0]}
           alt=""
+          onClick={() => setOffset(+1)}
         />
       </div>
       {/* Use the classNames for styling the image previews */}

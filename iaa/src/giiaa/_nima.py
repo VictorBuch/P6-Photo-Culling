@@ -9,11 +9,11 @@ from tensorflow.keras.optimizers import Adam
 from tensorflow.keras import backend as K
 
 
-def earth_movers_distance(y_true, y_pred):
+def earth_movers_distance(y_true, y_predicted):
 
     cdf_true = K.cumsum(y_true, axis=-1)
-    cdf_pred = K.cumsum(y_pred, axis=-1)
-    emd = K.sqrt(K.mean(K.square(cdf_true - cdf_pred), axis=-1))
+    cdf_predicted = K.cumsum(y_predicted, axis=-1)
+    emd = K.sqrt(K.mean(K.square(cdf_true - cdf_predicted), axis=-1))
     return K.mean(emd)
 
 
@@ -46,7 +46,7 @@ class NimaModule:
 
         BaseCnn = getattr(self.base_module, self.base_model_name)
 
-        # Replace last layer with Dropout and Dense (virtually turn regression into classification).
+        # Replace last layer with Dropout and Dense (virtually turn classification into multi-output regression).
 
         self.base_model = BaseCnn(input_shape=(224, 224, 3), weights=self.weights, include_top=False, pooling='avg')
 
@@ -54,7 +54,6 @@ class NimaModule:
         x = Dense(units=self.n_classes, activation='softmax')(x)
 
         self.nima_model = Model(self.base_model.inputs, x)
-
 
     def compile(self):
         self.nima_model.compile(optimizer=Adam(lr=self.learning_rate, decay=self.decay), loss=self.loss)

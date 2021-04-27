@@ -7,7 +7,7 @@ iaa/ava/train
 iaa/ava/test
 iaa/ava/subset
 iaa/models
-iaa/src/giiaa_dist/__pycache__
+iaa/src/giiaa/__pycache__
 iaa/src/giiaa_mean/__pycache__
 iaa/src/utils/__pycache__
 

@@ -23,7 +23,7 @@ export default function Cluster({ imageBlobArr, isFullScreen }) {
     imageBlobArr.map((blob) => {
       clustersArray.push(blob[0]);
       if (selectedImagesKeys.includes(blob[0])) {
-        setNumberOfSelectedImages((prev) => prev + 1);
+        setNumberOfSelectedImages((prev) => (prev += 1));
       }
     });
 
@@ -48,7 +48,7 @@ export default function Cluster({ imageBlobArr, isFullScreen }) {
     //   console.log("Model: " + clusterModel);
     // };
     // fetchModel();
-  });
+  }, []);
 
   const imageCards = imageBlobArr.map((blob) => {
     return (

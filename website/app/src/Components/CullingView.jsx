@@ -10,13 +10,19 @@ export default function CullingView({ imageBlobArr }) {
   const { globalyStoredClusters } = useContext(NavContext);
   const [storedClusters, setStoredClusters] = globalyStoredClusters;
   const { globalOrange, selectedImages } = useContext(NavContext);
-  const [selectedImagesKeys, setSelecedImagesKeys] = selectedImages;
   const [orange, setOrange] = globalOrange;
 
   let clusterIndex = storedClusters.findIndex((element) =>
     element.includes(orange)
   );
-  let cluster = storedClusters[clusterIndex];
+
+  const [offset, setOffset] = useState(0);
+
+  document.addEventListener("keydown", handleKeyDown);
+
+  function changeOffset(direction) {
+    setOffset((prev) => (prev += direction));
+  }
 
   function handleKeyDown(e) {
     switch (e.key) {
@@ -24,9 +30,11 @@ export default function CullingView({ imageBlobArr }) {
         if (orange) {
           setIsFullScreen(true);
         }
+        document.removeEventListener("keydown", handleKeyDown);
         break;
       case "Escape":
         setIsFullScreen(false);
+        document.removeEventListener("keydown", handleKeyDown);
         break;
       case "p":
         console.log();
@@ -35,27 +43,6 @@ export default function CullingView({ imageBlobArr }) {
         break;
     }
   }
-
-  useEffect(() => {
-    document.addEventListener("keydown", handleKeyDown);
-  });
-
-  const fullscreen = (
-    <div>
-      <StyledFullscreenSection
-        className="container-fluid m-2"
-        id="fullscreenView"
-      >
-        {/* Replace image with the currecnt clusters best image */}
-        <img className="" src={orange} alt="" />
-        {/* Replace with an actual view of clusters with the best image being the representative one */}
-        <VerticalCluster index={clusterIndex} />
-
-        <Cluster imageBlobArr={cluster} isFullScreen={true} />
-        <h1>Info and shit</h1>
-      </StyledFullscreenSection>
-    </div>
-  );
 
   const netflix = (
     <div>
@@ -66,6 +53,29 @@ export default function CullingView({ imageBlobArr }) {
       </div>
     </div>
   );
+  const fullscreen = (
+    <div>
+      <StyledFullscreenSection
+        className="container-fluid m-2"
+        id="fullscreenView"
+      >
+        {/* Replace image with the currecnt clusters best image */}
+        <img className="" src={orange} alt="" />
+        {/* Replace with an actual view of clusters with the best image being the representative one */}
+        <VerticalCluster
+          index={clusterIndex + offset}
+          setOffset={changeOffset}
+        />
+
+        <Cluster
+          imageBlobArr={storedClusters[clusterIndex + offset]}
+          isFullScreen={true}
+        />
+        <h1>Info and shit</h1>
+      </StyledFullscreenSection>
+    </div>
+  );
+
   return (
     <StyledCullingView>{isFullScreen ? fullscreen : netflix}</StyledCullingView>
   );

@@ -10,7 +10,6 @@ export default function CullingView({ imageBlobArr }) {
   const { globalyStoredClusters } = useContext(NavContext);
   const [storedClusters, setStoredClusters] = globalyStoredClusters;
   const { globalOrange, selectedImages } = useContext(NavContext);
-  const [selectedImagesKeys, setSelecedImagesKeys] = selectedImages;
   const [orange, setOrange] = globalOrange;
 
   let clusterIndex = storedClusters.findIndex((element) =>
@@ -18,6 +17,8 @@ export default function CullingView({ imageBlobArr }) {
   );
 
   const [offset, setOffset] = useState(0);
+
+  document.addEventListener("keydown", handleKeyDown);
 
   function changeOffset(direction) {
     setOffset((prev) => (prev += direction));
@@ -29,9 +30,11 @@ export default function CullingView({ imageBlobArr }) {
         if (orange) {
           setIsFullScreen(true);
         }
+        document.removeEventListener("keydown", handleKeyDown);
         break;
       case "Escape":
         setIsFullScreen(false);
+        document.removeEventListener("keydown", handleKeyDown);
         break;
       case "p":
         console.log();
@@ -41,10 +44,15 @@ export default function CullingView({ imageBlobArr }) {
     }
   }
 
-  useEffect(() => {
-    document.addEventListener("keydown", handleKeyDown);
-  });
-
+  const netflix = (
+    <div>
+      <div className="container-fluid m-2">
+        <div className="d-flex flex-column">
+          <Clusters imageBlobArr={imageBlobArr} isFullScreen={false} />
+        </div>
+      </div>
+    </div>
+  );
   const fullscreen = (
     <div>
       <StyledFullscreenSection
@@ -68,15 +76,6 @@ export default function CullingView({ imageBlobArr }) {
     </div>
   );
 
-  const netflix = (
-    <div>
-      <div className="container-fluid m-2">
-        <div className="d-flex flex-column">
-          <Clusters imageBlobArr={imageBlobArr} isFullScreen={false} />
-        </div>
-      </div>
-    </div>
-  );
   return (
     <StyledCullingView>{isFullScreen ? fullscreen : netflix}</StyledCullingView>
   );

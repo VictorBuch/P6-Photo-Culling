@@ -20,8 +20,8 @@ export function NavProvider(props) {
     // console.log(selectedImageKeys);
     // console.log("storedClusters");
     // console.log(storedClusters);
-    // console.log("orange: ");
-    // console.log(orange);
+    console.log("orange: ");
+    console.log(orange);
   }, [selectedImageKeys, storedClusters, orange]);
 
   return (

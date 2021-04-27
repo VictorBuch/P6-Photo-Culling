@@ -3,15 +3,17 @@ import numpy as np
 from tensorflow.keras.models import Model
 from tensorflow.keras.layers import Dropout, Dense
 from tensorflow.keras.optimizers import RMSprop
-from tensorflow.keras.optimizers import Adam
 from tensorflow.keras import backend as K
 from tensorflow.keras import Input
 from tensorflow.keras.layers import Lambda
 
+from time import time_ns
+
 
 def contrastive_loss(y_true, y_predicted):
     margin = 1
-    return K.mean(y_true * 0.5 * K.square(y_predicted) + (1 - y_true) * 0.5 * K.square(K.maximum(margin - y_predicted, 0)))
+    return K.mean(
+        y_true * 0.5 * K.square(y_predicted) + (1 - y_true) * 0.5 * K.square(K.maximum(margin - y_predicted, 0)))
 
 
 def accuracy(y_true, y_predicted):
@@ -32,7 +34,8 @@ def mapped_comparison_layer(vectors):
 
 class BaseModule:
 
-    def __init__(self, base_model_name, weights=None, n_classes_base=1, loss=contrastive_loss, learning_rate=0.00001, decay=0, dropout_rate=0):
+    def __init__(self, base_model_name, weights=None, n_classes_base=1, loss=contrastive_loss, learning_rate=0.00001,
+                 decay=0, dropout_rate=0):
 
         self.base_model_name = base_model_name
         self.n_classes_base = n_classes_base
@@ -76,11 +79,14 @@ class BaseModule:
 
         self.siamese_model = Model(inputs=[image_a, image_b], outputs=x)
 
-        for layer in self.siamese_model.layers:
-            layer.trainable = False
-
-        self.siamese_model.summary()
+        # for layer in self.siamese_model.layers:
+        #     layer.trainable = False
 
     def compile(self):
         self.siamese_model.compile(optimizer=RMSprop(lr=self.learning_rate), loss=self.loss, metrics=[accuracy])
 
+    def predict(self, inputs):
+        start = time_ns()
+        prediction = self.siamese_model.predict([inputs[0], inputs[1]])
+        print("Prediction in ns: {}".format(time_ns() - start))
+        return prediction

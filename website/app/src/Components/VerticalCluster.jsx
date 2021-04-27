@@ -13,17 +13,17 @@ export default function Cluster(props) {
     >
       {/* Replace index with the index of the cluster */}
 
-      <div className="card" style={{ width: "18rem", margin: "5px" }}>
+      <div className="card" style={{ width: "12rem", margin: "5px" }}>
         <img
           className="smallCluster"
           src={storedClusters[index - 1][0]}
           alt=""
         />
       </div>
-      <div className="card" style={{ width: "18rem", margin: "5px" }}>
+      <div className="card" style={{ width: "12rem", margin: "5px" }}>
         <img className="bigCluster" src={storedClusters[index][0]} alt="" />
       </div>
-      <div className="card" style={{ width: "18rem", margin: "5px" }}>
+      <div className="card" style={{ width: "12rem", margin: "5px" }}>
         <img
           className="smallCluster"
           src={storedClusters[index + 1][0]}

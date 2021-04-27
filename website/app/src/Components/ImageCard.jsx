@@ -1,4 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
+import FigureImage from "react-bootstrap/esm/FigureImage";
 import { NavContext } from "./NavContext";
 
 export default function ImageCard(props) {
@@ -50,7 +51,7 @@ export default function ImageCard(props) {
   }
 
   return (
-    <div className="card" style={{ width: "18rem", margin: "5px" }}>
+    <div className="card" style={{ width: "11rem", margin: "5px" }}>
       <img
         key={props.blob}
         src={props.blob}

@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import { NavContext } from "./NavContext";
 import ImageCard from "./ImageCard";
+import styled from "styled-components";
 import { all } from "@tensorflow/tfjs";
 
 // import tensorflow

@@ -2,8 +2,10 @@ import { useEffect, useState, useContext } from "react";
 import { NavContext } from "./NavContext";
 import Clusters from "./Clusters";
 import Cluster from "./Cluster";
+import FullscreenCluster from "./FullscreenCluster";
 import VerticalCluster from "./VerticalCluster";
 import styled from "styled-components";
+import ImageCard from "./ImageCard";
 
 export default function CullingView({ imageBlobArr }) {
   const [isFullScreen, setIsFullScreen] = useState(false);
@@ -32,19 +34,17 @@ export default function CullingView({ imageBlobArr }) {
 
   const fullscreen = (
     <div>
-      <StyledFullscreenSection
-        className="container-fluid m-2"
-        id="fullscreenView"
-      >
-        {/* Replace image with the currecnt clusters best image */}
-        <img className="" src={imageBlobArr[0][0]} alt="" />
-
+      <StyledFullscreenSection className="grid-container" id="fullscreenView">
         {/* Replace with an actual view of clusters with the best image being the representative one */}
         <VerticalCluster imageBlobArr={imageBlobArr} isFullScreen={true} />
 
+        {/* Replace image with the currecnt clusters best image */}
+        <img class="bigImage" src={imageBlobArr[0][0]} alt="" />
+
+        <h1 class="bigImageInfo">Info and stuff goes here</h1>
+
         {/* Replace with only the images from the current cluster */}
-        <Cluster imageBlobArr={imageBlobArr} isFullScreen={true} />
-        <h1>Info and shit</h1>
+        <FullscreenCluster imageBlobArr={imageBlobArr} isFullScreen={true} />
       </StyledFullscreenSection>
     </div>
   );
@@ -71,13 +71,27 @@ const StyledCullingView = styled.div`
 
 const StyledFullscreenSection = styled.section`
   height: 90vh;
+
   display: grid;
-  grid-template-columns: 2.5fr 1fr;
-  grid-template-rows: 2.5fr 1fr;
+  grid-template-columns: 0.3fr 1fr;
+  grid-template-rows: 1fr 0.5fr 0.3fr;
   gap: 1em;
 
-  img {
+  .scrollMenuVertical {
+    grid-area: 1 / 1 / 1 / 1;
+  }
+  .bigImage {
+    grid-area: 1 / 2 / 3 / 4;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
+  }
+  .scrollMenu {
+    grid-area: 3 / 1 / 3 / 4;
+  }
+  .bigImageInfo {
+    grid-area: 2 / 1;
+  }
+  .card {
+    width: 1em;
   }
 `;

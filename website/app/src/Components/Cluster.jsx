@@ -3,6 +3,9 @@ import { NavContext } from "./NavContext";
 import ImageCard from "./ImageCard";
 import { all } from "@tensorflow/tfjs";
 
+
+import styled from "styled-components";
+
 // import tensorflow
 const tf = require("@tensorflow/tfjs");
 
@@ -51,6 +54,9 @@ export default function Cluster({ imageBlobArr, isFullScreen }) {
     // fetchModel();
   }, []);
 
+  const [isOpen, setIsOpen] = useState(false);
+
+
   const imageCards = imageBlobArr.map((blob) => {
     return (
       <ImageCard
@@ -60,6 +66,23 @@ export default function Cluster({ imageBlobArr, isFullScreen }) {
       />
     );
   });
+
+return(
+
+
+  <StyledClusterContainer open={isOpen ? "true" : "false"}> 
+  <StyledOpenButton 
+            bg="blue" 
+            onClick={()=>setIsOpen((prev)=>!prev)}>
+            Blue button
+      </StyledOpenButton>
+    <StyledSelectedText>
+    
+      {numberOfSelectedImages} out of {props.imageBlobArr.lenght}
+    </StyledSelectedText>
+    {imageCards}
+  </StyledClusterContainer>
+) 
 
   return (
     <div
@@ -110,3 +133,29 @@ export default function Cluster({ imageBlobArr, isFullScreen }) {
     </div>
   );
 }
+
+
+
+const StyledClusterContainer = styled.div`
+background: gray;
+display: flex;
+flex-wrap: ${props => props.open === "true" ? "wrap" : "nowrap"};
+flex-direction: row;
+overflow-x: auto;
+overflow-y: auto;
+margin-bottom: 10px;
+img{
+  width:300px;
+  height:200px;
+  object-fit: cover;
+}
+
+`
+const StyledSelectedText = styled.text`
+color: black;
+`
+
+const StyledOpenButton = styled.button`
+color: ${props => props.bg === "black" ? "black" : "blue"}
+
+`

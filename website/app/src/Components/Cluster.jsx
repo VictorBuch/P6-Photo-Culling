@@ -39,9 +39,11 @@ return(
 
 
   <StyledClusterContainer open={isOpen ? "true" : "false"}> 
-  <Button>
-    onClick={setIsOpen}
-  </Button>
+  <StyledOpenButton 
+            bg="blue" 
+            onClick={()=>setIsOpen((prev)=>!prev)}>
+            Blue button
+      </StyledOpenButton>
     <StyledSelectedText>
     
       {numberOfSelectedImages} out of {props.imageBlobArr.lenght}
@@ -117,8 +119,13 @@ img{
   height:200px;
   object-fit: cover;
 }
+
 `
 const StyledSelectedText = styled.text`
 color: black;
 `
 
+const StyledOpenButton = styled.button`
+color: ${props => props.bg === "black" ? "black" : "blue"}
+
+`

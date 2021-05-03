@@ -10,15 +10,15 @@ import styled from "styled-components";
 
 export default function CullingView({ imageBlobArr }) {
   const [isFullScreen, setIsFullScreen] = useState(false);
-  const { globalOrange, selectedImages } = useContext(NavContext);
-  const [orange, setOrange] = globalOrange;
+  const { globalSelectedImageKey } = useContext(NavContext);
+  const [selectedImageKey, setSelectedImageKey] = globalSelectedImageKey;
 
   document.addEventListener("keydown", handleKeyDown);
 
   function handleKeyDown(e) {
     switch (e.key) {
       case "f":
-        if (orange) {
+        if (selectedImageKey) {
           setIsFullScreen(true);
         }
         document.removeEventListener("keydown", handleKeyDown);

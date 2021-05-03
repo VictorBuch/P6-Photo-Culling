@@ -10,11 +10,14 @@ import { NavProvider } from "./Components/NavContext";
 import Loader from "./Components/Loader";
 import CullingView from "./Components/CullingView";
 
-
 export default function App() {
   const [imageBlobArr, setimageBlobArr] = useState([]);
-  const [areImagesLoaded, setAreImagesLoaded] = useState(false);
+
+  // Has the user uploaded any images by clicking the upload button
   const [areImagesUploaded, setAreImagesUploaded] = useState(false);
+
+  // has the images been loaded and and fetched the meta data
+  const [areImagesLoaded, setAreImagesLoaded] = useState(false);
 
   // check if we need to show the loading icon or the upload button
   var uploadBtn;

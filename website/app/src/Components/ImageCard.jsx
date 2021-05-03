@@ -1,39 +1,40 @@
 import React, { useState, useContext, useEffect } from "react";
-import FigureImage from "react-bootstrap/esm/FigureImage";
 import { NavContext } from "./NavContext";
 
 export default function ImageCard(props) {
   const [isSelected, setIsSelected] = useState(false);
   const [isAccepted, setIsAccepted] = useState(false);
-  const { numberOfSelectedImages, selectedImages, globalOrange } = useContext(
-    NavContext
-  ); // getting multiple states from the Nav Context
-  const [orange, setOrange] = globalOrange;
+  const {
+    numberOfSelectedImages,
+    globalAcceptedImages,
+    globalSelectedImageKey,
+  } = useContext(NavContext); // getting multiple states from the Nav Context
+  const [selectedImageKey, setSelectedImageKey] = globalSelectedImageKey;
 
   const [
     totalNumSelectedImages,
     setTotalNumSelectedImages,
   ] = numberOfSelectedImages;
 
-  const [selectedImagesKeys, setSelecedImagesKeys] = selectedImages;
+  const [acceptedImagesKeys, setAcceptedImagesKeys] = globalAcceptedImages;
 
   // This checks on rerenders if the key of the image is in the global selected key array
   useEffect(() => {
-    if (selectedImagesKeys.includes(props.blob)) {
+    if (acceptedImagesKeys.includes(props.blob)) {
       // console.log('Key is in selected array, set selected state to true');
       setIsAccepted(true);
     } else {
       // console.log('Key is not in selected array, set selected state to false');
       setIsAccepted(false);
     }
-    if (orange === props.blob) {
+    if (selectedImageKey === props.blob) {
       setIsSelected(true);
     } else {
       setIsSelected(false);
     }
-  }, [orange]);
+  }, [selectedImageKey]);
 
-  function selectImage() {
+  function acceptImage() {
     if (isAccepted) {
       console.log("accepted");
       props.setNumberOfSelectedImages((prev) => prev - 1);
@@ -41,12 +42,12 @@ export default function ImageCard(props) {
 
       // If an image is selected we want it to be deleted from the global selected image key array
       // React likes states to not be directly changed so copy the global state array
-      const selectedImagesKeysCopy = [...selectedImagesKeys];
+      const selectedImagesKeysCopy = [...acceptedImagesKeys];
       selectedImagesKeysCopy.splice(
         selectedImagesKeysCopy.indexOf(props.blob),
         1
       ); // find the index of the key and delete it
-      setSelecedImagesKeys([...selectedImagesKeysCopy]); // set the state array to the new modified array
+      setAcceptedImagesKeys([...selectedImagesKeysCopy]); // set the state array to the new modified array
     } else {
       console.log("Not accepted");
       props.setNumberOfSelectedImages((prev) => prev + 1);
@@ -54,15 +55,15 @@ export default function ImageCard(props) {
 
       // the image key doesnt exist in the global image selected key array
       // make a copy of the global array
-      const selectedImagesKeysCopy = [...selectedImagesKeys];
+      const selectedImagesKeysCopy = [...acceptedImagesKeys];
       selectedImagesKeysCopy.push(props.blob); // add the key of the selected image
-      setSelecedImagesKeys([...selectedImagesKeysCopy]); // set the state to the modified array
+      setAcceptedImagesKeys([...selectedImagesKeysCopy]); // set the state to the modified array
     }
     return setIsAccepted(!isAccepted);
   }
 
   function handleSelected(e) {
-    setOrange(e.target.src);
+    setSelectedImageKey(e.target.src);
   }
 
   const rejected = (
@@ -73,7 +74,7 @@ export default function ImageCard(props) {
       width="19"
       height="17"
       viewBox="0 0 19 17"
-      onClick={selectImage}
+      onClick={acceptImage}
     >
       <rect
         id="Rectangle_97"
@@ -113,7 +114,7 @@ export default function ImageCard(props) {
       width="19"
       height="17"
       viewBox="0 0 19 17"
-      onClick={selectImage}
+      onClick={acceptImage}
     >
       <g
         id="Rectangle_95"
@@ -150,7 +151,7 @@ export default function ImageCard(props) {
           width: "100%",
           height: "20%",
           textAlign: "center",
-          backgroundColor: "grey",
+          backgroundColor: "#282828",
           padding: "0px 0px 0px 0px",
         }}
       >

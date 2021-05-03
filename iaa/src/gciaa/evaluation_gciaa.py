@@ -1,5 +1,7 @@
 """
 Script to perform proper evaluation on the test set.
+Loss: 0.4274
+Accuracy: 0.6751
 """
 
 

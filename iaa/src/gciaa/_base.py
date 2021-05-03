@@ -11,8 +11,7 @@ from time import time_ns
 
 
 def contrastive_loss(y_true, y_predicted):
-    margin = 1
-    return K.mean(y_true * K.maximum(margin - y_predicted, 0) + (1 - y_true) * y_predicted)
+    return K.mean(y_true * K.maximum(1 - y_predicted, 0) + (1 - y_true) * y_predicted)
 
 
 def accuracy(y_true, y_predicted):

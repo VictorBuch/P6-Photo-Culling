@@ -1,6 +1,8 @@
 import React, { useState, useContext } from "react";
 import { NavContext } from "./NavContext";
 
+import styled from "styled-components";
+
 export default function ImageCard(props) {
   const [isSelected, setIsSelected] = useState(false);
 
@@ -21,6 +23,18 @@ export default function ImageCard(props) {
     return setIsSelected(!isSelected);
   }
 
+  return(
+    <StyledImageCard>
+      <img
+        key={props.blob[0]}
+        src={props.blob[0]}
+        alt=""
+        className={isSelected ? "cardSelected" : ""}
+        onClick={selectImage}
+      />
+    </StyledImageCard>
+  )
+
   return (
     <div className="card" style={{ width: "18rem", margin: "5px" }}>
       <img
@@ -28,14 +42,21 @@ export default function ImageCard(props) {
         src={props.blob[0]}
         alt=""
         className={isSelected ? "cardSelected" : ""}
-        onClick={selectImage}
-        
+        onClick={selectImage}     
+           
       />
-      <div className="card-body">
-        <p>{props.blob[1]} </p>
-      </div>
+      
     </div>
   );
 }
+//<div className="card-body">
+//<p>{props.blob[1]} </p>
+//</div>
 
+const StyledImageCard = styled.div`
+width: 300px;
+margin: 5px;
+object-fit: contain;
+
+`
 

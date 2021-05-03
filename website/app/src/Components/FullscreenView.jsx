@@ -11,9 +11,11 @@ import styled from "styled-components";
 export default function FullscreenView() {
   //states
 
-  const { globalyStoredClusters, globalOrange } = useContext(NavContext);
+  const { globalyStoredClusters, globalSelectedImageKey } = useContext(
+    NavContext
+  );
   const [storedClusters, setStoredClusters] = globalyStoredClusters;
-  const [orange, setOrange] = globalOrange;
+  const [selectedImageKey, setSelectedImageKey] = globalSelectedImageKey;
   const [clusterIndex, setClusterIndex] = useState(0);
 
   function changeOffset(direction) {
@@ -29,7 +31,7 @@ export default function FullscreenView() {
 
   useEffect(() => {
     setClusterIndex(
-      storedClusters.findIndex((element) => element.includes(orange))
+      storedClusters.findIndex((element) => element.includes(selectedImageKey))
     );
   }, []);
 
@@ -41,8 +43,8 @@ export default function FullscreenView() {
       <img
         className=""
         src={
-          storedClusters[clusterIndex].includes(orange)
-            ? orange
+          storedClusters[clusterIndex].includes(selectedImageKey)
+            ? selectedImageKey
             : storedClusters[clusterIndex][0]
         }
         alt=""

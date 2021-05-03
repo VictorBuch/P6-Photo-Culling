@@ -69,7 +69,7 @@ const StyledFullscreenSection = styled.section`
   gap: 1em;
   .scrollMenuVertical {
     grid-area: 1 / 1 / 1 / 1;
-    width: 100;
+    width: 100%;
     height: 100%;
   }
   .bigImage {
@@ -90,6 +90,6 @@ const StyledFullscreenSection = styled.section`
   }
   .smallCluster {
     height: 100%;
-    width: 12 rem;
+    width: 12rem;
   }
 `;

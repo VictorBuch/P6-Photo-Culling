@@ -42,12 +42,12 @@ export default function ImageCard(props) {
 
       // If an image is selected we want it to be deleted from the global selected image key array
       // React likes states to not be directly changed so copy the global state array
-      const selectedImagesKeysCopy = [...acceptedImagesKeys];
-      selectedImagesKeysCopy.splice(
-        selectedImagesKeysCopy.indexOf(props.blob),
+      const acceptedImagesKeysCopy = [...acceptedImagesKeys];
+      acceptedImagesKeysCopy.splice(
+        acceptedImagesKeysCopy.indexOf(props.blob),
         1
       ); // find the index of the key and delete it
-      setAcceptedImagesKeys([...selectedImagesKeysCopy]); // set the state array to the new modified array
+      setAcceptedImagesKeys([...acceptedImagesKeysCopy]); // set the state array to the new modified array
     } else {
       console.log("Not accepted");
       props.setNumberOfSelectedImages((prev) => prev + 1);
@@ -55,9 +55,9 @@ export default function ImageCard(props) {
 
       // the image key doesnt exist in the global image selected key array
       // make a copy of the global array
-      const selectedImagesKeysCopy = [...acceptedImagesKeys];
-      selectedImagesKeysCopy.push(props.blob); // add the key of the selected image
-      setAcceptedImagesKeys([...selectedImagesKeysCopy]); // set the state to the modified array
+      const acceptedImagesKeysCopy = [...acceptedImagesKeys];
+      acceptedImagesKeysCopy.push(props.blob); // add the key of the selected image
+      setAcceptedImagesKeys([...acceptedImagesKeysCopy]); // set the state to the modified array
     }
     return setIsAccepted(!isAccepted);
   }
@@ -91,7 +91,7 @@ export default function ImageCard(props) {
           transform="translate(5811.638 -4404.347)"
           fill="none"
           stroke="#181818"
-          stroke-width="2"
+          strokeWidth="2"
         />
         <path
           id="Path_37"
@@ -100,7 +100,7 @@ export default function ImageCard(props) {
           transform="translate(5811.638 -4404.347)"
           fill="none"
           stroke="#181818"
-          stroke-width="2"
+          strokeWidth="2"
         />
       </g>
     </svg>
@@ -133,7 +133,7 @@ export default function ImageCard(props) {
         transform="translate(-101.724 -1044.227)"
         fill="none"
         stroke="#181818"
-        stroke-linejoin="round"
+        strokeLinejoin="round"
         strokeWidth="2"
       />
     </svg>

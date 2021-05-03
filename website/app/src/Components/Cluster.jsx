@@ -14,7 +14,7 @@ export default function Cluster(props) {
   const [isOpen, setIsOpen] = useState(false);
 
   // const [clusterModel, setClusterModel] = useState();
-
+//
   // useEffect(() => {
   //   const fetchModel = async () => {
   //     const model = await tf.loadLayersModel(

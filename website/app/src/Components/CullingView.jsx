@@ -80,7 +80,9 @@ export default function CullingView({ imageBlobArr }) {
     <div>
       <div className="container-fluid m-2">
         <div className="d-flex flex-column">
-          <Clusters imageBlobArr={imageBlobArr} isFullScreen={false} />
+          <StyledNetflixSection>
+            <Clusters imageBlobArr={imageBlobArr} isFullScreen={false} />
+          </StyledNetflixSection>
         </div>
       </div>
     </div>
@@ -88,3 +90,17 @@ export default function CullingView({ imageBlobArr }) {
 
   return <>{isFullScreen ? <FullscreenView /> : netflix}</>;
 }
+
+const StyledNetflixSection = styled.section`
+  height: 90vh;
+  display: grid;
+
+  .scrollMenu {
+    height: 20rem;
+  }
+
+  .card {
+    width: 19em;
+    height: 15.2em;
+  }
+`;

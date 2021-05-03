@@ -99,7 +99,7 @@ export default function Cluster({ imageBlobArr, isFullScreen }) {
         <div
           className="d-flex flex-row"
           style={{
-            backgroundColor: "grey",
+            backgroundColor: "#282828",
             borderRadius: "0px 3px 3px 3px",
           }}
         >

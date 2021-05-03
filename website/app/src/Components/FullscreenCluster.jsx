@@ -64,7 +64,7 @@ export default function Cluster({ imageBlobArr, isFullScreen }) {
           <div
             className="d-inline-flex flex-row clusterNum "
             style={{
-              backgroundColor: "grey",
+              backgroundColor: "#282828",
               borderRadius: "3px 3px 0px 0px",
               padding: "3px",
               width: "min-content",
@@ -78,7 +78,7 @@ export default function Cluster({ imageBlobArr, isFullScreen }) {
           <div
             className="d-flex flex-row"
             style={{
-              backgroundColor: "grey",
+              backgroundColor: "#282828",
               borderRadius: "0px 3px 3px 3px",
             }}
           >
@@ -92,7 +92,7 @@ export default function Cluster({ imageBlobArr, isFullScreen }) {
         <div
           className="d-flex flex-row"
           style={{
-            backgroundColor: "grey",
+            backgroundColor: "#282828",
             borderRadius: "0px 3px 3px 3px",
           }}
         >

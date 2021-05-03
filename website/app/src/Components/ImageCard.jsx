@@ -142,12 +142,18 @@ export default function ImageCard(props) {
   return (
     <div
       className={"card" + (isSelected ? " cardSelected" : "")}
-      style={{ width: "18rem", margin: "5px" }}
+      style={{ margin: "5px" }}
     >
       <img key={props.blob} src={props.blob} alt="" onClick={handleSelected} />
       <div
         className="card-body"
-        style={{ textAlign: "center", backgroundColor: "#282828" }}
+        style={{
+          width: "100%",
+          height: "20%",
+          textAlign: "center",
+          backgroundColor: "#282828",
+          padding: "0px 0px 0px 0px",
+        }}
       >
         {isAccepted ? accepted : rejected}
       </div>

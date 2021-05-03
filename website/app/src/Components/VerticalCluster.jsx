@@ -23,7 +23,7 @@ export default function Cluster({ index, setOffset }) {
     >
       {/* Replace index with the index of the cluster */}
 
-      <div className="card" style={{ width: "12rem", margin: "5px" }}>
+      <div className="card" style={{ margin: "5px" }}>
         <img
           className="smallCluster"
           src={storedClusters[prevClusterIndex][0]}
@@ -31,10 +31,10 @@ export default function Cluster({ index, setOffset }) {
           onClick={() => setOffset(-1)}
         />
       </div>
-      <div className="card" style={{ width: "12rem", margin: "5px" }}>
+      <div className="card" style={{ margin: "5px" }}>
         <img className="bigCluster" src={storedClusters[index][0]} alt="" />
       </div>
-      <div className="card" style={{ width: "12rem", margin: "5px" }}>
+      <div className="card" style={{ margin: "5px" }}>
         <img
           className="smallCluster"
           src={storedClusters[nextClusterIndex][0]}

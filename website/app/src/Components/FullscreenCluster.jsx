@@ -14,8 +14,8 @@ export default function Cluster({ imageBlobArr, isFullScreen }) {
 
   // local variables
   const [numberOfSelectedImages, setNumberOfSelectedImages] = useState(0);
-  const { selectedImages } = useContext(NavContext);
-  const [selectedImagesKeys, setSelecedImagesKeys] = selectedImages;
+  const { globalAcceptedImages } = useContext(NavContext);
+  const [acceptedImagesKeys, setAcceptedImagesKeys] = globalAcceptedImages;
   // const [clusterModel, setClusterModel] = useState();
 
   const clustersArray = [];
@@ -24,7 +24,7 @@ export default function Cluster({ imageBlobArr, isFullScreen }) {
   useEffect(() => {
     imageBlobArr.map((blob) => {
       clustersArray.push(blob[0]);
-      if (selectedImagesKeys.includes(blob[0])) {
+      if (acceptedImagesKeys.includes(blob[0])) {
         setNumberOfSelectedImages((prev) => prev + 1);
       }
     });

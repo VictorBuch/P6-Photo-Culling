@@ -169,5 +169,5 @@ def prepare_dataframe_gciaa(image_dataset_path, image_info_path, num_categories=
 
 
 if __name__ == "__main__":
-    dataframe = prepare_dataframe_gciaa(AVA_DATASET_SUBSET_PATH, AVA_TEXT_PATH)
-    dataframe.to_csv(AVA_DATAFRAME_GCIAA_SUBSET_PATH)
+    dataframe = prepare_dataframe_gciaa(AVA_DATASET_TRAIN_PATH, AVA_TEXT_PATH)
+    dataframe.to_csv(AVA_DATAFRAME_GCIAA_TRAIN_PATH)

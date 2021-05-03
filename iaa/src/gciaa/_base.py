@@ -10,10 +10,10 @@ from tensorflow.keras.layers import Lambda
 from time import time_ns
 
 
-def contrastive_loss(y_true, y_predicted):
-    margin = 1
-    return K.mean(
-        y_true * 0.5 * K.square(y_predicted) + (1 - y_true) * 0.5 * K.square(K.maximum(margin - y_predicted, 0)))
+# def contrastive_loss(y_true, y_predicted):
+#     margin = 1
+#     return K.mean(
+#         y_true * 0.5 * K.square(y_predicted) + (1 - y_true) * 0.5 * K.square(K.maximum(margin - y_predicted, 0)))
 
 
 def accuracy(y_true, y_predicted):
@@ -34,7 +34,7 @@ def mapped_comparison_layer(vectors):
 
 class BaseModule:
 
-    def __init__(self, base_model_name, weights=None, n_classes_base=1, loss=contrastive_loss, learning_rate=0.00001,
+    def __init__(self, base_model_name, weights=None, n_classes_base=1, loss=None, learning_rate=0.00001,
                  decay=0, dropout_rate=0):
 
         self.base_model_name = base_model_name
@@ -83,7 +83,7 @@ class BaseModule:
         #     layer.trainable = False
 
     def compile(self):
-        self.siamese_model.compile(optimizer=RMSprop(lr=self.learning_rate), loss=self.loss, metrics=[accuracy])
+        self.siamese_model.compile(optimizer=RMSprop(lr=self.learning_rate), loss="binary_crossentropy", metrics=[accuracy])
 
     def predict(self, inputs):
         start = time_ns()

@@ -1,20 +1,20 @@
 """
 Script to perform proper evaluation on the test set.
-Not yet implemented.
 """
 
 
 from iaa.src.giiaa._nima import *
 import pandas as pd
+import tensorflow.keras as keras
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 
 
-MODEL_PATH = "../../models/giiaa/weights_dist_2k_mobilenet_0.166.hdf5"
+MODEL_PATH = "../../models/giiaa/model_giiaa-dist_200k_inceptionresnetv2_0.078.hdf5"
 
 AVA_DATASET_TEST_PATH = "../../ava/test/"
 AVA_DATAFRAME_TEST_PATH = "../../ava/giiaa/AVA_dist_test_dataframe.csv"
 
-BATCH_SIZE = 1
+BATCH_SIZE = 32
 
 
 def get_mean(distribution):
@@ -28,12 +28,12 @@ def get_mean(distribution):
 
 if __name__ == "__main__":
 
-    # model = keras.models.load_model(WEIGHTS_PATH, custom_objects={"earth_movers_distance": earth_movers_distance})
+    # model = keras.models.load_model(MODEL_PATH, custom_objects={"earth_movers_distance": earth_movers_distance})
 
-    nima = NimaModule(weights=None)
+    nima = NimaModule()
     nima.build()
     nima.nima_model.load_weights(MODEL_PATH)
-    model = nima.nima_model
+    nima.nima_model.compile()
 
     dataframe = pd.read_csv(AVA_DATAFRAME_TEST_PATH, converters={'label': eval})
 
@@ -51,10 +51,10 @@ if __name__ == "__main__":
         shuffle=False
     )
 
-    evaluate = model.predict_generator(
-        generator=test_generator,
-        steps=len(test_generator.filenames)
-    )
 
-    print("Dunno what's happening.")
+    nima.nima_model.evaluate_generator(
+        generator=test_generator,
+        steps=test_generator.samples / test_generator.batch_size,
+        verbose=1
+    )
 

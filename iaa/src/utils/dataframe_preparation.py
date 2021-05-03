@@ -23,6 +23,8 @@ AVA_DATAFRAME_GCIAA_TRAIN_PATH = "../../ava/gciaa/AVA_gciaa_train_dataframe.csv"
 AVA_DATAFRAME_GCIAA_TEST_PATH = "../../ava/gciaa/AVA_gciaa_test_dataframe.csv"
 AVA_DATAFRAME_GCIAA_SUBSET_PATH = "../../ava/gciaa/AVA_gciaa_subset_dataframe.csv"
 
+SELECTED_CATEGORIES_FOR_PAIRWISE_TRAINING = (19, 20, 43, 57, 21, 50, 2, 4, 3, 38, 40, 65, 6, 14, 15, 47, 7, 28, 42)
+
 
 def prepare_dataframe_giiaa_mean(image_dataset_path, image_info_path):
     original_dataframe = pd.read_csv(image_info_path, sep=' ')
@@ -116,7 +118,11 @@ def prepare_dataframe_giiaa_dist(image_dataset_path, image_info_path):
     return pd.DataFrame(data)
 
 
-def prepare_dataframe_gciaa(image_dataset_path, image_info_path, num_categories=66, pairs_per_category_scalar=2):
+def prepare_dataframe_gciaa(image_dataset_path,
+                            image_info_path,
+                            selected_categories=SELECTED_CATEGORIES_FOR_PAIRWISE_TRAINING,
+                            pairs_per_category_scalar=1):
+
     original_dataframe = pd.read_csv(image_info_path, sep=' ')
 
     relevant_file_indices = []
@@ -134,7 +140,7 @@ def prepare_dataframe_gciaa(image_dataset_path, image_info_path, num_categories=
         'label': []
     }
 
-    for i in tqdm(range(1, num_categories)):
+    for i in tqdm(selected_categories):
 
         images_per_category = filtered_dataframe.loc[(filtered_dataframe['tag1'] == i) | (filtered_dataframe['tag2'] == i)]
 
@@ -169,5 +175,5 @@ def prepare_dataframe_gciaa(image_dataset_path, image_info_path, num_categories=
 
 
 if __name__ == "__main__":
-    dataframe = prepare_dataframe_gciaa(AVA_DATASET_TRAIN_PATH, AVA_TEXT_PATH)
-    dataframe.to_csv(AVA_DATAFRAME_GCIAA_TRAIN_PATH)
+    dataframe = prepare_dataframe_gciaa(AVA_DATASET_TEST_PATH, AVA_TEXT_PATH)
+    dataframe.to_csv(AVA_DATAFRAME_GCIAA_TEST_PATH)

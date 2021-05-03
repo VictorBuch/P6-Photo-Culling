@@ -14,12 +14,18 @@ def earth_movers_distance(y_true, y_predicted):
     cdf_true = K.cumsum(y_true, axis=-1)
     cdf_predicted = K.cumsum(y_predicted, axis=-1)
     emd = K.sqrt(K.mean(K.square(cdf_true - cdf_predicted), axis=-1))
+
     return K.mean(emd)
+
+
+def accuracy(y_true, y_predicted):
+    print("hello?")
+    return 0.35
 
 
 class NimaModule:
 
-    def __init__(self, base_model_name="MobileNet", n_classes=10,
+    def __init__(self, base_model_name="InceptionResNetV2", n_classes=10,
                  learning_rate=0.001, decay=0, dropout_rate=0,
                  loss=earth_movers_distance, weights='imagenet'):
 
@@ -44,11 +50,10 @@ class NimaModule:
 
     def build(self):
 
-        BaseCnn = getattr(self.base_module, self.base_model_name)
+        imagenet_cnn = getattr(self.base_module, self.base_model_name)
 
         # Replace last layer with Dropout and Dense (virtually turn classification into multi-output regression).
-
-        self.base_model = BaseCnn(input_shape=(224, 224, 3), weights=self.weights, include_top=False, pooling='avg')
+        self.base_model = imagenet_cnn(input_shape=(224, 224, 3), weights=self.weights, include_top=False, pooling='avg')
 
         x = Dropout(self.dropout_rate)(self.base_model.output)
         x = Dense(units=self.n_classes, activation='softmax')(x)
@@ -56,7 +61,10 @@ class NimaModule:
         self.nima_model = Model(self.base_model.inputs, x)
 
     def compile(self):
-        self.nima_model.compile(optimizer=Adam(lr=self.learning_rate, decay=self.decay), loss=self.loss)
+        self.nima_model.compile(
+            optimizer=Adam(lr=self.learning_rate, decay=self.decay),
+            loss=self.loss,
+            metrics=['earth_movers_distance', 'accuracy'])
 
     def preprocess(self):
         return self.base_module.preprocess_input

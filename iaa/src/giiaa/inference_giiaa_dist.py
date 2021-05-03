@@ -9,7 +9,7 @@ import cv2
 import os
 import random
 from scipy.stats import wasserstein_distance
-from iaa.src.giiaa._nima import earth_movers_distance
+from iaa.src.giiaa._nima import *
 import tensorflow.keras as keras
 
 
@@ -32,20 +32,19 @@ def get_mean(distribution):
 
 if __name__ == "__main__":
 
-    model = keras.models.load_model(MODEL_PATH, custom_objects={"earth_movers_distance": earth_movers_distance})
+    # model = keras.models.load_model(MODEL_PATH, custom_objects={"earth_movers_distance": earth_movers_distance})
 
-    # nima = NimaModule(weights=None)
-    # nima.build()
-    # nima.nima_model.load_weights(WEIGHTS_PATH)
-    # model = nima.nima_model
+    nima = NimaModule()
+    nima.build()
+    nima.nima_model.load_weights(MODEL_PATH)
+    model = nima.nima_model
+    model.compile()
 
     dataframe = pd.read_csv(AVA_DATAFRAME_SUBSET_PATH, converters={'label': eval})
 
     count_all = 200
     count_correct = 0
     eval_matrix = np.ndarray([count_all, 2])
-
-
 
     for i in tqdm(range(count_all)):
 

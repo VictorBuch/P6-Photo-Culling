@@ -1,9 +1,9 @@
-SEED = 35
+SEED = 1
 
 
 class SiameseGenerator:
 
-    def __init__(self, generator, dataframe, subset, target_size=(224, 224), color_mode='rgb', shuffle=True, batch_size=64):
+    def __init__(self, generator, dataframe, subset=None, target_size=(224, 224), color_mode='rgb', shuffle=True, batch_size=64):
 
         self.generator_a = generator.flow_from_dataframe(
             dataframe=dataframe,

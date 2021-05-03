@@ -11,33 +11,34 @@ from tensorflow.keras import backend as K
 import pandas as pd
 import os
 
-FULL_DATASET_TRAINING = False
+FULL_DATASET_TRAINING = True
 
 
 AVA_DATASET_PATH = "../../ava/train"
-AVA_DATAFRAME_PATH = "../../ava/giiaa/AVA_gciaa_train_dataframe.csv"
+AVA_DATAFRAME_PATH = "../../ava/gciaa/AVA_gciaa_train_dataframe.csv"
 
 AVA_DATASET_SUBSET_PATH = "../../ava/subset/"
 AVA_DATAFRAME_SUBSET_PATH = "../../ava/gciaa/AVA_gciaa_subset_dataframe.csv"
 
 GIIAA_MODEL = "../../models/giiaa/model_giiaa-dist_200k_inceptionresnetv2_0.078.hdf5"
+# GIIAA_MODEL = "../../models/giiaa/weights_giiaa-dist_reference_0.070.hdf5"
 LOG_PATH = "../../ava/gciaa/logs"
 MODELS_PATH = "../../models/gciaa/"
 
 BASE_MODEL_NAME = "InceptionResNetV2"
-BATCH_SIZE = 32
+BATCH_SIZE = 96
 DROPOUT_RATE = 0.75
 USE_MULTIPROCESSING = False
 N_WORKERS = 1
 
-EPOCHS = 12
+EPOCHS = 5
 
 
 if __name__ == "__main__":
     if FULL_DATASET_TRAINING:
         dataset_path = AVA_DATASET_PATH
         dataframe_path = AVA_DATAFRAME_PATH
-        model_name_tag = 'model_gciaa_200k_'
+        model_name_tag = 'model_gciaa_all_'
     else:
         dataset_path = AVA_DATASET_SUBSET_PATH
         dataframe_path = AVA_DATAFRAME_SUBSET_PATH
@@ -47,11 +48,11 @@ if __name__ == "__main__":
         log_dir=LOG_PATH, update_freq='batch'
     )
 
-    model_save_name = (model_name_tag + BASE_MODEL_NAME.lower() + '_{val_loss:.3f}.hdf5')
+    model_save_name = (model_name_tag + BASE_MODEL_NAME.lower() + '_{accuracy:.3f}.hdf5')
     model_file_path = os.path.join(MODELS_PATH, model_save_name)
     model_checkpointer = ModelCheckpoint(
         filepath=model_file_path,
-        monitor='val_loss',
+        monitor='accuracy',
         verbose=1,
         save_best_only=True,
         save_weights_only=True,
@@ -64,7 +65,6 @@ if __name__ == "__main__":
     base.compile()
 
     # This file should be used to further fine tune the model with generated images or similar, if we want to do that.
-
     dataframe = pd.read_csv(dataframe_path, converters={'label': eval})
 
     data_generator = ImageDataGenerator(
@@ -75,11 +75,13 @@ if __name__ == "__main__":
     train_generator = SiameseGenerator(
         generator=data_generator,
         dataframe=dataframe,
+        batch_size=BATCH_SIZE,
         subset='training')
 
     validation_generator = SiameseGenerator(
         generator=data_generator,
         dataframe=dataframe,
+        batch_size=BATCH_SIZE,
         subset='validation')
 
     base.siamese_model.fit_generator(

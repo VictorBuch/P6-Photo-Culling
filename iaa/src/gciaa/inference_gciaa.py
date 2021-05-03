@@ -13,10 +13,10 @@ from iaa.src.giiaa._nima import *
 import tensorflow.keras as keras
 
 
-GCIAA_MODEL = "../../models/gciaa/model_gciaa_siamese_base.h5"
 GIIAA_MODEL = "../../models/giiaa/model_giiaa-dist_200k_inceptionresnetv2_0.078.hdf5"
 AVA_DATASET_SUBSET_PATH = "../../ava/subset/"
 AVA_DATAFRAME_SUBSET_PATH = "../../ava/giiaa/AVA_dist_subset_dataframe.csv"
+
 BASE_MODEL_NAME = "InceptionResNetV2"
 
 

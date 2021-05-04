@@ -63,14 +63,14 @@ export default function FullscreenView() {
 }
 
 const StyledFullscreenSection = styled.section`
-  height: 90vh;
+  height: 100vh;
   display: grid;
   grid-template: 30rem 8rem auto / 20rem auto;
   gap: 1em;
 
   /* Vertical cluster*/
   .vertical-cluster {
-    grid-area: 1 / 1 / 1 / 1;
+    grid-area: 2 / 1 / 2 / 1;
     align-items: center;
   }
 

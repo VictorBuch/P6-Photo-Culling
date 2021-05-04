@@ -18,8 +18,8 @@ export default function Cluster({ index, setOffset }) {
   }
 
   return (
-    <StyledVertClusterSection>
-      <section className="d-flex flex-column scrollMenuVertical">
+    <StyledVertClusterSection className="grid-item">
+      <section className="d-flex flex-column vertical-cluster ">
         {/* Replace index with the index of the cluster */}
 
         <div className="card">

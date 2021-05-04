@@ -59,10 +59,12 @@ export default function CullingView({ imageBlobArr }) {
     e.preventDefault();
     switch (e.key) {
       case "f":
-        if (selectedImageKey) {
           setIsFullScreen(true);
           applyFullscreenSettings();
-        }
+
+
+        setIsFullScreen(true);
+        applyFullscreenSettings();
 
         break;
       case "Escape":
@@ -109,7 +111,7 @@ export default function CullingView({ imageBlobArr }) {
   //   }
   //   zip.generateAsync({ type: "blob" }).then(function (content) {
   //     // see FileSaver.js
-  //     FileSaver.saveAs(content, "CulledImages.zip");
+
   //   });
   // }
 

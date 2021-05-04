@@ -101,47 +101,89 @@ export default function FullscreenView() {
 }
 
 const StyledFullscreenSection = styled.section`
-  height: 100vh;
-  display: grid;
-  grid-template: 30rem 8rem auto / 20rem auto;
-  gap: 1em;
+  //height: 100vh;
+  //display: grid;
+  //grid-template: 30rem 8rem auto / 20rem auto;
+  //gap: 3px;
+  //background-color: #0D0D0D;
+  
 
   /* Vertical cluster*/
-  .vertical-cluster {
-    grid-area: 2 / 1 / 2 / 1;
-    align-items: center;
-  }
+  //.vertical-cluster {
+  //  grid-area: 2 / 1 / 2 / 1;
+  //  align-items: center;
+  //  background-color: #282828;
+  //}
 
   /* Fullscreen image*/
-  .bigImage {
-    grid-area: 1 / 2 / 3 / 3;
-    height: 100%;
-    object-fit: contain;
-    align-items: right;
-  }
+  //.bigImage {
+  //  grid-area: 1 / 2 / 3 / 3;
+  //  height: 100%;
+  //  object-fit: contain;
+  //  align-items: right;
+  //  padding: 30px;
+  //}
 
-  .acceptedCluster {
-    grid-area: 3 / 1 / 3 / 2;
-    height: 11rem;
-    width: minMax(0%, 50%);
-    overflow: hidden;
-  }
+  //.acceptedCluster {
+  //  grid-area: 3 / 1 / 3 / 2;
+  //  height: 11rem;
+  //  width: minMax(0%, 50%);
+  //  overflow: hidden;
+  //}
  
   /* Meta data for displaye image*/
-  .bigImageInfo {
-    color: white;
-    grid-area: 2 / 1 / 2 / 1;
-  }
+  //.bigImageInfo {
+  //  color: white;
+  //  grid-area: 2 / 1 / 2 / 1;
+  //  background-color: #282828;
+  //}
   /* Horizontal cluster*/
-  .horizontal-cluster {
-    grid-area: 3 / 1 / 3 / 3;
-    height: 11rem;
-    padding-bottom: 10px;
-  }
+  //.horizontal-cluster {
+  //  grid-area: 3 / 1 / 3 / 3;
+  //  height: 11rem;
+  //  padding-bottom: 10px;
+  //}
 
   .card {
     width: 12em;
     height: 100%;
     background-color: transparent;
   }
+  
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1.9fr 0.8fr 0.8fr;
+    gap: 3px 3px;
+    grid-template-areas:
+    "vertical-cluster bigImage bigImage bigImage"
+    "bigImageInfo bigImage bigImage bigImage"
+    "horizontal-cluster horizontal-cluster horizontal-cluster horizontal-cluster";
+    background-color: #0D0D0D;
+  
+
+  .bigImageInfo {
+    color: white;
+    grid-area: bigImageInfo;
+    background-color: #282828;
+  }
+
+  .vertical-cluster { 
+    grid-area: vertical-cluster;
+    align-items: center;
+    background-color: #282828;
+  }
+  
+
+  .bigImage { 
+    grid-area: bigImage;
+    height: 100%;
+    object-fit: contain;
+    //align-items: right;
+    padding: 30px;
+  }
+
+  .horizontal-cluster { 
+    grid-area: horizontal-cluster;
+    height: 11rem;
+    padding-bottom: 10px;}
 `;

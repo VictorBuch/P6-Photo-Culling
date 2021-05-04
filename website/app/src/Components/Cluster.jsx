@@ -7,7 +7,11 @@ import styled from "styled-components";
 // import tensorflow
 const tf = require("@tensorflow/tfjs");
 
-export default function Cluster({ imageBlobArr, isFullScreen }) {
+export default function Cluster({
+  imageBlobArr,
+  isFullScreen,
+  isAcceptedCluster,
+}) {
   // Global variables
   const { globalyStoredClusters } = useContext(NavContext);
   const [storedClusters, setStoredClusters] = globalyStoredClusters;
@@ -101,6 +105,7 @@ export default function Cluster({ imageBlobArr, isFullScreen }) {
         {imageCards}
       </StyledClusterContainer>
     </StyledRowContainer>
+
   );
 }
 

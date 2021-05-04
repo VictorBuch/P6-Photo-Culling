@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { NavContext } from "./NavContext";
 
 // components
@@ -7,6 +7,9 @@ import FullscreenView from "./FullscreenView";
 
 // styles
 import styled from "styled-components";
+
+
+var i = 0;
 
 function applyFullscreenSettings(){
   document.getElementById('appNav').style.display = 'none'
@@ -18,74 +21,106 @@ function applyNetflixSettings(){
   document.body.style.overflow = "scroll"
 }
 
+
 export default function CullingView({ imageBlobArr }) {
-  const [isFullScreen, setIsFullScreen] = useState(false);
-  const { globalSelectedImageKey, globalAcceptedImages } = useContext(
-    NavContext
-  );
+  var JSZip = require("jszip");
+  var FileSaver = require("file-saver");
+
+  const {
+    globalSelectedImageKey,
+    globalAcceptedImages,
+    globalyStoredClusters,
+  } = useContext(NavContext);
   const [selectedImageKey, setSelectedImageKey] = globalSelectedImageKey;
   const [acceptedImageKeys, setAcceptedImageKeys] = globalAcceptedImages;
+  const [storedClusters, setStoredClusters] = globalyStoredClusters;
 
-  document.addEventListener("keydown", handleKeyDown);
+  const [clusterIndex, setClusterIndex] = useState(0);
+
+  const [isFullScreen, setIsFullScreen] = useState(false);
+
+  useEffect(() => {
+    setSelectedImageKey(storedClusters[clusterIndex][0]);
+    document.addEventListener("keydown", handleKeyDown);
+    console.log("making eventlistener");
+  }, []);
+
+  function changeOffset(direction) {
+    console.log("Direction");
+    console.log(direction);
+    if (clusterIndex + direction >= storedClusters.length - 1) {
+      return setClusterIndex(0);
+    }
+    if (clusterIndex + direction <= 0) {
+      return setClusterIndex(storedClusters.length - 1);
+    }
+    console.log("set it");
+    setClusterIndex((prev) => (prev += direction));
+  }
 
   function handleKeyDown(e) {
+    e.preventDefault();
     switch (e.key) {
       case "f":
         if (selectedImageKey) {
           setIsFullScreen(true);
           applyFullscreenSettings()
         }
-        document.removeEventListener("keydown", handleKeyDown);
+         
+
         break;
       case "Escape":
         setIsFullScreen(false);
-        document.removeEventListener("keydown", handleKeyDown);
         applyNetflixSettings()
+
+
         break;
-      case "s":
-        console.log("Firing S");
-        download(acceptedImageKeys);
+      // case "s":
+      //   console.log("Firing S");
+      //   zipImages();
+      //   break;
+
+      // Cluster controlls withe keyboard
+      // case "ArrowDown":
+      //   changeOffset(1);
+      //   break;
+      // case "ArrowUp":
+      //   changeOffset(-1);
+      //   break;
+      case "ArrowLeft":
+        if (i - 1 < 0) return;
+        i -= 1;
+        try {
+          setSelectedImageKey(storedClusters[clusterIndex][i]);
+        } catch (error) {
+          console.log(error);
+        }
+        break;
+      case "ArrowRight":
+        if (i + 1 > storedClusters[clusterIndex].length - 1) return;
+        i += 1;
+        try {
+          setSelectedImageKey(storedClusters[clusterIndex][i]);
+        } catch (error) {
+          console.log(error);
+        }
         break;
       default:
         break;
     }
   }
 
-  function download(blobArray) {
-    const a = document.createElement("a");
-    a.href = blobArray[0];
-    a.download = "myImage.png";
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-  }
-
-  function downloadBlob(blobArray, name = "file.png") {
-    console.log(blobArray);
-    const blobUrl = blobArray[1];
-
-    // Create a link element
-    const link = document.createElement("a");
-
-    // Set link's href to point to the Blob URL
-    link.href = blobUrl;
-    link.download = name;
-
-    // Append link to the body
-    document.body.appendChild(link);
-
-    // Dispatch click event on the link
-    // This is necessary as link.click() does not work on the latest firefox
-    // link.dispatchEvent(
-    //   new MouseEvent("click", {
-    //     bubbles: true,
-    //     cancelable: true,
-    //     view: window,
-    //   })
-    // );
-    link.click();
-    // Remove link from body
-    document.body.removeChild(link);
+  function zipImages() {
+    var zip = new JSZip();
+    var img = zip.folder("images");
+    let index = 0;
+    for (let image of acceptedImageKeys) {
+      img.file(`Image${index++}.png`, image, { base64: true });
+    }
+    zip.generateAsync({ type: "blob" }).then(function (content) {
+      // see FileSaver.js
+      FileSaver.saveAs(content, "CulledImages.zip");
+    });
   }
 
   const netflix = (

@@ -26,8 +26,6 @@ export default function Cluster({
 
   // checks if any of the images in the cluster are in the global selected images array and modify the counter state based on it
   useEffect(() => {
-    console.log("Cluster useEffect");
-
     imageBlobArr.map((blob) => {
       clustersArray.push(blob[0]);
       if (acceptedImagesKeys.includes(blob[0])) {

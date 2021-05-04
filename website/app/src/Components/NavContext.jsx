@@ -19,6 +19,8 @@ export function NavProvider(props) {
 
   // used for debugging
   useEffect(() => {
+    console.log("NavContext useEffect");
+
     // console.log("acceptedImageKeys");
     // console.log(acceptedImageKeys);
     // console.log("storedClusters");

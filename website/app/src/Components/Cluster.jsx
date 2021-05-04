@@ -7,7 +7,11 @@ import styled from "styled-components";
 // import tensorflow
 const tf = require("@tensorflow/tfjs");
 
-export default function Cluster({ imageBlobArr, isFullScreen }) {
+export default function Cluster({
+  imageBlobArr,
+  isFullScreen,
+  isAcceptedCluster,
+}) {
   // Global variables
   const { globalyStoredClusters } = useContext(NavContext);
   const [storedClusters, setStoredClusters] = globalyStoredClusters;
@@ -22,6 +26,8 @@ export default function Cluster({ imageBlobArr, isFullScreen }) {
 
   // checks if any of the images in the cluster are in the global selected images array and modify the counter state based on it
   useEffect(() => {
+    console.log("Cluster useEffect");
+
     imageBlobArr.map((blob) => {
       clustersArray.push(blob[0]);
       if (acceptedImagesKeys.includes(blob[0])) {
@@ -64,29 +70,46 @@ export default function Cluster({ imageBlobArr, isFullScreen }) {
 
   return (
     <StyledHorizClusterSection>
-      <div
-        className={"d-flex flex-row scrollMenu" + (isFullScreen ? "" : " m-2")}
-      >
-        {!isFullScreen && (
-          <div className="d-flex flex-column">
-            {/* Selected Text above images */}
-            <div
-              className="d-inline-flex flex-row clusterNum "
-              style={{
-                backgroundColor: "#282828",
-                borderRadius: "3px 3px 0px 0px",
-                padding: "3px",
-                width: "min-content",
-              }}
-            >
-              <p
-                className=""
-                style={{ color: "white", display: "inline-block" }}
+      {isAcceptedCluster && (
+        <div
+          className={
+            "d-flex flex-row scrollMenu" + (isFullScreen ? "" : " m-2")
+          }
+        >
+          {!isFullScreen && (
+            <div className="d-flex flex-column">
+              {/* Selected Text above images */}
+              <div
+                className="d-inline-flex flex-row clusterNum "
+                style={{
+                  backgroundColor: "#282828",
+                  borderRadius: "3px 3px 0px 0px",
+                  padding: "3px",
+                  width: "min-content",
+                }}
               >
-                {numberOfSelectedImages} out of {imageBlobArr.length}
-              </p>
+                <p
+                  className=""
+                  style={{ color: "white", display: "inline-block" }}
+                >
+                  {numberOfSelectedImages} out of {imageBlobArr.length}
+                </p>
+              </div>
+              {/* Horizontal Image Div */}
+              <div
+                className="d-flex flex-row"
+                style={{
+                  backgroundColor: "#282828",
+                  borderRadius: "0px 3px 3px 3px",
+                }}
+              >
+                {/* Creates all the image cards */}
+                {imageCards}
+              </div>
             </div>
-            {/* Horizontal Image Div */}
+          )}
+
+          {isFullScreen && (
             <div
               className="d-flex flex-row"
               style={{
@@ -97,22 +120,21 @@ export default function Cluster({ imageBlobArr, isFullScreen }) {
               {/* Creates all the image cards */}
               {imageCards}
             </div>
-          </div>
-        )}
-
-        {isFullScreen && (
-          <div
-            className="d-flex flex-row"
-            style={{
-              backgroundColor: "#282828",
-              borderRadius: "0px 3px 3px 3px",
-            }}
-          >
-            {/* Creates all the image cards */}
-            {imageCards}
-          </div>
-        )}
-      </div>
+          )}
+        </div>
+      )}
+      {!isAcceptedCluster && (
+        <div
+          className="d-flex flex-row"
+          style={{
+            backgroundColor: "#282828",
+            borderRadius: "0px 3px 3px 3px",
+          }}
+        >
+          {/* Creates all the image cards */}
+          {imageCards}
+        </div>
+      )}
     </StyledHorizClusterSection>
   );
 }

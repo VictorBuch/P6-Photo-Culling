@@ -8,19 +8,17 @@ import FullscreenView from "./FullscreenView";
 // styles
 import styled from "styled-components";
 
-
 var i = 0;
 
-function applyFullscreenSettings(){
-  document.getElementById('appNav').style.display = 'none'
-  document.body.style.overflow = "hidden"
+function applyFullscreenSettings() {
+  document.getElementById("appNav").style.display = "none";
+  document.body.style.overflow = "hidden";
 }
 
-function applyNetflixSettings(){
-  document.getElementById('appNav').style.display = 'block'
-  document.body.style.overflow = "scroll"
+function applyNetflixSettings() {
+  document.getElementById("appNav").style.display = "block";
+  document.body.style.overflow = "scroll";
 }
-
 
 export default function CullingView({ imageBlobArr }) {
   var JSZip = require("jszip");
@@ -64,21 +62,15 @@ export default function CullingView({ imageBlobArr }) {
       case "f":
         if (selectedImageKey) {
           setIsFullScreen(true);
-          applyFullscreenSettings()
+          applyFullscreenSettings();
         }
-         
 
         break;
       case "Escape":
         setIsFullScreen(false);
-        applyNetflixSettings()
-
+        applyNetflixSettings();
 
         break;
-      // case "s":
-      //   console.log("Firing S");
-      //   zipImages();
-      //   break;
 
       // Cluster controlls withe keyboard
       // case "ArrowDown":
@@ -141,11 +133,9 @@ export default function CullingView({ imageBlobArr }) {
 const StyledNetflixSection = styled.section`
   height: 100vh;
   display: grid;
-
   .scrollMenu {
     height: 20rem;
   }
-
   .card {
     min-width: 200px;
     min-height: 100px;
@@ -153,5 +143,3 @@ const StyledNetflixSection = styled.section`
     max-height: 100px;
   }
 `;
-
-

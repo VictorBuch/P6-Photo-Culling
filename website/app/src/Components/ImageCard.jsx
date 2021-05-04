@@ -140,7 +140,6 @@ export default function ImageCard(props) {
 
   return (
     <StyledImageCardSection>
-
       <div
         className={"card" + (isSelected ? " cardSelected" : "")}
         style={{ margin: "5px" }}
@@ -149,7 +148,7 @@ export default function ImageCard(props) {
           key={props.blob}
           src={props.blob}
           alt=""
-          onClick={handleSelected}
+          // onClick={handleSelected}
         />
         <div
           className="card-body"

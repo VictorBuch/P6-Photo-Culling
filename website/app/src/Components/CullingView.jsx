@@ -8,14 +8,14 @@ import FullscreenView from "./FullscreenView";
 // styles
 import styled from "styled-components";
 
-function applyFullscreenSettings(){
-  document.getElementById('appNav').style.display = 'none'
-  document.body.style.overflow = "hidden"
+function applyFullscreenSettings() {
+  document.getElementById("appNav").style.display = "none";
+  document.body.style.overflow = "hidden";
 }
 
-function applyNetflixSettings(){
-  document.getElementById('appNav').style.display = 'block'
-  document.body.style.overflow = "scroll"
+function applyNetflixSettings() {
+  document.getElementById("appNav").style.display = "block";
+  document.body.style.overflow = "scroll";
 }
 
 export default function CullingView({ imageBlobArr }) {
@@ -33,14 +33,14 @@ export default function CullingView({ imageBlobArr }) {
       case "f":
         if (selectedImageKey) {
           setIsFullScreen(true);
-          applyFullscreenSettings()
+          applyFullscreenSettings();
         }
         document.removeEventListener("keydown", handleKeyDown);
         break;
       case "Escape":
         setIsFullScreen(false);
         document.removeEventListener("keydown", handleKeyDown);
-        applyNetflixSettings()
+        applyNetflixSettings();
         break;
       case "s":
         console.log("Firing S");

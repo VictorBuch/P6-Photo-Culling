@@ -178,7 +178,6 @@ const StyledImageCardSection = styled.section`
 
   .card {
     border: none;
-    width: 15rem;
   }
 
   .cardAccepted {

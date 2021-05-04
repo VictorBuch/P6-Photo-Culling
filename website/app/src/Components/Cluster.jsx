@@ -70,9 +70,9 @@ export default function Cluster({
 
   if (isFullScreen) {
     return (
-      <StyledRowContainer>
-        <StyledClusterContainer>{imageCards}</StyledClusterContainer>
-      </StyledRowContainer>
+      <StyledFullscreenClusterContainer className="grid-item horizontal-cluster">
+        {imageCards}
+      </StyledFullscreenClusterContainer>
     );
   } else {
     return (
@@ -155,6 +155,33 @@ const StyledSelectedText = styled.text`
 
 const StyledOpenButton = styled.button`
   color: ${(props) => (props.bg === "black" ? "black" : "blue")};
+`;
+
+const StyledFullscreenRowContainer = styled.div`
+  background: #282828;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  min-height: 140px;
+  max-height: 140px;
+  margin-bottom: 5px;
+  overflow-y: auto;
+  overflow-x: hidden;
+`;
+
+const StyledFullscreenClusterContainer = styled.div`
+  display: flex !important;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  ${(props) =>
+    props.isOpen &&
+    `
+flex-wrap: wrap
+
+`}
 `;
 
 const StyledHorizClusterSection = styled.section`

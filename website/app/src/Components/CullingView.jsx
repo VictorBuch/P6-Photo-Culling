@@ -8,6 +8,7 @@ import FullscreenView from "./FullscreenView";
 // styles
 import styled from "styled-components";
 
+
 var i = 0;
 
 function applyFullscreenSettings() {
@@ -69,7 +70,6 @@ export default function CullingView({ imageBlobArr }) {
       case "Escape":
         setIsFullScreen(false);
         applyNetflixSettings();
-
         break;
 
       // Cluster controlls withe keyboard

@@ -11,16 +11,15 @@ import pandas as pd
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 
 
-GIIAA_MODEL = "../../models/giiaa/model_giiaa-dist_200k_inceptionresnetv2_0.078.hdf5"
+GIIAA_MODEL = "../../models/giiaa/model_giiaa-hist_200k_inceptionresnetv2_0.078.hdf5"
 AVA_DATASET_TEST_PATH = "../../ava/test/"
-AVA_DATAFRAME_TEST_PATH = "../../ava/gciaa/AVA_gciaa_test_dataframe.csv"
+AVA_DATAFRAME_TEST_PATH = "../../ava/gciaa/AVA_gciaa-cat_test_dataframe.csv"
 
 BASE_MODEL_NAME = "InceptionResNetV2"
 BATCH_SIZE = 64
 
 
 def get_mean(distribution):
-
     mean = 0.0
     for i in range(0, len(distribution)):
         mean += distribution[i] * (i + 1)
@@ -30,7 +29,6 @@ def get_mean(distribution):
 if __name__ == "__main__":
 
     # model = keras.models.load_model(WEIGHTS_PATH, custom_objects={"earth_movers_distance": earth_movers_distance})
-
     base = BaseModule(
         base_model_name=BASE_MODEL_NAME,
         weights=GIIAA_MODEL)

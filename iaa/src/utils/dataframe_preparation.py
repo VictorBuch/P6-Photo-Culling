@@ -15,15 +15,20 @@ AVA_DATASET_TRAIN_PATH = "../../ava/train"
 AVA_DATASET_TEST_PATH = "../../ava/test"
 AVA_DATASET_SUBSET_PATH = "../../ava/subset/"
 
-AVA_DATAFRAME_GIIAA_TRAIN_PATH = "../../ava/giiaa/AVA_dist_train_dataframe.csv"
-AVA_DATAFRAME_GIIAA_TEST_PATH = "../../ava/giiaa/AVA_dist_test_dataframe.csv"
-AVA_DATAFRAME_GIIAA_SUBSET_PATH = "../../ava/giiaa/AVA_dist_subset_dataframe.csv"
+AVA_DATAFRAME_GIIAA_HIST_TRAIN_PATH = "../../ava/giiaa/AVA_giiaa-hist_train_dataframe.csv"
+AVA_DATAFRAME_GIIAA_HIST_TEST_PATH = "../../ava/giiaa/AVA_giiaa-hist_test_dataframe.csv"
+AVA_DATAFRAME_GIIAA_HIST_SUBSET_PATH = "../../ava/giiaa/AVA_giiaa-hist_subset_dataframe.csv"
 
-AVA_DATAFRAME_GCIAA_TRAIN_PATH = "../../ava/gciaa/AVA_gciaa_train_dataframe.csv"
-AVA_DATAFRAME_GCIAA_TEST_PATH = "../../ava/gciaa/AVA_gciaa_test_dataframe.csv"
-AVA_DATAFRAME_GCIAA_SUBSET_PATH = "../../ava/gciaa/AVA_gciaa_subset_dataframe.csv"
+AVA_DATAFRAME_GCIAA_CAT_TRAIN_PATH = "../../ava/gciaa/AVA_gciaa-cat_train_dataframe.csv"
+AVA_DATAFRAME_GCIAA_CAT_TEST_PATH = "../../ava/gciaa/AVA_gciaa-cat_test_dataframe.csv"
+AVA_DATAFRAME_GCIAA_CAT_SUBSET_PATH = "../../ava/gciaa/AVA_gciaa-cat_subset_dataframe.csv"
 
-SELECTED_CATEGORIES_FOR_PAIRWISE_TRAINING = (19, 20, 43, 57, 21, 50, 2, 4, 3, 38, 40, 65, 6, 14, 15, 47, 7, 28, 42)
+AVA_DATAFRAME_GCIAA_DIST_TRAIN_PATH = "../../ava/gciaa/AVA_gciaa-dist_train_dataframe.csv"
+AVA_DATAFRAME_GCIAA_DIST_TEST_PATH = "../../ava/gciaa/AVA_gciaa-dist_test_dataframe.csv"
+AVA_DATAFRAME_GCIAA_DIST_SUBSET_PATH = "../../ava/gciaa/AVA_gciaa-dist_subset_dataframe.csv"
+
+
+SELECTED_CATEGORIES_FOR_PAIRWISE_TRAINING = (19, 20, 43, 57, 21, 50, 2, 4, 3, 38, 40, 65, 6, 14, 15, 47, 7, 28, 42, 26)
 
 
 def prepare_dataframe_giiaa_mean(image_dataset_path, image_info_path):
@@ -75,7 +80,7 @@ def prepare_dataframe_giiaa_mean(image_dataset_path, image_info_path):
     return pd.DataFrame(data)
 
 
-def prepare_dataframe_giiaa_dist(image_dataset_path, image_info_path):
+def prepare_dataframe_giiaa_hist(image_dataset_path, image_info_path):
 
     original_dataframe = pd.read_csv(image_info_path, sep=' ')
 
@@ -118,10 +123,11 @@ def prepare_dataframe_giiaa_dist(image_dataset_path, image_info_path):
     return pd.DataFrame(data)
 
 
-def prepare_dataframe_gciaa(image_dataset_path,
-                            image_info_path,
-                            selected_categories=SELECTED_CATEGORIES_FOR_PAIRWISE_TRAINING,
-                            pairs_per_category_scalar=1):
+def prepare_dataframe_gciaa_cat(
+        image_dataset_path,
+        image_info_path,
+        selected_categories=SELECTED_CATEGORIES_FOR_PAIRWISE_TRAINING,
+        pairs_per_category_scalar=1):
 
     original_dataframe = pd.read_csv(image_info_path, sep=' ')
 
@@ -174,6 +180,24 @@ def prepare_dataframe_gciaa(image_dataset_path,
     return pd.DataFrame(data)
 
 
+def prepare_dataframe_gciaa_dist(
+        image_dataset_path,
+        image_info_path,
+        pairs_per_dataset_scalar=1):
+
+    data = {
+        'id': [],
+        'label': []
+    }
+
+    for filename in tqdm(os.listdir(image_dataset_path)):
+
+        data['id'].append(os.path.join(image_dataset_path, filename))
+        data['label'].append(0.0)
+
+    return pd.DataFrame(data)
+
+
 if __name__ == "__main__":
-    dataframe = prepare_dataframe_gciaa(AVA_DATASET_TEST_PATH, AVA_TEXT_PATH)
-    dataframe.to_csv(AVA_DATAFRAME_GCIAA_TEST_PATH)
+    dataframe = prepare_dataframe_gciaa_dist(AVA_DATASET_TEST_PATH, AVA_TEXT_PATH)
+    dataframe.to_csv(AVA_DATAFRAME_GCIAA_DIST_TEST_PATH)

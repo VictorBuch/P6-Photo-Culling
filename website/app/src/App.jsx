@@ -1,7 +1,5 @@
 import React, { useState } from "react";
-
-// Styles
-import "./Styles/App.scss";
+import styled from "styled-components";
 
 // Components
 import ImageUploadBtn from "./Components/ImageUploadBtn";
@@ -35,19 +33,46 @@ export default function App() {
   }
 
   return (
-    <>
-      {/* While the images have not been processed display either the upload btn or the loading page */}
-      {!areImagesLoaded && uploadBtn}
+    <StyledAppSection>
+      <>
+        {/* While the images have not been processed display either the upload btn or the loading page */}
+        {!areImagesLoaded && uploadBtn}
 
-      {/* Images have now been processed and show the culing interface */}
-      {areImagesLoaded && (
-        <NavProvider>
-          <Nav imageBlobArr={imageBlobArr} />
+        {/* Images have now been processed and show the culing interface */}
+        {areImagesLoaded && (
+          <NavProvider>
+            <Nav imageBlobArr={imageBlobArr} />
 
-          {/* Component that is resposible for drawing the netflix or fullscreen view */}
-          <CullingView imageBlobArr={imageBlobArr} />
-        </NavProvider>
-      )}
-    </>
+            {/* Component that is resposible for drawing the netflix or fullscreen view */}
+            <CullingView imageBlobArr={imageBlobArr} />
+          </NavProvider>
+        )}
+      </>
+    </StyledAppSection>
   );
 }
+
+const StyledAppSection = styled.section`
+  :root {
+    --background-color: #282828;
+    --card-background-color: #414141;
+    --selected-image-color: #3f8a4b;
+  }
+  * {
+    box-sizing: border-box;
+    -webkit-user-select: none; /* Chrome all / Safari all */
+    -moz-user-select: none; /* Firefox all */
+    -ms-user-select: none; /* IE 10+ */
+    user-select: none;
+  }
+
+  background-color: #282828;
+  overflow-x: hidden;
+
+  @import "ImageUploadBtn";
+  @import "Loader";
+  @import "Nav";
+  @import "Clusters";
+  @import "Cluster";
+  @import "ImageCard";
+`;

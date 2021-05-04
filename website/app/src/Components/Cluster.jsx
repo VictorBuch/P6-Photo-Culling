@@ -2,8 +2,6 @@ import React, { useEffect, useState, useContext } from "react";
 import { NavContext } from "./NavContext";
 import ImageCard from "./ImageCard";
 import { all } from "@tensorflow/tfjs";
-
-
 import styled from "styled-components";
 
 // import tensorflow
@@ -56,8 +54,6 @@ export default function Cluster({ imageBlobArr, isFullScreen }) {
     // fetchModel();
   }, []);
 
-
-
   const imageCards = imageBlobArr.map((blob) => {
     return (
       <ImageCard
@@ -68,92 +64,120 @@ export default function Cluster({ imageBlobArr, isFullScreen }) {
     );
   });
 
-if(isFullScreen){
-  return(<StyledRowContainer>
-    <StyledClusterContainer>
-      {imageCards}
-    </StyledClusterContainer>
-  </StyledRowContainer>);
-} else{
-  return(<StyledRowContainer isOpen={isOpen}>
-    <StyledColumnContainer>
-      <StyledSelectedText>
-        {numberOfSelectedImages} / {imageBlobArr.length}
-      </StyledSelectedText>
-      <StyledOpenButton
-        onClick={()=>setIsOpen((prev)=>!prev)}>
-      </StyledOpenButton>
-    </StyledColumnContainer>
-    <StyledClusterContainer isOpen={isOpen}>
-      {imageCards}
-    </StyledClusterContainer>
-  </StyledRowContainer>);
-};
-return(
-
-
-  <StyledRowContainer isOpen={isOpen}>
-    <StyledColumnContainer>
-      <StyledSelectedText>
-        {numberOfSelectedImages} / {imageBlobArr.length}
-      </StyledSelectedText>
-      <StyledOpenButton
-        onClick={()=>setIsOpen((prev)=>!prev)}>
-      </StyledOpenButton>
-    </StyledColumnContainer>
-    <StyledClusterContainer isOpen={isOpen}>
-      {imageCards}
-    </StyledClusterContainer>
-  </StyledRowContainer>
-
-
-  
+  if (isFullScreen) {
+    return (
+      <StyledRowContainer>
+        <StyledClusterContainer>{imageCards}</StyledClusterContainer>
+      </StyledRowContainer>
+    );
+  } else {
+    return (
+      <StyledRowContainer isOpen={isOpen}>
+        <StyledColumnContainer>
+          <StyledSelectedText>
+            {numberOfSelectedImages} / {imageBlobArr.length}
+          </StyledSelectedText>
+          <StyledOpenButton
+            onClick={() => setIsOpen((prev) => !prev)}
+          ></StyledOpenButton>
+        </StyledColumnContainer>
+        <StyledClusterContainer isOpen={isOpen}>
+          {imageCards}
+        </StyledClusterContainer>
+      </StyledRowContainer>
+    );
+  }
+  return (
+    <StyledRowContainer isOpen={isOpen}>
+      <StyledColumnContainer>
+        <StyledSelectedText>
+          {numberOfSelectedImages} / {imageBlobArr.length}
+        </StyledSelectedText>
+        <StyledOpenButton
+          onClick={() => setIsOpen((prev) => !prev)}
+        ></StyledOpenButton>
+      </StyledColumnContainer>
+      <StyledClusterContainer isOpen={isOpen}>
+        {imageCards}
+      </StyledClusterContainer>
+    </StyledRowContainer>
   );
 }
 
-
-
 const StyledClusterContainer = styled.div`
-display: flex!important;
-flex-direction: row;
-flex-wrap: nowrap;
-overflow-x: auto;
-overflow-y: hidden;
+  display: flex !important;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  overflow-y: hidden;
 
-${props => props.isOpen && `
+  ${(props) =>
+    props.isOpen &&
+    `
 flex-wrap: wrap
 
 `}
-`
+`;
 
 const StyledColumnContainer = styled.div`
-min-width: 50px;
-display: flex;
-flex-direction: column;
-`
+  min-width: 50px;
+  display: flex;
+  flex-direction: column;
+`;
 
 const StyledRowContainer = styled.div`
-background: #282828;
-display: flex;
-flex-direction: row;
-width: 100%;
-min-height: 140px;
-max-height: 140px;
-margin-bottom: 5px;
-overflow-y: auto;
-overflow-x: hidden;
+  background: #282828;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  min-height: 140px;
+  max-height: 140px;
+  margin-bottom: 5px;
+  overflow-y: auto;
+  overflow-x: hidden;
 
-${props => props.isOpen &&`
+  ${(props) =>
+    props.isOpen &&
+    `
 max-height: 300px;
 min-height: 300px;
 `}
-`
+`;
 
 const StyledSelectedText = styled.text`
-color: white;
-`
+  color: white;
+`;
 
 const StyledOpenButton = styled.button`
-color: ${props => props.bg === "black" ? "black" : "blue"}
+  color: ${(props) => (props.bg === "black" ? "black" : "blue")};
+`;
 
-`
+const StyledHorizClusterSection = styled.section`
+  .scrollMenu {
+    overflow-x: scroll;
+    overflow-y: hidden;
+    white-space: nowrap;
+  }
+
+  .clusterNum {
+    position: -webkit-sticky;
+    position: sticky;
+    left: 0px;
+  }
+
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(155, 155, 155, 0.5) transparent;
+  }
+  ::-webkit-scrollbar {
+    width: 5px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    color: rgba(155, 155, 155, 0.5);
+    border-radius: 20px;
+    border: transparent;
+  }
+`;

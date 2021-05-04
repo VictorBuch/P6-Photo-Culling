@@ -1,5 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import { NavContext } from "./NavContext";
+import styled from "styled-components";
 
 import styled from "styled-components";
 
@@ -142,23 +143,55 @@ export default function ImageCard(props) {
   );
 
   return (
-    <div
-      className={"card" + (isSelected ? " cardSelected" : "")}
-      style={{ margin: "5px" }}
-    >
-      <img key={props.blob} src={props.blob} alt="" onClick={handleSelected} />
+    <StyledImageCardSection>
       <div
-        className="card-body"
-        style={{
-          width: "100%",
-          height: "20%",
-          textAlign: "center",
-          backgroundColor: "#282828",
-          padding: "0px 0px 0px 0px",
-        }}
+        className={"card" + (isSelected ? " cardSelected" : "")}
+        style={{ margin: "5px" }}
       >
-        {isAccepted ? accepted : rejected}
+        <img
+          key={props.blob}
+          src={props.blob}
+          alt=""
+          onClick={handleSelected}
+        />
+        <div
+          className="card-body"
+          style={{
+            width: "100%",
+            height: "20%",
+            textAlign: "center",
+            backgroundColor: "#282828",
+            padding: "0px 0px 0px 0px",
+          }}
+        >
+          {isAccepted ? accepted : rejected}
+        </div>
       </div>
-    </div>
+    </StyledImageCardSection>
   );
 }
+
+const StyledImageCardSection = styled.section`
+  .card-img-top {
+    width: auto;
+    height: 15vh;
+    object-fit: contain;
+  }
+
+  .card {
+    border: none;
+  }
+
+  .cardAccepted {
+    box-shadow: 0px 0px 10px 7px var(--selected-image-color);
+  }
+  .cardSelected {
+    box-shadow: 0px 0px 10px 7px rgb(255, 152, 18);
+  }
+
+  img {
+    object-fit: contain;
+    width: 100%;
+    height: 100%;
+  }
+`;

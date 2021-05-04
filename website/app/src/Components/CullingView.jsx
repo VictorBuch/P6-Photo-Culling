@@ -22,7 +22,6 @@ function applyNetflixSettings() {
 
 export default function CullingView({ imageBlobArr }) {
   var JSZip = require("jszip");
-  var FileSaver = require("file-saver");
 
   const {
     globalSelectedImageKey,
@@ -69,12 +68,7 @@ export default function CullingView({ imageBlobArr }) {
       case "Escape":
         setIsFullScreen(false);
         applyNetflixSettings();
-
         break;
-      // case "s":
-      //   console.log("Firing S");
-      //   zipImages();
-      //   break;
 
       // Cluster controlls withe keyboard
       // case "ArrowDown":
@@ -106,18 +100,18 @@ export default function CullingView({ imageBlobArr }) {
     }
   }
 
-  function zipImages() {
-    var zip = new JSZip();
-    var img = zip.folder("images");
-    let index = 0;
-    for (let image of acceptedImageKeys) {
-      img.file(`Image${index++}.png`, image, { base64: true });
-    }
-    zip.generateAsync({ type: "blob" }).then(function (content) {
-      // see FileSaver.js
-      FileSaver.saveAs(content, "CulledImages.zip");
-    });
-  }
+  // function zipImages() {
+  //   var zip = new JSZip();
+  //   var img = zip.folder("images");
+  //   let index = 0;
+  //   for (let image of acceptedImageKeys) {
+  //     img.file(`Image${index++}.png`, image, { base64: true });
+  //   }
+  //   zip.generateAsync({ type: "blob" }).then(function (content) {
+  //     // see FileSaver.js
+  //     FileSaver.saveAs(content, "CulledImages.zip");
+  //   });
+  // }
 
   const netflix = (
     <div>
@@ -137,11 +131,9 @@ export default function CullingView({ imageBlobArr }) {
 const StyledNetflixSection = styled.section`
   height: 100vh;
   display: grid;
-
   .scrollMenu {
     height: 20rem;
   }
-
   .card {
     min-width: 200px;
     min-height: 100px;

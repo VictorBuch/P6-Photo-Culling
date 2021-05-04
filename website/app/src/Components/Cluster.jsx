@@ -65,7 +65,9 @@ export default function Cluster({ imageBlobArr, isFullScreen }) {
   return (
     <StyledHorizClusterSection>
       <div
-        className={"d-flex flex-row scrollMenu" + (isFullScreen ? "" : " m-2")}
+        className={
+          "d-flex flex-row scrollMenu grid-item" + (isFullScreen ? "" : " m-2")
+        }
       >
         {!isFullScreen && (
           <div className="d-flex flex-column">
@@ -122,5 +124,27 @@ const StyledHorizClusterSection = styled.section`
     overflow-x: scroll;
     overflow-y: hidden;
     white-space: nowrap;
+  }
+
+  .clusterNum {
+    position: -webkit-sticky;
+    position: sticky;
+    left: 0px;
+  }
+
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(155, 155, 155, 0.5) transparent;
+  }
+  ::-webkit-scrollbar {
+    width: 5px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    color: rgba(155, 155, 155, 0.5);
+    border-radius: 20px;
+    border: transparent;
   }
 `;

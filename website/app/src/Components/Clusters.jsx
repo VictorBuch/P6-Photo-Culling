@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import Cluster from "./Cluster";
 import { NavContext } from "./NavContext";
+import styled from "styled-components";
 
 export default function Clusters(props) {
   // local values
@@ -43,15 +44,41 @@ export default function Clusters(props) {
       );
 
       return (
-        <Cluster
-          id="cluster"
-          key={clusterNum}
-          imageBlobArr={newCluster}
-          isFullScreen={props.isFullScreen}
-        />
+        <StyledClustersSection>
+          <Cluster
+            id="cluster"
+            key={clusterNum}
+            imageBlobArr={newCluster}
+            isFullScreen={props.isFullScreen}
+          />
+        </StyledClustersSection>
       );
     }
   });
 }
 
 // get the images into a prop for the individual clusters
+
+const StyledClustersSection = styled.section`
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(155, 155, 155, 0.5) transparent;
+  }
+  ::-webkit-scrollbar {
+    width: 5px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    color: rgba(155, 155, 155, 0.5);
+    border-radius: 20px;
+    border: transparent;
+  }
+
+  .scrollMenu {
+    overflow-x: scroll;
+    overflow-y: hidden;
+    white-space: nowrap;
+  }
+`;

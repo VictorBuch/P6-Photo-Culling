@@ -2,8 +2,6 @@ import React, { useState, useContext, useEffect } from "react";
 import { NavContext } from "./NavContext";
 import styled from "styled-components";
 
-import styled from "styled-components";
-
 export default function ImageCard(props) {
   const [isSelected, setIsSelected] = useState(false);
   const [isAccepted, setIsAccepted] = useState(false);

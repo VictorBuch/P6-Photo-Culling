@@ -7,6 +7,7 @@ export default function Clusters(props) {
   const clusterArray = [[]];
   var prevClusterIndex = 0;
   var clusterNum = 0;
+  var interval = 2800; //change this number to tweak the clustering
 
   var prevDateTimeOriginal = null;
 
@@ -17,17 +18,13 @@ export default function Clusters(props) {
     if (prevDateTimeOriginal === null) {
       prevDateTimeOriginal = element[1];
     }
-    if (Math.abs(element[1] - prevDateTimeOriginal) < 10000) {
-      prevDateTimeOriginal = element[1];
-    }
 
-    // if the new image element is bigger that means 10 seconds have passed and it should create a new cluster
+    //check if the image creation date is within the interval compared to the previous image
     if (
-      Math.abs(element[1] - prevDateTimeOriginal) > 10000 ||
+      Math.abs(element[1] - prevDateTimeOriginal) > interval ||
       index === props.imageBlobArr.length - 1
     ) {
-      // the image element is not withing the threshold so make a new cluster
-
+      // the image element is not within the threshold so make a new cluster
       if (index === props.imageBlobArr.length - 1) {
         clusterArray.push([prevClusterIndex, index + 1]);
       } else {
@@ -36,6 +33,7 @@ export default function Clusters(props) {
       prevClusterIndex = index;
       clusterNum++;
       prevDateTimeOriginal = element[1];
+      console.log(element[1]);
 
       const newCluster = props.imageBlobArr.slice(
         clusterArray[clusterNum][0],
@@ -50,6 +48,8 @@ export default function Clusters(props) {
           isFullScreen={props.isFullScreen}
         />
       );
+    } else {
+      prevDateTimeOriginal = element[1];
     }
   });
 }

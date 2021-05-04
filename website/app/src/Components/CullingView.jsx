@@ -92,7 +92,7 @@ export default function CullingView({ imageBlobArr }) {
 }
 
 const StyledNetflixSection = styled.section`
-  height: 90vh;
+  height: 100vh;
   display: grid;
 
   .scrollMenu {
@@ -100,7 +100,11 @@ const StyledNetflixSection = styled.section`
   }
 
   .card {
-    width: 19em;
-    height: 15.2em;
+    min-width: 200px;
+    min-height: 100px;
+    max-width: 200px;
+    max-height: 100px;
   }
 `;
+
+

@@ -3,6 +3,9 @@ import { NavContext } from "./NavContext";
 import ImageCard from "./ImageCard";
 import { all } from "@tensorflow/tfjs";
 
+
+import styled from "styled-components";
+
 // import tensorflow
 const tf = require("@tensorflow/tfjs");
 
@@ -15,6 +18,8 @@ export default function Cluster({ imageBlobArr, isFullScreen }) {
   const [numberOfSelectedImages, setNumberOfSelectedImages] = useState(0);
   const { globalAcceptedImages } = useContext(NavContext);
   const [acceptedImagesKeys, setAcceptedImagesKeys] = globalAcceptedImages;
+  const [isOpen, setIsOpen] = useState(false);
+
   // const [clusterModel, setClusterModel] = useState();
 
   const clustersArray = [];
@@ -51,6 +56,8 @@ export default function Cluster({ imageBlobArr, isFullScreen }) {
     // fetchModel();
   }, []);
 
+
+
   const imageCards = imageBlobArr.map((blob) => {
     return (
       <ImageCard
@@ -61,52 +68,92 @@ export default function Cluster({ imageBlobArr, isFullScreen }) {
     );
   });
 
-  return (
-    <div
-      className={"d-flex flex-row scrollMenu" + (isFullScreen ? "" : " m-2")}
-    >
-      {!isFullScreen && (
-        <div className="d-flex flex-column">
-          {/* Selected Text above images */}
-          <div
-            className="d-inline-flex flex-row clusterNum "
-            style={{
-              backgroundColor: "#282828",
-              borderRadius: "3px 3px 0px 0px",
-              padding: "3px",
-              width: "min-content",
-            }}
-          >
-            <p className="" style={{ color: "white", display: "inline-block" }}>
-              {numberOfSelectedImages} out of {imageBlobArr.length}
-            </p>
-          </div>
-          {/* Horizontal Image Div */}
-          <div
-            className="d-flex flex-row"
-            style={{
-              backgroundColor: "#282828",
-              borderRadius: "0px 3px 3px 3px",
-            }}
-          >
-            {/* Creates all the image cards */}
-            {imageCards}
-          </div>
-        </div>
-      )}
+if(isFullScreen){
+  return(<StyledRowContainer>
+    <StyledClusterContainer>
+      {imageCards}
+    </StyledClusterContainer>
+  </StyledRowContainer>);
+} else{
+  return(<StyledRowContainer isOpen={isOpen}>
+    <StyledColumnContainer>
+      <StyledSelectedText>
+        {numberOfSelectedImages} / {imageBlobArr.length}
+      </StyledSelectedText>
+      <StyledOpenButton
+        onClick={()=>setIsOpen((prev)=>!prev)}>
+      </StyledOpenButton>
+    </StyledColumnContainer>
+    <StyledClusterContainer isOpen={isOpen}>
+      {imageCards}
+    </StyledClusterContainer>
+  </StyledRowContainer>);
+};
+return(
 
-      {isFullScreen && (
-        <div
-          className="d-flex flex-row"
-          style={{
-            backgroundColor: "#282828",
-            borderRadius: "0px 3px 3px 3px",
-          }}
-        >
-          {/* Creates all the image cards */}
-          {imageCards}
-        </div>
-      )}
-    </div>
+
+  <StyledRowContainer isOpen={isOpen}>
+    <StyledColumnContainer>
+      <StyledSelectedText>
+        {numberOfSelectedImages} / {imageBlobArr.length}
+      </StyledSelectedText>
+      <StyledOpenButton
+        onClick={()=>setIsOpen((prev)=>!prev)}>
+      </StyledOpenButton>
+    </StyledColumnContainer>
+    <StyledClusterContainer isOpen={isOpen}>
+      {imageCards}
+    </StyledClusterContainer>
+  </StyledRowContainer>
+
+
+  
   );
 }
+
+
+
+const StyledClusterContainer = styled.div`
+display: flex!important;
+flex-direction: row;
+flex-wrap: nowrap;
+overflow-x: auto;
+overflow-y: hidden;
+
+${props => props.isOpen && `
+flex-wrap: wrap
+
+`}
+`
+
+const StyledColumnContainer = styled.div`
+min-width: 50px;
+display: flex;
+flex-direction: column;
+`
+
+const StyledRowContainer = styled.div`
+background: #282828;
+display: flex;
+flex-direction: row;
+width: 100%;
+min-height: 140px;
+max-height: 140px;
+margin-bottom: 5px;
+overflow-y: auto;
+overflow-x: hidden;
+
+${props => props.isOpen &&`
+max-height: 300px;
+min-height: 300px;
+`}
+`
+
+const StyledSelectedText = styled.text`
+color: white;
+`
+
+const StyledOpenButton = styled.button`
+color: ${props => props.bg === "black" ? "black" : "blue"}
+
+`

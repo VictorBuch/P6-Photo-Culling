@@ -16,9 +16,8 @@ export default function Loader() {
 }
 
 const StyledLoaderSection = styled.section`
-  body {
-    height: 100vh;
-  }
+  height: 100vh;
+  
   h3 {
     color: white;
     display: block;
@@ -26,7 +25,7 @@ const StyledLoaderSection = styled.section`
 
   .loader {
     border: 16px solid #f3f3f3; /* Light grey */
-    border-top: 16px solid var(--card-background-color); /* Blue */
+    border-top: 16px solid #414141; /* Blue */
     border-radius: 50%;
     width: 120px;
     height: 120px;

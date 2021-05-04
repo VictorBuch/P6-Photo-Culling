@@ -42,14 +42,13 @@ export default function Clusters(props) {
       );
 
       return (
-        <StyledClustersSection>
           <Cluster
             id="cluster"
             key={clusterNum}
             imageBlobArr={newCluster}
             isFullScreen={props.isFullScreen}
           />
-        </StyledClustersSection>
+
       );
     } else {
       prevDateTimeOriginal = element[1];

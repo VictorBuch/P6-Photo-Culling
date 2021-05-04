@@ -106,5 +106,3 @@ const StyledNetflixSection = styled.section`
     max-height: 100px;
   }
 `;
-
-

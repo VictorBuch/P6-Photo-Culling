@@ -40,13 +40,9 @@ export default function FullscreenView() {
       className="grid-container-fluid m-2"
       id="fullscreenView"
     >
-      <VerticalCluster
-        className="vertical-cluster"
-        index={clusterIndex}
-        setOffset={changeOffset}
-      />
+      <VerticalCluster index={clusterIndex} setOffset={changeOffset} />
       <img
-        className="bigImage"
+        className="bigImage grid-item"
         src={
           storedClusters[clusterIndex].includes(selectedImageKey)
             ? selectedImageKey
@@ -75,13 +71,15 @@ const StyledFullscreenSection = styled.section`
   /* Vertical cluster*/
   .vertical-cluster {
     grid-area: 1 / 1 / 1 / 1;
+    align-items: center;
   }
 
   /* Fullscreen image*/
   .bigImage {
-    grid-area: 1 / 2 / 2 / 2;
+    grid-area: 1 / 2 / 3 / 3;
     height: 100%;
     object-fit: contain;
+    align-items: right;
   }
 
   /* Meta data for displaye image*/
@@ -91,14 +89,11 @@ const StyledFullscreenSection = styled.section`
   }
   /* Horizontal cluster*/
   .horizontal-cluster {
-    grid-area: 3 / 1 / 2 / 2;
+    grid-area: 3 / 1 / 3 / 3;
     height: 11rem;
     padding-bottom: 10px;
   }
-  .scrollMenu {
-    padding-bottom: 10px;
-    grid-area: 3 / 1 / 3 / 2;
-  }
+
   .card {
     width: 12em;
     height: 100%;

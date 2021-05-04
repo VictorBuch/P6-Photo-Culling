@@ -8,7 +8,20 @@ import FullscreenView from "./FullscreenView";
 // styles
 import styled from "styled-components";
 
+
 var i = 0;
+
+function applyFullscreenSettings(){
+  document.getElementById('appNav').style.display = 'none'
+  document.body.style.overflow = "hidden"
+}
+
+function applyNetflixSettings(){
+  document.getElementById('appNav').style.display = 'block'
+  document.body.style.overflow = "scroll"
+}
+
+
 export default function CullingView({ imageBlobArr }) {
   var JSZip = require("jszip");
   var FileSaver = require("file-saver");
@@ -51,11 +64,15 @@ export default function CullingView({ imageBlobArr }) {
       case "f":
         if (selectedImageKey) {
           setIsFullScreen(true);
+          applyFullscreenSettings()
         }
+         
 
         break;
       case "Escape":
         setIsFullScreen(false);
+        applyNetflixSettings()
+
 
         break;
       // case "s":
@@ -122,7 +139,7 @@ export default function CullingView({ imageBlobArr }) {
 }
 
 const StyledNetflixSection = styled.section`
-  height: 90vh;
+  height: 100vh;
   display: grid;
 
   .scrollMenu {
@@ -130,7 +147,11 @@ const StyledNetflixSection = styled.section`
   }
 
   .card {
-    width: 19em;
-    height: 15.2em;
+    min-width: 200px;
+    min-height: 100px;
+    max-width: 200px;
+    max-height: 100px;
   }
 `;
+
+

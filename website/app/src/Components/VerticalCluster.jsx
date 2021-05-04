@@ -64,6 +64,11 @@ const StyledVertClusterSection = styled.section`
     overflow-x: hidden;
     white-space: nowrap;
   }
+  .card {
+    width: 12em;
+    height: 100%;
+    background-color: transparent;
+  }
   .middle-img {
     height: 100%;
     width: 15rem;

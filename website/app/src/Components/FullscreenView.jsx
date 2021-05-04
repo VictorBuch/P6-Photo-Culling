@@ -65,12 +65,11 @@ const StyledFullscreenSection = styled.section`
   height: 90vh;
   display: grid;
   grid-template-columns: 0.3fr 1fr;
-  grid-template-rows: 1fr 0.5fr 0.3fr;
+  grid-template-rows: 1.28fr 0.5fr 0.3fr;
   gap: 1em;
+
   .scrollMenuVertical {
     grid-area: 1 / 1 / 1 / 1;
-    width: 100%;
-    height: 100%;
   }
   .bigImage {
     grid-area: 1 / 2 / 3 / 4;
@@ -86,10 +85,29 @@ const StyledFullscreenSection = styled.section`
   }
   .card {
     width: 12em;
-    height: 9.6em;
+    height: 100%;
+    background-color: transparent;
+  }
+  .card-middle-vert {
+    height: 100%;
+    width: 15rem;
   }
   .smallCluster {
     height: 100%;
     width: 12rem;
+    margin: 1em 0em 1em 0em;
+    background-color: transparent;
+  }
+  .bigCluster {
+    height: 100%;
+    width: 15rem;
+    /* box-shadow: 0px 0px 10px 7px rgb(255, 152, 18); */
+    outline-width: 0.13em;
+    outline-color: white;
+    outline-style: solid;
+  }
+  .image-overlay {
+    color: white;
+    padding-bottom: em;
   }
 `;

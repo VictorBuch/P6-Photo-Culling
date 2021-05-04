@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import { NavContext } from "./NavContext";
 import ImageCard from "./ImageCard";
 import { all } from "@tensorflow/tfjs";
+import styled from "styled-components";
 
 // import tensorflow
 const tf = require("@tensorflow/tfjs");
@@ -62,26 +63,44 @@ export default function Cluster({ imageBlobArr, isFullScreen }) {
   });
 
   return (
-    <div
-      className={"d-flex flex-row scrollMenu" + (isFullScreen ? "" : " m-2")}
-    >
-      {!isFullScreen && (
-        <div className="d-flex flex-column">
-          {/* Selected Text above images */}
-          <div
-            className="d-inline-flex flex-row clusterNum "
-            style={{
-              backgroundColor: "#282828",
-              borderRadius: "3px 3px 0px 0px",
-              padding: "3px",
-              width: "min-content",
-            }}
-          >
-            <p className="" style={{ color: "white", display: "inline-block" }}>
-              {numberOfSelectedImages} out of {imageBlobArr.length}
-            </p>
+    <StyledHorizClusterSection>
+      <div
+        className={"d-flex flex-row scrollMenu" + (isFullScreen ? "" : " m-2")}
+      >
+        {!isFullScreen && (
+          <div className="d-flex flex-column">
+            {/* Selected Text above images */}
+            <div
+              className="d-inline-flex flex-row clusterNum "
+              style={{
+                backgroundColor: "#282828",
+                borderRadius: "3px 3px 0px 0px",
+                padding: "3px",
+                width: "min-content",
+              }}
+            >
+              <p
+                className=""
+                style={{ color: "white", display: "inline-block" }}
+              >
+                {numberOfSelectedImages} out of {imageBlobArr.length}
+              </p>
+            </div>
+            {/* Horizontal Image Div */}
+            <div
+              className="d-flex flex-row"
+              style={{
+                backgroundColor: "#282828",
+                borderRadius: "0px 3px 3px 3px",
+              }}
+            >
+              {/* Creates all the image cards */}
+              {imageCards}
+            </div>
           </div>
-          {/* Horizontal Image Div */}
+        )}
+
+        {isFullScreen && (
           <div
             className="d-flex flex-row"
             style={{
@@ -92,21 +111,16 @@ export default function Cluster({ imageBlobArr, isFullScreen }) {
             {/* Creates all the image cards */}
             {imageCards}
           </div>
-        </div>
-      )}
-
-      {isFullScreen && (
-        <div
-          className="d-flex flex-row"
-          style={{
-            backgroundColor: "#282828",
-            borderRadius: "0px 3px 3px 3px",
-          }}
-        >
-          {/* Creates all the image cards */}
-          {imageCards}
-        </div>
-      )}
-    </div>
+        )}
+      </div>
+    </StyledHorizClusterSection>
   );
 }
+
+const StyledHorizClusterSection = styled.section`
+  .scrollMenu {
+    overflow-x: scroll;
+    overflow-y: hidden;
+    white-space: nowrap;
+  }
+`;

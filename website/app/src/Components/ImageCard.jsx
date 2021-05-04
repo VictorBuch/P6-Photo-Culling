@@ -35,37 +35,35 @@ export default function ImageCard(props) {
     }
   }, [selectedImageKey]);
 
-  function acceptImage() {
-    if (isAccepted) {
-      console.log("accepted");
-      props.setNumberOfSelectedImages((prev) => prev - 1);
-      setTotalNumSelectedImages((prev) => prev - 1);
+  // function acceptImage() {
+  //   if (isAccepted) {
+  //     props.setNumberOfSelectedImages((prev) => prev - 1);
+  //     setTotalNumSelectedImages((prev) => prev - 1);
 
-      // If an image is selected we want it to be deleted from the global selected image key array
-      // React likes states to not be directly changed so copy the global state array
-      const acceptedImagesKeysCopy = [...acceptedImagesKeys];
-      acceptedImagesKeysCopy.splice(
-        acceptedImagesKeysCopy.indexOf(props.blob),
-        1
-      ); // find the index of the key and delete it
-      setAcceptedImagesKeys([...acceptedImagesKeysCopy]); // set the state array to the new modified array
-    } else {
-      console.log("Not accepted");
-      props.setNumberOfSelectedImages((prev) => prev + 1);
-      setTotalNumSelectedImages((prev) => prev + 1);
+  //     // If an image is selected we want it to be deleted from the global selected image key array
+  //     // React likes states to not be directly changed so copy the global state array
+  //     const acceptedImagesKeysCopy = [...acceptedImagesKeys];
+  //     acceptedImagesKeysCopy.splice(
+  //       acceptedImagesKeysCopy.indexOf(props.blob),
+  //       1
+  //     ); // find the index of the key and delete it
+  //     setAcceptedImagesKeys([...acceptedImagesKeysCopy]); // set the state array to the new modified array
+  //   } else {
+  //     props.setNumberOfSelectedImages((prev) => prev + 1);
+  //     setTotalNumSelectedImages((prev) => prev + 1);
 
-      // the image key doesnt exist in the global image selected key array
-      // make a copy of the global array
-      const acceptedImagesKeysCopy = [...acceptedImagesKeys];
-      acceptedImagesKeysCopy.push(props.blob); // add the key of the selected image
-      setAcceptedImagesKeys([...acceptedImagesKeysCopy]); // set the state to the modified array
-    }
-    return setIsAccepted(!isAccepted);
-  }
+  //     // the image key doesnt exist in the global image selected key array
+  //     // make a copy of the global array
+  //     const acceptedImagesKeysCopy = [...acceptedImagesKeys];
+  //     acceptedImagesKeysCopy.push(props.blob); // add the key of the selected image
+  //     setAcceptedImagesKeys([...acceptedImagesKeysCopy]); // set the state to the modified array
+  //   }
+  //   return setIsAccepted(!isAccepted);
+  // }
 
-  function handleSelected(e) {
-    setSelectedImageKey(e.target.src);
-  }
+  // function handleSelected(e) {
+  //   setSelectedImageKey(e.target.src);
+  // }
 
   const rejected = (
     <svg
@@ -75,7 +73,7 @@ export default function ImageCard(props) {
       width="19"
       height="17"
       viewBox="0 0 19 17"
-      onClick={acceptImage}
+      // onClick={acceptImage}
     >
       <rect
         id="Rectangle_97"
@@ -115,7 +113,7 @@ export default function ImageCard(props) {
       width="19"
       height="17"
       viewBox="0 0 19 17"
-      onClick={acceptImage}
+      // onClick={acceptImage}
     >
       <g
         id="Rectangle_95"
@@ -150,7 +148,7 @@ export default function ImageCard(props) {
           key={props.blob}
           src={props.blob}
           alt=""
-          onClick={handleSelected}
+          // onClick={handleSelected}
         />
         <div
           className="card-body"

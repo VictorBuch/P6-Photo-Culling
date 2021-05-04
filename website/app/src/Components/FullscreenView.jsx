@@ -11,12 +11,30 @@ import styled from "styled-components";
 export default function FullscreenView() {
   //states
 
-  const { globalyStoredClusters, globalSelectedImageKey } = useContext(
-    NavContext
-  );
+  const {
+    globalyStoredClusters,
+    globalSelectedImageKey,
+    globalAcceptedImages,
+  } = useContext(NavContext);
   const [storedClusters, setStoredClusters] = globalyStoredClusters;
   const [selectedImageKey, setSelectedImageKey] = globalSelectedImageKey;
-  const [clusterIndex, setClusterIndex] = useState(0);
+  const [acceptedImageKeys, setAcceptedImageKeys] = globalAcceptedImages;
+
+  // local state
+  const [clusterIndex, setClusterIndex] = useState(
+    storedClusters.findIndex((element) => element.includes(selectedImageKey))
+  );
+
+  const [acceptedClustersImages, setAcceptedClustersImages] = useState(
+    storedClusters[clusterIndex].filter((element) => {
+      return acceptedImageKeys.find((e) => e === element);
+    })
+  );
+  const [nonAcceptedClustersImages, setNonAcceptedClustersImages] = useState(
+    storedClusters[clusterIndex].filter((element) => {
+      return !acceptedImageKeys.includes(element);
+    })
+  );
 
   function changeOffset(direction) {
     if (clusterIndex + direction >= storedClusters.length - 1) {
@@ -25,15 +43,26 @@ export default function FullscreenView() {
     if (clusterIndex + direction <= 0) {
       return setClusterIndex(storedClusters.length - 1);
     }
-    console.log("Got to change offset bottom");
     setClusterIndex((prev) => (prev += direction));
   }
 
   useEffect(() => {
-    setClusterIndex(
-      storedClusters.findIndex((element) => element.includes(selectedImageKey))
+    // Set the accepted blob array bt filtering the current cluster array
+    // then find the new instance of blob key that matches the accepted key
+    setAcceptedClustersImages(
+      storedClusters[clusterIndex].filter((element) => {
+        return acceptedImageKeys.find((e) => e === element);
+      })
     );
-  }, []);
+
+    // set the blob array to only include non accepted images
+    // this is done by checking the current cluster array and filtering by excluding the acceptedKey blobs
+    setNonAcceptedClustersImages(
+      storedClusters[clusterIndex].filter((element) => {
+        return !acceptedImageKeys.includes(element);
+      })
+    );
+  }, [acceptedImageKeys, clusterIndex]);
 
   return (
     <StyledFullscreenSection
@@ -55,8 +84,17 @@ export default function FullscreenView() {
       <p className="empty"></p>
 
       <Cluster
-        imageBlobArr={storedClusters[clusterIndex]}
+        className="acceptedCluster"
+        imageBlobArr={acceptedClustersImages}
+        isAcceptedCluster={true}
         isFullScreen={true}
+      />
+
+      <Cluster
+        className="cluster"
+        imageBlobArr={nonAcceptedClustersImages}
+        isFullScreen={true}
+        isAcceptedCluster={true}
       />
     </StyledFullscreenSection>
   );
@@ -82,6 +120,13 @@ const StyledFullscreenSection = styled.section`
     align-items: right;
   }
 
+  .acceptedCluster {
+    grid-area: 3 / 1 / 3 / 2;
+    height: 11rem;
+    width: minMax(0%, 50%);
+    overflow: hidden;
+  }
+ 
   /* Meta data for displaye image*/
   .bigImageInfo {
     color: white;

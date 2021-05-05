@@ -78,7 +78,7 @@ export default function ImageUploadBtn({
   );
 }
 
-const StyledUploadBtnSection = styled.section`
+const StyledUploadBtnSection = styled.div`
   h1 {
     color: white;
   }

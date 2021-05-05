@@ -50,9 +50,9 @@ export default function FullscreenView() {
         }
         alt=""
       />
-      <h1 className="bigImageInfo">Info and shit</h1>
+      <h1 className="bigImageInfo grid-item">Info and shit</h1>
 
-      <p className="empty"></p>
+      <p className="empty grid-item"></p>
 
       <Cluster
         imageBlobArr={storedClusters[clusterIndex]}
@@ -70,7 +70,7 @@ const StyledFullscreenSection = styled.section`
 
   /* Vertical cluster*/
   .vertical-cluster {
-    grid-area: 2 / 1 / 2 / 1;
+    grid-area: 1 / 1 / 2 / 1;
     align-items: center;
   }
 
@@ -79,7 +79,14 @@ const StyledFullscreenSection = styled.section`
     grid-area: 1 / 2 / 3 / 3;
     height: 100%;
     object-fit: contain;
-    align-items: right;
+    justify-content: center;
+  }
+
+  .acceptedCluster {
+    grid-area: 3 / 1 / 3 / 2;
+    height: 11rem;
+    width: minMax(0%, 50%);
+    overflow: hidden;
   }
 
   /* Meta data for displaye image*/

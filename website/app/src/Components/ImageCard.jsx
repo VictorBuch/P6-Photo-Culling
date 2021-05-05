@@ -141,35 +141,21 @@ export default function ImageCard(props) {
   );
 
   return (
-    <StyledImageCardSection>
-      <div
-        className={"card" + (isSelected ? " cardSelected" : "")}
-        style={{ margin: "5px" }}
-      >
+    <StyledImageCardDiv>
+      <div className={"card" + (isSelected ? " cardSelected" : "")}>
         <img
           key={props.blob}
           src={props.blob}
           alt=""
           onClick={handleSelected}
         />
-        <div
-          className="card-body"
-          style={{
-            width: "100%",
-            height: "20%",
-            textAlign: "center",
-            backgroundColor: "#282828",
-            padding: "0px 0px 0px 0px",
-          }}
-        >
-          {isAccepted ? accepted : rejected}
-        </div>
+        <div className="card-body">{isAccepted ? accepted : rejected}</div>
       </div>
-    </StyledImageCardSection>
+    </StyledImageCardDiv>
   );
 }
 
-const StyledImageCardSection = styled.section`
+const StyledImageCardDiv = styled.div`
   .card-img-top {
     width: auto;
     height: 15vh;
@@ -178,6 +164,15 @@ const StyledImageCardSection = styled.section`
 
   .card {
     border: none;
+    margin: "5px";
+  }
+
+  .card-body {
+    width: 100%;
+    height: 20%;
+    text-align: center;
+    background-color: #282828;
+    padding: 0px 0px 0px 0px;
   }
 
   .cardAccepted {

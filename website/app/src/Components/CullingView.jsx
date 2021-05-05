@@ -31,11 +31,9 @@ export default function CullingView({ imageBlobArr }) {
   function handleKeyDown(e) {
     switch (e.key) {
       case "f":
-        if (selectedImageKey) {
-          setIsFullScreen(true);
-          applyFullscreenSettings();
-        }
-        document.removeEventListener("keydown", handleKeyDown);
+        setIsFullScreen(true);
+        applyFullscreenSettings();
+
         break;
       case "Escape":
         setIsFullScreen(false);

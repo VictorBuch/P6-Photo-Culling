@@ -133,7 +133,6 @@ min-height: 300px;
 `}
 `;
 
-
 const StyledSelectedText = styled.p`
   color: white;
 `;

@@ -7,7 +7,11 @@ import styled from "styled-components";
 // import tensorflow
 const tf = require("@tensorflow/tfjs");
 
-export default function Cluster({ imageBlobArr, isFullScreen }) {
+export default function Cluster({
+  imageBlobArr,
+  isFullScreen,
+  isAcceptedCluster,
+}) {
   // Global variables
   const { globalyStoredClusters } = useContext(NavContext);
   const [storedClusters, setStoredClusters] = globalyStoredClusters;
@@ -87,21 +91,6 @@ export default function Cluster({ imageBlobArr, isFullScreen }) {
       </StyledRowContainer>
     );
   }
-  return (
-    <StyledRowContainer isOpen={isOpen}>
-      <StyledColumnContainer>
-        <StyledSelectedText>
-          {numberOfSelectedImages} / {imageBlobArr.length}
-        </StyledSelectedText>
-        <StyledOpenButton
-          onClick={() => setIsOpen((prev) => !prev)}
-        ></StyledOpenButton>
-      </StyledColumnContainer>
-      <StyledClusterContainer isOpen={isOpen}>
-        {imageCards}
-      </StyledClusterContainer>
-    </StyledRowContainer>
-  );
 }
 
 const StyledClusterContainer = styled.div`
@@ -144,7 +133,8 @@ min-height: 300px;
 `}
 `;
 
-const StyledSelectedText = styled.div`
+
+const StyledSelectedText = styled.p`
   color: white;
 `;
 

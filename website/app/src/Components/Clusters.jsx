@@ -34,7 +34,6 @@ export default function Clusters(props) {
       prevClusterIndex = index;
       clusterNum++;
       prevDateTimeOriginal = element[1];
-      console.log(element[1]);
 
       const newCluster = props.imageBlobArr.slice(
         clusterArray[clusterNum][0],
@@ -42,14 +41,12 @@ export default function Clusters(props) {
       );
 
       return (
-        <StyledClustersSection>
-          <Cluster
-            id="cluster"
-            key={clusterNum}
-            imageBlobArr={newCluster}
-            isFullScreen={props.isFullScreen}
-          />
-        </StyledClustersSection>
+        <Cluster
+          id="cluster"
+          key={clusterNum}
+          imageBlobArr={newCluster}
+          isFullScreen={props.isFullScreen}
+        />
       );
     } else {
       prevDateTimeOriginal = element[1];

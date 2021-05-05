@@ -15,9 +15,10 @@ export default function Loader() {
   );
 }
 
-const StyledLoaderSection = styled.div`
-  height: 100vh;
 
+const StyledLoaderSection = styled.section`
+  height: 100vh;
+  
   h3 {
     color: white;
     display: block;

@@ -37,7 +37,6 @@ export default function ImageCard(props) {
 
   function acceptImage() {
     if (isAccepted) {
-      console.log("accepted");
       props.setNumberOfSelectedImages((prev) => prev - 1);
       setTotalNumSelectedImages((prev) => prev - 1);
 
@@ -50,7 +49,6 @@ export default function ImageCard(props) {
       ); // find the index of the key and delete it
       setAcceptedImagesKeys([...acceptedImagesKeysCopy]); // set the state array to the new modified array
     } else {
-      console.log("Not accepted");
       props.setNumberOfSelectedImages((prev) => prev + 1);
       setTotalNumSelectedImages((prev) => prev + 1);
 

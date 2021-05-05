@@ -66,23 +66,25 @@ export default function FullscreenView() {
 
   return (
     <StyledFullscreenSection
-      className="grid-container-fluid m-2"
+      className="grid-container-fluid"
       id="fullscreenView"
     >
-      <span className="h-cluster grid-item">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          height="24px"
-          viewBox="0 0 24 24"
-          width="24px"
-          fill="#FFFFFF"
-        >
-          <path d="M0 0h24v24H0z" fill="none" />
-          <path d="M11.99 18.54l-7.37-5.73L3 14.07l9 7 9-7-1.63-1.27-7.38 5.74zM12 16l7.36-5.73L21 9l-9-7-9 7 1.63 1.27L12 16z" />
-        </svg>
-        <span> Clusters</span>
-      </span>
-      <VerticalCluster index={clusterIndex} setOffset={changeOffset} />
+      <div className="vertical-cluster">
+        <h1>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="24px"
+            viewBox="0 0 24 24"
+            width="24px"
+            fill="#b9b9b9"
+          >
+            <path d="M0 0h24v24H0z" fill="none" />
+            <path d="M11.99 18.54l-7.37-5.73L3 14.07l9 7 9-7-1.63-1.27-7.38 5.74zM12 16l7.36-5.73L21 9l-9-7-9 7 1.63 1.27L12 16z" />
+          </svg>
+          Clusters
+        </h1>
+        <VerticalCluster index={clusterIndex} setOffset={changeOffset} />
+      </div>
 
       <div className="bigImageContainer grid-item">
         `
@@ -159,27 +161,6 @@ export default function FullscreenView() {
         </ul>
       </div>
 
-      <p className="empty"></p>
-
-      <span className="h-autoculling grid-item">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          height="24px"
-          viewBox="0 0 24 24"
-          width="24px"
-          fill="#FFFFFF"
-        >
-          <path d="M0 0h24v24H0z" fill="none" />
-          <path d="M15 9H9v6h6V9zm-2 4h-2v-2h2v2zm8-2V9h-2V7c0-1.1-.9-2-2-2h-2V3h-2v2h-2V3H9v2H7c-1.1 0-2 .9-2 2v2H3v2h2v2H3v2h2v2c0 1.1.9 2 2 2h2v2h2v-2h2v2h2v-2h2c1.1 0 2-.9 2-2v-2h2v-2h-2v-2h2zm-4 6H7V7h10v10z" />
-        </svg>
-        <span> Autoculling</span>
-        <p>
-          Confidence <br></br> Images accepted <br></br> Clusters completed{" "}
-          <br></br>
-          Personalization learned <br></br> Accepted suggestions <br></br>{" "}
-          Changed suggestions
-        </p>
-      </span>
       <Cluster
         className="acceptedCluster"
         imageBlobArr={acceptedClustersImages}
@@ -188,7 +169,7 @@ export default function FullscreenView() {
       />
 
       <Cluster
-        className="cluster"
+        className="horizontalCluster"
         imageBlobArr={nonAcceptedClustersImages}
         isFullScreen={true}
         isAcceptedCluster={true}
@@ -198,7 +179,6 @@ export default function FullscreenView() {
 }
 
 const StyledFullscreenSection = styled.section`
-
   background-color: #0d0d0d;
   margin: 0 !important;
   display: grid;
@@ -208,13 +188,7 @@ const StyledFullscreenSection = styled.section`
   grid-template-areas:
     "vertical-cluster bigImageContainer bigImageContainer bigImageContainer"
     "bigImageInfo bigImageContainer bigImageContainer bigImageContainer"
-    "horizontal-cluster horizontal-cluster horizontal-cluster horizontal-cluster";
-
-  .h-cluster {
-    color: white;
-    font-size: 20px;
-    padding-top: 0.3rem;
-  }
+    "horizontalCluster horizontalCluster horizontalCluster horizontalCluster";
 
   .bigImageInfo {
     color: white;
@@ -224,9 +198,12 @@ const StyledFullscreenSection = styled.section`
   }
 
   .vertical-cluster {
-    grid-area: vertical-cluster;
+    /* grid-area: verticalCluster; */
     align-items: center;
     background-color: #282828;
+    h1 {
+      padding-top: 0.5rem;
+    }
   }
 
   .bigImageContainer {
@@ -235,44 +212,35 @@ const StyledFullscreenSection = styled.section`
     margin: 30px 30px 30px 200px;
   }
 
-  .h-autoculling {
-    color: white;
-    grid-area: 3 / 1 / 3 / 1;
-    font-size: 20px;
-
-    p {
-      font-size: 16px;
-      padding-left: 0.6rem;
-    }
-  }
-
   /* Horizontal cluster*/
   .horizontal-cluster {
-    grid-area: 4 / 1 / 4 / 3;
-    position: absolute;
+    grid-area: horizontalCluster;
+    /* position: absolute; */
     align-items: baseline;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.6); /* Black see-through */
     width: 100%;
-    height: 20%;
-    font-size: 15px; /* Changes card size within cluster */
+    /* height: 20%px; */
+    font-size: 17px; /* Changes card size within cluster */
     padding: 1em 1em 1em 1em;
+    background-color: #282828;
+    border-top: 2px solid #b9b9b9;
   }
 
   .card {
     width: 12em;
     height: 100%;
     background-color: transparent;
-    margin: 0.4em;
+    margin: 0.7em;
+  }
 
   .bigImage {
     height: 100%;
     object-fit: contain;
-    //padding-left: 10px;
+    /* padding-left: 10px; */
   }
 
   .bigImageMetadata {
-    //background-color: green;
+    /* background-color: green; */
     top: 80%;
     padding-left: 15px;
     list-style-type: none;
@@ -288,15 +256,7 @@ const StyledFullscreenSection = styled.section`
     margin-top: 0;
   }
 
-  .horizontal-cluster {
-    grid-area: horizontal-cluster;
-    height: 11rem;
-    padding-bottom: 10px;
-    background-color: #282828;
-    border-top: 2px solid #b9b9b9;
-  }
-
-  //other elements
+  /* other elements */
 
   h1 {
     font-size: 20px;
@@ -318,45 +278,10 @@ const StyledFullscreenSection = styled.section`
     color: transparent;
   }
 
-  //height: 100vh;
-  //display: grid;
-  //grid-template: 30rem 8rem auto / 20rem auto;
-  //gap: 3px;
-  //background-color: #0D0D0D;
-
-  /* Vertical cluster*/
-  //.vertical-cluster {
-  //  grid-area: 2 / 1 / 2 / 1;
-  //  align-items: center;
-  //  background-color: #282828;
-  //}
-
-  /* Fullscreen image*/
-  //.bigImage {
-  //  grid-area: 1 / 2 / 3 / 3;
-  //  height: 100%;
-  //  object-fit: contain;
-  //  align-items: right;
-  //  padding: 30px;
-  //}
-
-  //.acceptedCluster {
-  //  grid-area: 3 / 1 / 3 / 2;
-  //  height: 11rem;
-  //  width: minMax(0%, 50%);
-  //  overflow: hidden;
-  //}
-
-  /* Meta data for displaye image*/
-  //.bigImageInfo {
-  //  color: white;
-  //  grid-area: 2 / 1 / 2 / 1;
-  //  background-color: #282828;
-  //}
-  /* Horizontal cluster*/
-  //.horizontal-cluster {
-  //  grid-area: 3 / 1 / 3 / 3;
-  //  height: 11rem;
-  //  padding-bottom: 10px;
-  //}
+  /* .acceptedCluster {
+    grid-area: 3 / 1 / 3 / 2;
+    height: 11rem;
+    width: minMax(0%, 50%);
+    overflow: hidden;
+  } */
 `;

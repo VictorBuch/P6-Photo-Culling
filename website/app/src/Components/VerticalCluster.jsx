@@ -84,7 +84,7 @@ const StyledVertClusterSection = styled.section`
   }
   .overlay-big {
     position: absolute;
-    bottom: 63.4%;
+    bottom: 62%;
     background: rgba(0, 0, 0, 0.6); /* Black see-through */
     width: 1%;
     height: 1%;

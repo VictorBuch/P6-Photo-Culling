@@ -14,10 +14,12 @@ var fullscreen = false;
 
 function applyFullscreenSettings() {
   document.getElementById("appNav").style.display = "none";
+  document.body.style.overflow = "hidden";
 }
 
 function applyNetflixSettings() {
   document.getElementById("appNav").style.display = "block";
+  document.body.style.overflow = "scroll";
 }
 
 export default function CullingView({ imageBlobArr }) {

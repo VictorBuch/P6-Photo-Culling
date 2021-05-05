@@ -105,6 +105,10 @@ const StyledNetflixSection = styled.section`
     max-width: 200px;
     max-height: 100px;
   }
+
+  .eWeylI {
+    color: #B9B9B9;
+  }
 `;
 
 

@@ -142,7 +142,7 @@ export default function ImageCard(props) {
 
   return (
     <StyledImageCardSection>
-      
+      <div style={{width: "100%", height: "80%", marginTop: "5px"}}>
         <StyledImage
           key={props.blob}
           src={props.blob}
@@ -151,6 +151,7 @@ export default function ImageCard(props) {
           isSelected={isSelected}
           >
         </StyledImage>
+        </div>
         <span style={{textAlign: "center"}}>
           {isAccepted ? accepted : rejected}
         </span>
@@ -168,6 +169,7 @@ margin-left: 10px;
 border: none;
 display: flex;
 flex-direction: column;
+padding-bottom: 8px;
 
   .card-img-top {
     width: auto;

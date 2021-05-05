@@ -63,7 +63,7 @@ const StyledClustersSection = styled.section`
     scrollbar-color: rgba(155, 155, 155, 0.5) transparent;
   }
   ::-webkit-scrollbar {
-    width: 5px;
+    width: 2px;
   }
   ::-webkit-scrollbar-track {
     background: transparent;

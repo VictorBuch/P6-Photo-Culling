@@ -130,6 +130,9 @@ const StyledClusterContainer = styled.div`
   overflow-y: hidden;
   object-fit: contain;
   height: fit-content;
+  ::-webkit-scrollbar {
+    scrollbar-width: thin;
+  }
 
 
   ${(props) =>
@@ -144,11 +147,10 @@ const StyledColumnContainer = styled.div`
   min-width: 50px;
   display: flex;
   flex-direction: column;
-  //background-color: green;
 `;
 
 const StyledRowContainer = styled.div`
-  //background: red;
+  background: #282828;
   display: flex;
   flex-direction: row;
   flex:3;

@@ -77,8 +77,8 @@ export default function CullingView({ imageBlobArr }) {
   }
 
   const netflix = (
-    <div>
-      <div className="container-fluid m-2">
+    <div style={{margin: 0+'!important'}}>
+      <div className="container-fluid" style={{padding: 0}}>
         <div className="d-flex flex-column">
           <StyledNetflixSection>
             <Clusters imageBlobArr={imageBlobArr} isFullScreen={false} />

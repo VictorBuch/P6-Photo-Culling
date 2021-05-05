@@ -91,22 +91,6 @@ export default function Cluster({
       </StyledRowContainer>
     );
   }
-  return (
-    <StyledRowContainer isOpen={isOpen}>
-      <StyledColumnContainer>
-        <StyledSelectedText>
-          {numberOfSelectedImages} / {imageBlobArr.length}
-        </StyledSelectedText>
-        <StyledOpenButton
-          onClick={() => setIsOpen((prev) => !prev)}
-        ></StyledOpenButton>
-      </StyledColumnContainer>
-      <StyledClusterContainer isOpen={isOpen}>
-        {imageCards}
-      </StyledClusterContainer>
-    </StyledRowContainer>
-
-  );
 }
 
 const StyledClusterContainer = styled.div`
@@ -149,7 +133,7 @@ min-height: 300px;
 `}
 `;
 
-const StyledSelectedText = styled.text`
+const StyledSelectedText = styled.p`
   color: white;
 `;
 

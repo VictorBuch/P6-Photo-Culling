@@ -9,6 +9,8 @@ import FullscreenView from "./FullscreenView";
 import styled from "styled-components";
 
 var i = 0;
+var ii = 0;
+var fullscreen = false;
 
 function applyFullscreenSettings() {
   document.getElementById("appNav").style.display = "none";
@@ -21,8 +23,6 @@ function applyNetflixSettings() {
 }
 
 export default function CullingView({ imageBlobArr }) {
-  var JSZip = require("jszip");
-
   const {
     globalSelectedImageKey,
     globalAcceptedImages,
@@ -36,63 +36,78 @@ export default function CullingView({ imageBlobArr }) {
 
   const [isFullScreen, setIsFullScreen] = useState(false);
 
+  const [firstRender, setFirstRender] = useState(false);
+
   useEffect(() => {
-    setSelectedImageKey(storedClusters[clusterIndex][0]);
-    document.addEventListener("keydown", handleKeyDown);
-    console.log("making eventlistener");
+    if (!firstRender) {
+      setSelectedImageKey(storedClusters[ii][0]);
+      document.addEventListener("keydown", handleKeyDown);
+      setFirstRender(true);
+      console.log("making eventlistener");
+    }
   }, []);
 
+  // some minor bug here but not too bad
   function changeOffset(direction) {
-    console.log("Direction");
-    console.log(direction);
-    if (clusterIndex + direction >= storedClusters.length - 1) {
-      return setClusterIndex(0);
+    let selectedCard = document.querySelector(".cardSelected");
+    selectedCard.scrollIntoView({ behavior: "smooth", block: "center" });
+    if (ii + direction > storedClusters.length - 1) {
+      // ii = 0;
+      // return setSelectedImageKey(storedClusters[ii][0]);
+      return;
     }
-    if (clusterIndex + direction <= 0) {
-      return setClusterIndex(storedClusters.length - 1);
+    if (ii + direction < 0) {
+      // ii = storedClusters.length - 1;
+      // return setSelectedImageKey(storedClusters[ii][0]);
+      return;
     }
-    console.log("set it");
-    setClusterIndex((prev) => (prev += direction));
+    ii += direction;
+    setSelectedImageKey(storedClusters[ii][0]);
   }
 
   function handleKeyDown(e) {
     e.preventDefault();
     switch (e.key) {
       case "f":
-          setIsFullScreen(true);
-          applyFullscreenSettings();
-
-
+        fullscreen = true;
         setIsFullScreen(true);
         applyFullscreenSettings();
 
         break;
       case "Escape":
+        fullscreen = false;
         setIsFullScreen(false);
         applyNetflixSettings();
         break;
 
       // Cluster controlls withe keyboard
-      // case "ArrowDown":
-      //   changeOffset(1);
-      //   break;
-      // case "ArrowUp":
-      //   changeOffset(-1);
-      //   break;
+      case "ArrowDown":
+        if (fullscreen) {
+          return;
+        }
+        changeOffset(1);
+
+        break;
+      case "ArrowUp":
+        if (fullscreen) {
+          return;
+        }
+        changeOffset(-1);
+        break;
       case "ArrowLeft":
         if (i - 1 < 0) return;
         i -= 1;
         try {
-          setSelectedImageKey(storedClusters[clusterIndex][i]);
+          setSelectedImageKey(storedClusters[ii][i]);
         } catch (error) {
           console.log(error);
         }
         break;
       case "ArrowRight":
-        if (i + 1 > storedClusters[clusterIndex].length - 1) return;
+        if (i + 1 > storedClusters[ii].length - 1) return;
         i += 1;
         try {
-          setSelectedImageKey(storedClusters[clusterIndex][i]);
+          setSelectedImageKey(storedClusters[ii][i]);
         } catch (error) {
           console.log(error);
         }

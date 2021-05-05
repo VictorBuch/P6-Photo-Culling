@@ -71,6 +71,7 @@ export default function ImageUploadBtn({
             accept="image/*"
             onChange={loadImages}
             multiple
+            autofocus
           />
         </label>
       </div>

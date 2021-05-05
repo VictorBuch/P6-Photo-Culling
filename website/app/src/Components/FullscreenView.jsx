@@ -126,7 +126,7 @@ const StyledFullscreenSection = styled.section`
     width: minMax(0%, 50%);
     overflow: hidden;
   }
- 
+
   /* Meta data for displaye image*/
   .bigImageInfo {
     color: white;

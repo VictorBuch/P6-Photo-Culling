@@ -73,7 +73,7 @@ export default function ImageCard(props) {
       width="19"
       height="17"
       viewBox="0 0 19 17"
-      // onClick={acceptImage}
+      onClick={acceptImage}
     >
       <rect
         id="Rectangle_97"
@@ -113,7 +113,7 @@ export default function ImageCard(props) {
       width="19"
       height="17"
       viewBox="0 0 19 17"
-      // onClick={acceptImage}
+      onClick={acceptImage}
     >
       <g
         id="Rectangle_95"
@@ -148,7 +148,7 @@ export default function ImageCard(props) {
           key={props.blob}
           src={props.blob}
           alt=""
-          // onClick={handleSelected}
+          onClick={handleSelected}
         />
         <div
           className="card-body"

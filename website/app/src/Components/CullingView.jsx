@@ -49,8 +49,6 @@ export default function CullingView({ imageBlobArr }) {
 
   // some minor bug here but not too bad
   function changeOffset(direction) {
-    let selectedCard = document.querySelector(".cardSelected");
-    selectedCard.scrollIntoView({ behavior: "smooth", block: "center" });
     if (ii + direction > storedClusters.length - 1) {
       // ii = 0;
       // return setSelectedImageKey(storedClusters[ii][0]);
@@ -63,6 +61,8 @@ export default function CullingView({ imageBlobArr }) {
     }
     ii += direction;
     setSelectedImageKey(storedClusters[ii][0]);
+    let selectedCard = document.querySelector(".cardSelected");
+    selectedCard.scrollIntoView({ behavior: "smooth", block: "center" });
   }
 
   function handleKeyDown(e) {

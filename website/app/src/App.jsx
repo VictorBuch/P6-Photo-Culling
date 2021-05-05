@@ -68,5 +68,4 @@ const StyledAppSection = styled.section`
 
   background-color: #282828;
   overflow-x: hidden;
-  
 `;

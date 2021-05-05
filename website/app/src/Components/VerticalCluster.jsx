@@ -62,7 +62,6 @@ const StyledVertClusterSection = styled.section`
     object-fit: contain;
     height: 100%;
     width: 12rem;
-    margin: 1em 0em 1em 0em;
   }
   .bigCluster {
     object-fit: contain;
@@ -74,7 +73,7 @@ const StyledVertClusterSection = styled.section`
   }
   .overlay {
     position: absolute;
-    bottom: 10%;
+    bottom: 0%;
     background: rgba(0, 0, 0, 0.6); /* Black see-through */
     width: 1%;
     height: 1%;
@@ -85,7 +84,7 @@ const StyledVertClusterSection = styled.section`
   }
   .overlay-big {
     position: absolute;
-    bottom: 64.8%;
+    bottom: 63.4%;
     background: rgba(0, 0, 0, 0.6); /* Black see-through */
     width: 1%;
     height: 1%;

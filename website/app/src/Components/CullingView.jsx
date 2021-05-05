@@ -105,10 +105,6 @@ const StyledNetflixSection = styled.section`
   height: 100vh;
   display: grid;
 
-  .scrollMenu {
-    height: 20rem;
-  }
-
   .card {
     min-width: 200px;
     min-height: 100px;

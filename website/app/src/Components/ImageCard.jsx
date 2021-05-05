@@ -164,7 +164,6 @@ const StyledImageCardDiv = styled.div`
 
   .card {
     border: none;
-    margin: "5px";
   }
 
   .card-body {

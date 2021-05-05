@@ -142,16 +142,16 @@ export default function ImageCard(props) {
 
   return (
     <StyledImageCardSection>
-      <div style={{width: "100%", height: "80%", marginTop: "5px", backgroundColor: "#181818"}}>
-        <StyledImage
+      <StyledImageContainer isSelected={isSelected}>
+      <StyledImage
           key={props.blob}
           src={props.blob}
           alt=""
           onClick={handleSelected}
-          isSelected={isSelected}
+          //isSelected={isSelected}
           >
         </StyledImage>
-        </div>
+      </StyledImageContainer>
         <span style={{textAlign: "center"}}>
           {isAccepted ? accepted : rejected}
         </span>
@@ -159,6 +159,22 @@ export default function ImageCard(props) {
     </StyledImageCardSection>
   );
 }
+
+const StyledImageContainer = styled.div`
+width: 97%;
+height: 80%;
+margin-top: 5px;
+background-color: #181818;
+${(props) =>
+  props.isSelected &&`
+  box-shadow: 0px 0px 8px 5px rgb(180, 180, 180);
+  //outline: 3px;
+  //outline-style: solid;
+  //outline-color: #A8A8A8;
+  //outline-radius: 4px;
+  `
+}
+`
 
 const StyledImageCardSection = styled.section`
 min-width: 199px;
@@ -197,7 +213,7 @@ object-fit: contain;
 ${(props) =>
   props.isSelected &&`
   //box-shadow: 0px 0px 5px 3px rgb(110, 110, 110);
-  border: 3px;
+  border: 5px;
   border-color: #A8A8A8;
   border-radius: 4px;
 `}

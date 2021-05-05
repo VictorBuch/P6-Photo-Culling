@@ -148,6 +148,7 @@ export default function CullingView({ imageBlobArr }) {
 const StyledNetflixSection = styled.section`
   height: 100vh;
   display: grid;
+
   .scrollMenu {
     height: 20rem;
   }

@@ -69,7 +69,21 @@ export default function FullscreenView() {
       className="grid-container-fluid m-2"
       id="fullscreenView"
     >
+      <span className="h-cluster grid-item">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          height="24px"
+          viewBox="0 0 24 24"
+          width="24px"
+          fill="#FFFFFF"
+        >
+          <path d="M0 0h24v24H0z" fill="none" />
+          <path d="M11.99 18.54l-7.37-5.73L3 14.07l9 7 9-7-1.63-1.27-7.38 5.74zM12 16l7.36-5.73L21 9l-9-7-9 7 1.63 1.27L12 16z" />
+        </svg>
+        <span> Clusters</span>
+      </span>
       <VerticalCluster index={clusterIndex} setOffset={changeOffset} />
+
       <div className="bigImageContainer grid-item">
         `
         <img
@@ -147,6 +161,25 @@ export default function FullscreenView() {
 
       <p className="empty"></p>
 
+      <span className="h-autoculling grid-item">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          height="24px"
+          viewBox="0 0 24 24"
+          width="24px"
+          fill="#FFFFFF"
+        >
+          <path d="M0 0h24v24H0z" fill="none" />
+          <path d="M15 9H9v6h6V9zm-2 4h-2v-2h2v2zm8-2V9h-2V7c0-1.1-.9-2-2-2h-2V3h-2v2h-2V3H9v2H7c-1.1 0-2 .9-2 2v2H3v2h2v2H3v2h2v2c0 1.1.9 2 2 2h2v2h2v-2h2v2h2v-2h2c1.1 0 2-.9 2-2v-2h2v-2h-2v-2h2zm-4 6H7V7h10v10z" />
+        </svg>
+        <span> Autoculling</span>
+        <p>
+          Confidence <br></br> Images accepted <br></br> Clusters completed{" "}
+          <br></br>
+          Personalization learned <br></br> Accepted suggestions <br></br>{" "}
+          Changed suggestions
+        </p>
+      </span>
       <Cluster
         className="acceptedCluster"
         imageBlobArr={acceptedClustersImages}
@@ -165,9 +198,10 @@ export default function FullscreenView() {
 }
 
 const StyledFullscreenSection = styled.section`
-  display: grid;
+
   background-color: #0d0d0d;
   margin: 0 !important;
+  display: grid;
   grid-template-columns: 0.75fr 1.25fr 1fr 1fr;
   grid-template-rows: 1.9fr 0.8fr 0.8fr;
   gap: 3px 3px;
@@ -176,10 +210,10 @@ const StyledFullscreenSection = styled.section`
     "bigImageInfo bigImageContainer bigImageContainer bigImageContainer"
     "horizontal-cluster horizontal-cluster horizontal-cluster horizontal-cluster";
 
-  .card {
-    width: 12em;
-    height: 100%;
-    background-color: transparent;
+  .h-cluster {
+    color: white;
+    font-size: 20px;
+    padding-top: 0.3rem;
   }
 
   .bigImageInfo {
@@ -200,6 +234,36 @@ const StyledFullscreenSection = styled.section`
     //background-color: red;
     margin: 30px 30px 30px 200px;
   }
+
+  .h-autoculling {
+    color: white;
+    grid-area: 3 / 1 / 3 / 1;
+    font-size: 20px;
+
+    p {
+      font-size: 16px;
+      padding-left: 0.6rem;
+    }
+  }
+
+  /* Horizontal cluster*/
+  .horizontal-cluster {
+    grid-area: 4 / 1 / 4 / 3;
+    position: absolute;
+    align-items: baseline;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6); /* Black see-through */
+    width: 100%;
+    height: 20%;
+    font-size: 15px; /* Changes card size within cluster */
+    padding: 1em 1em 1em 1em;
+  }
+
+  .card {
+    width: 12em;
+    height: 100%;
+    background-color: transparent;
+    margin: 0.4em;
 
   .bigImage {
     height: 100%;

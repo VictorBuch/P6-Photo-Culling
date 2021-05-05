@@ -133,6 +133,7 @@ min-height: 300px;
 `}
 `;
 
+
 const StyledSelectedText = styled.p`
   color: white;
 `;
@@ -141,17 +142,17 @@ const StyledOpenButton = styled.button`
   color: ${(props) => (props.bg === "black" ? "black" : "blue")};
 `;
 
-const StyledFullscreenRowContainer = styled.div`
-  background: #282828;
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  min-height: 140px;
-  max-height: 140px;
-  margin-bottom: 5px;
-  overflow-y: auto;
-  overflow-x: hidden;
-`;
+// const StyledFullscreenRowContainer = styled.div`
+//   background: #282828;
+//   display: flex;
+//   flex-direction: row;
+//   width: 100%;
+//   min-height: 140px;
+//   max-height: 140px;
+//   margin-bottom: 5px;
+//   overflow-y: auto;
+//   overflow-x: hidden;
+// `;
 
 const StyledFullscreenClusterContainer = styled.div`
   display: flex !important;
@@ -168,32 +169,32 @@ flex-wrap: wrap
 `}
 `;
 
-const StyledHorizClusterSection = styled.section`
-  .scrollMenu {
-    overflow-x: scroll;
-    overflow-y: hidden;
-    white-space: nowrap;
-  }
+// const StyledHorizClusterSection = styled.section`
+//   .scrollMenu {
+//     overflow-x: scroll;
+//     overflow-y: hidden;
+//     white-space: nowrap;
+//   }
 
-  .clusterNum {
-    position: -webkit-sticky;
-    position: sticky;
-    left: 0px;
-  }
+//   .clusterNum {
+//     position: -webkit-sticky;
+//     position: sticky;
+//     left: 0px;
+//   }
 
-  * {
-    scrollbar-width: thin;
-    scrollbar-color: rgba(155, 155, 155, 0.5) transparent;
-  }
-  ::-webkit-scrollbar {
-    width: 5px;
-  }
-  ::-webkit-scrollbar-track {
-    background: transparent;
-  }
-  ::-webkit-scrollbar-thumb {
-    color: rgba(155, 155, 155, 0.5);
-    border-radius: 20px;
-    border: transparent;
-  }
-`;
+//   * {
+//     scrollbar-width: thin;
+//     scrollbar-color: rgba(155, 155, 155, 0.5) transparent;
+//   }
+//   ::-webkit-scrollbar {
+//     width: 5px;
+//   }
+//   ::-webkit-scrollbar-track {
+//     background: transparent;
+//   }
+//   ::-webkit-scrollbar-thumb {
+//     color: rgba(155, 155, 155, 0.5);
+//     border-radius: 20px;
+//     border: transparent;
+//   }
+// `;

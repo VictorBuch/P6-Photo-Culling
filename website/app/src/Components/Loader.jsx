@@ -15,6 +15,7 @@ export default function Loader() {
   );
 }
 
+
 const StyledLoaderSection = styled.section`
   height: 100vh;
   

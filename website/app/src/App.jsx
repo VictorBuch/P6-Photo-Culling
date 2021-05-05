@@ -53,6 +53,7 @@ export default function App() {
 }
 
 const StyledAppSection = styled.section`
+  overflow-y: hidden;
   :root {
     --background-color: #282828;
     --card-background-color: #414141;

@@ -37,7 +37,6 @@ export default function ImageCard(props) {
 
   function acceptImage() {
     if (isAccepted) {
-      console.log("accepted");
       props.setNumberOfSelectedImages((prev) => prev - 1);
       setTotalNumSelectedImages((prev) => prev - 1);
 
@@ -50,7 +49,6 @@ export default function ImageCard(props) {
       ); // find the index of the key and delete it
       setAcceptedImagesKeys([...acceptedImagesKeysCopy]); // set the state array to the new modified array
     } else {
-      console.log("Not accepted");
       props.setNumberOfSelectedImages((prev) => prev + 1);
       setTotalNumSelectedImages((prev) => prev + 1);
 
@@ -144,6 +142,7 @@ export default function ImageCard(props) {
     <StyledImageCardSection>
       <StyledImageContainer isSelected={isSelected}>
       <StyledImage
+
           key={props.blob}
           src={props.blob}
           alt=""
@@ -195,6 +194,14 @@ padding-bottom: 8px;
 
   .card {
     border: none;
+  }
+
+  .card-body {
+    width: 100%;
+    height: 20%;
+    text-align: center;
+    background-color: #282828;
+    padding: 0px 0px 0px 0px;
   }
 
   .cardAccepted {

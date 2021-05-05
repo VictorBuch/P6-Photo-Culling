@@ -68,11 +68,4 @@ const StyledAppSection = styled.section`
 
   background-color: #181818;
   overflow-x: hidden;
-
-  @import "ImageUploadBtn";
-  @import "Loader";
-  @import "Nav";
-  @import "Clusters";
-  @import "Cluster";
-  @import "ImageCard";
 `;

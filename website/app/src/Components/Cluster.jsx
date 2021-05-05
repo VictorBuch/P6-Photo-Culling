@@ -7,7 +7,11 @@ import styled from "styled-components";
 // import tensorflow
 const tf = require("@tensorflow/tfjs");
 
-export default function Cluster({ imageBlobArr, isFullScreen }) {
+export default function Cluster({
+  imageBlobArr,
+  isFullScreen,
+  isAcceptedCluster,
+}) {
   // Global variables
   const { globalyStoredClusters } = useContext(NavContext);
   const [storedClusters, setStoredClusters] = globalyStoredClusters;
@@ -66,9 +70,9 @@ export default function Cluster({ imageBlobArr, isFullScreen }) {
 
   if (isFullScreen) {
     return (
-      <StyledRowContainer>
-        <StyledClusterContainer>{imageCards}</StyledClusterContainer>
-      </StyledRowContainer>
+      <StyledFullscreenClusterContainer className="grid-item horizontal-cluster">
+        {imageCards}
+      </StyledFullscreenClusterContainer>
     );
   } else {
     return (
@@ -89,21 +93,6 @@ export default function Cluster({ imageBlobArr, isFullScreen }) {
       </StyledRowContainer>
     );
   }
-  return (
-    <StyledRowContainer isOpen={isOpen}>
-      <StyledColumnContainer>
-        <StyledSelectedText>
-          {numberOfSelectedImages} / {imageBlobArr.length}
-        </StyledSelectedText>
-        <StyledOpenButton
-          onClick={() => setIsOpen((prev) => !prev)}
-        ></StyledOpenButton>
-      </StyledColumnContainer>
-      <StyledClusterContainer isOpen={isOpen}>
-        {imageCards}
-      </StyledClusterContainer>
-    </StyledRowContainer>
-  );
 }
 
 const arrowOpen = (
@@ -166,7 +155,7 @@ const StyledRowContainer = styled.div`
 `}
 `;
 
-const StyledSelectedText = styled.text`
+const StyledSelectedText = styled.p`
   color: white;
 `;
 
@@ -176,32 +165,59 @@ const StyledOpenButton = styled.button`
   padding-top: 30px;
 `;
 
-const StyledHorizClusterSection = styled.section`
-  .scrollMenu {
-    overflow-x: scroll;
-    overflow-y: hidden;
-    white-space: nowrap;
-  }
+// const StyledFullscreenRowContainer = styled.div`
+//   background: #282828;
+//   display: flex;
+//   flex-direction: row;
+//   width: 100%;
+//   min-height: 140px;
+//   max-height: 140px;
+//   margin-bottom: 5px;
+//   overflow-y: auto;
+//   overflow-x: hidden;
+// `;
 
-  .clusterNum {
-    position: -webkit-sticky;
-    position: sticky;
-    left: 0px;
-  }
+const StyledFullscreenClusterContainer = styled.div`
+  display: flex !important;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  overflow-y: hidden;
 
-  * {
-    scrollbar-width: thin;
-    scrollbar-color: rgba(155, 155, 155, 0.5) transparent;
-  }
-  ::-webkit-scrollbar {
-    width: 5px;
-  }
-  ::-webkit-scrollbar-track {
-    background: transparent;
-  }
-  ::-webkit-scrollbar-thumb {
-    color: rgba(155, 155, 155, 0.5);
-    border-radius: 20px;
-    border: transparent;
-  }
+  ${(props) =>
+    props.isOpen &&
+    `
+flex-wrap: wrap
+
+`}
 `;
+
+// const StyledHorizClusterSection = styled.section`
+//   .scrollMenu {
+//     overflow-x: scroll;
+//     overflow-y: hidden;
+//     white-space: nowrap;
+//   }
+
+//   .clusterNum {
+//     position: -webkit-sticky;
+//     position: sticky;
+//     left: 0px;
+//   }
+
+//   * {
+//     scrollbar-width: thin;
+//     scrollbar-color: rgba(155, 155, 155, 0.5) transparent;
+//   }
+//   ::-webkit-scrollbar {
+//     width: 5px;
+//   }
+//   ::-webkit-scrollbar-track {
+//     background: transparent;
+//   }
+//   ::-webkit-scrollbar-thumb {
+//     color: rgba(155, 155, 155, 0.5);
+//     border-radius: 20px;
+//     border: transparent;
+//   }
+// `;

@@ -21,7 +21,7 @@ export default function Nav({ imageBlobArr }) {
   );
 }
 
-const StyledNavSection = styled.section`
+const StyledNavSection = styled.nav`
   nav {
     color: #B9B9B9;
     top: 0px;

@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { NavContext } from "./NavContext";
 
 // components
@@ -8,73 +8,127 @@ import FullscreenView from "./FullscreenView";
 // styles
 import styled from "styled-components";
 
+var i = 0;
+var ii = 0;
+var fullscreen = false;
+
+function applyFullscreenSettings() {
+  document.getElementById("appNav").style.display = "none";
+  document.body.style.overflow = "hidden";
+}
+
+function applyNetflixSettings() {
+  document.getElementById("appNav").style.display = "block";
+  document.body.style.overflow = "scroll";
+}
+
 export default function CullingView({ imageBlobArr }) {
-  const [isFullScreen, setIsFullScreen] = useState(false);
-  const { globalSelectedImageKey, globalAcceptedImages } = useContext(
-    NavContext
-  );
+  const {
+    globalSelectedImageKey,
+    globalAcceptedImages,
+    globalyStoredClusters,
+  } = useContext(NavContext);
   const [selectedImageKey, setSelectedImageKey] = globalSelectedImageKey;
   const [acceptedImageKeys, setAcceptedImageKeys] = globalAcceptedImages;
+  const [storedClusters, setStoredClusters] = globalyStoredClusters;
 
-  document.addEventListener("keydown", handleKeyDown);
+  const [clusterIndex, setClusterIndex] = useState(0);
+
+  const [isFullScreen, setIsFullScreen] = useState(false);
+
+  const [firstRender, setFirstRender] = useState(false);
+
+  useEffect(() => {
+    if (!firstRender) {
+      setSelectedImageKey(storedClusters[ii][0]);
+      document.addEventListener("keydown", handleKeyDown);
+      setFirstRender(true);
+      console.log("making eventlistener");
+    }
+  }, []);
+
+  // some minor bug here but not too bad
+  function changeOffset(direction) {
+    if (ii + direction > storedClusters.length - 1) {
+      // ii = 0;
+      // return setSelectedImageKey(storedClusters[ii][0]);
+      return;
+    }
+    if (ii + direction < 0) {
+      // ii = storedClusters.length - 1;
+      // return setSelectedImageKey(storedClusters[ii][0]);
+      return;
+    }
+    ii += direction;
+    setSelectedImageKey(storedClusters[ii][0]);
+    let selectedCard = document.querySelector(".cardSelected");
+    selectedCard.scrollIntoView({ behavior: "smooth", block: "center" });
+  }
 
   function handleKeyDown(e) {
+    e.preventDefault();
     switch (e.key) {
       case "f":
-        if (selectedImageKey) {
-          setIsFullScreen(true);
-        }
-        document.removeEventListener("keydown", handleKeyDown);
+        fullscreen = true;
+        setIsFullScreen(true);
+        applyFullscreenSettings();
+
         break;
       case "Escape":
+        fullscreen = false;
         setIsFullScreen(false);
-        document.removeEventListener("keydown", handleKeyDown);
+        applyNetflixSettings();
         break;
-      case "s":
-        console.log("Firing S");
-        download(acceptedImageKeys);
+
+      // Cluster controlls withe keyboard
+      case "ArrowDown":
+        if (fullscreen) {
+          return;
+        }
+        changeOffset(1);
+
+        break;
+      case "ArrowUp":
+        if (fullscreen) {
+          return;
+        }
+        changeOffset(-1);
+        break;
+      case "ArrowLeft":
+        if (i - 1 < 0) return;
+        i -= 1;
+        try {
+          setSelectedImageKey(storedClusters[ii][i]);
+        } catch (error) {
+          console.log(error);
+        }
+        break;
+      case "ArrowRight":
+        if (i + 1 > storedClusters[ii].length - 1) return;
+        i += 1;
+        try {
+          setSelectedImageKey(storedClusters[ii][i]);
+        } catch (error) {
+          console.log(error);
+        }
         break;
       default:
         break;
     }
   }
 
-  function download(blobArray) {
-    const a = document.createElement("a");
-    a.href = blobArray[0];
-    a.download = "myImage.png";
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-  }
+  // function zipImages() {
+  //   var zip = new JSZip();
+  //   var img = zip.folder("images");
+  //   let index = 0;
+  //   for (let image of acceptedImageKeys) {
+  //     img.file(`Image${index++}.png`, image, { base64: true });
+  //   }
+  //   zip.generateAsync({ type: "blob" }).then(function (content) {
+  //     // see FileSaver.js
 
-  function downloadBlob(blobArray, name = "file.png") {
-    console.log(blobArray);
-    const blobUrl = blobArray[1];
-
-    // Create a link element
-    const link = document.createElement("a");
-
-    // Set link's href to point to the Blob URL
-    link.href = blobUrl;
-    link.download = name;
-
-    // Append link to the body
-    document.body.appendChild(link);
-
-    // Dispatch click event on the link
-    // This is necessary as link.click() does not work on the latest firefox
-    // link.dispatchEvent(
-    //   new MouseEvent("click", {
-    //     bubbles: true,
-    //     cancelable: true,
-    //     view: window,
-    //   })
-    // );
-    link.click();
-    // Remove link from body
-    document.body.removeChild(link);
-  }
+  //   });
+  // }
 
   const netflix = (
     <div style={{margin: 0+'!important'}}>
@@ -98,7 +152,6 @@ const StyledNetflixSection = styled.section`
   .scrollMenu {
     height: 20rem;
   }
-
   .card {
     min-width: 200px;
     min-height: 100px;
@@ -110,5 +163,3 @@ const StyledNetflixSection = styled.section`
     color: #B9B9B9;
   }
 `;
-
-

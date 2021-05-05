@@ -129,7 +129,7 @@ const StyledClusterContainer = styled.div`
   overflow-x: auto;
   overflow-y: hidden;
   object-fit: contain;
-  height: auto;
+  height: fit-content;
 
 
   ${(props) =>
@@ -144,15 +144,16 @@ const StyledColumnContainer = styled.div`
   min-width: 50px;
   display: flex;
   flex-direction: column;
+  //background-color: green;
 `;
 
 const StyledRowContainer = styled.div`
-  background: #282828;
+  //background: red;
   display: flex;
   flex-direction: row;
   flex:3;
   width: 100%;
-  height: 300px;
+  height: fit-content;
   margin-bottom: 5px;
   overflow-y: auto;
   overflow-x: auto;

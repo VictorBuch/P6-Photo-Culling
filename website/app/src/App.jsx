@@ -66,6 +66,6 @@ const StyledAppSection = styled.section`
     user-select: none;
   }
 
-  background-color: #282828;
+  background-color: #181818;
   overflow-x: hidden;
 `;

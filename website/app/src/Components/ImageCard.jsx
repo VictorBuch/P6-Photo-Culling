@@ -139,21 +139,53 @@ export default function ImageCard(props) {
   );
 
   return (
-    <StyledImageCardDiv>
-      <div className={"card" + (isSelected ? " cardSelected" : "")}>
-        <img
+    <StyledImageCardSection>
+      <StyledImageContainer isSelected={isSelected}>
+      <StyledImage
+
           key={props.blob}
           src={props.blob}
           alt=""
           onClick={handleSelected}
-        />
-        <div className="card-body">{isAccepted ? accepted : rejected}</div>
-      </div>
-    </StyledImageCardDiv>
+          //isSelected={isSelected}
+          >
+        </StyledImage>
+      </StyledImageContainer>
+        <span style={{textAlign: "center"}}>
+          {isAccepted ? accepted : rejected}
+        </span>
+
+    </StyledImageCardSection>
   );
 }
 
-const StyledImageCardDiv = styled.div`
+const StyledImageContainer = styled.div`
+width: 97%;
+height: 80%;
+margin-top: 5px;
+background-color: #181818;
+${(props) =>
+  props.isSelected &&`
+  box-shadow: 0px 0px 8px 5px rgb(180, 180, 180);
+  //outline: 3px;
+  //outline-style: solid;
+  //outline-color: #A8A8A8;
+  //outline-radius: 4px;
+  `
+}
+`
+
+const StyledImageCardSection = styled.section`
+min-width: 199px;
+min-height: 140px;
+max-width: 199px;
+max-height: 140px;
+margin-left: 10px;
+border: none;
+display: flex;
+flex-direction: column;
+padding-bottom: 8px;
+
   .card-img-top {
     width: auto;
     height: 15vh;
@@ -179,9 +211,17 @@ const StyledImageCardDiv = styled.div`
     box-shadow: 0px 0px 10px 7px rgb(255, 152, 18);
   }
 
-  img {
-    object-fit: contain;
-    width: 100%;
-    height: 100%;
-  }
 `;
+
+const StyledImage = styled.img`
+width: 100%;
+height: 100%;
+object-fit: contain;
+${(props) =>
+  props.isSelected &&`
+  //box-shadow: 0px 0px 5px 3px rgb(110, 110, 110);
+  border: 5px;
+  border-color: #A8A8A8;
+  border-radius: 4px;
+`}
+`

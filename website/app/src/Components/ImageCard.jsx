@@ -142,7 +142,7 @@ export default function ImageCard(props) {
 
   return (
     <StyledImageCardSection>
-      <div style={{width: "100%", height: "80%", marginTop: "5px"}}>
+      <div style={{width: "100%", height: "80%", marginTop: "5px", backgroundColor: "#181818"}}>
         <StyledImage
           key={props.blob}
           src={props.blob}
@@ -161,9 +161,9 @@ export default function ImageCard(props) {
 }
 
 const StyledImageCardSection = styled.section`
-min-width: 200px;
+min-width: 199px;
 min-height: 140px;
-max-width: 200px;
+max-width: 199px;
 max-height: 140px;
 margin-left: 10px;
 border: none;
@@ -196,6 +196,9 @@ height: 100%;
 object-fit: contain;
 ${(props) =>
   props.isSelected &&`
-  box-shadow: 0px 0px 5px 3px rgb(255, 152, 18);
+  //box-shadow: 0px 0px 5px 3px rgb(110, 110, 110);
+  border: 3px;
+  border-color: #A8A8A8;
+  border-radius: 4px;
 `}
 `

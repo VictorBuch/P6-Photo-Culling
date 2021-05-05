@@ -79,8 +79,8 @@ export default function Cluster({ imageBlobArr, isFullScreen }) {
           </StyledSelectedText>
           <StyledOpenButton
             onClick={() => setIsOpen((prev) => !prev)}
-          >
-            {isOpen ? arrowOpen : arrowClosed}
+          >              
+          {isOpen ? arrowOpen : arrowClosed}
           </StyledOpenButton>
         </StyledColumnContainer>
         <StyledClusterContainer isOpen={isOpen}>
@@ -173,6 +173,7 @@ const StyledSelectedText = styled.text`
 const StyledOpenButton = styled.button`
   background-color: transparent;
   border: none;
+  padding-top: 30px;
 `;
 
 const StyledHorizClusterSection = styled.section`

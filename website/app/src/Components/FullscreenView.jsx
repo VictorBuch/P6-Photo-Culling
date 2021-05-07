@@ -183,7 +183,7 @@ const StyledFullscreenSection = styled.section`
   margin: 0 !important;
   display: grid;
   grid-template-columns: 0.75fr 1.25fr 1fr 1fr;
-  grid-template-rows: 1.9fr 0.8fr 0.8fr;
+  grid-template-rows: 2fr 0.7fr minmax(300px, 200px);
   gap: 3px 3px;
   grid-template-areas:
     "vertical-cluster bigImageContainer bigImageContainer bigImageContainer"

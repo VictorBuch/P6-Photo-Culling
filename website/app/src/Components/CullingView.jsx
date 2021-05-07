@@ -11,15 +11,15 @@ import styled from "styled-components";
 var i = 0;
 var ii = 0;
 var fullscreen = false;
+document.body.style.overflow = "hidden";
+
 
 function applyFullscreenSettings() {
   document.getElementById("appNav").style.display = "none";
-  document.body.style.overflow = "hidden";
 }
 
 function applyNetflixSettings() {
   document.getElementById("appNav").style.display = "block";
-  document.body.style.overflow = "scroll";
 }
 
 export default function CullingView({ imageBlobArr }) {
@@ -161,5 +161,30 @@ const StyledNetflixSection = styled.section`
 
   .eWeylI {
     color: #B9B9B9;
+  }
+
+  
+  //this is weird, everything works except the width of the scrollbar, i don't have time to look into it. 
+  * {
+    ::-webkit-scrollbar {
+      width: 5px;
+    }
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+      //box-shadow: inset 0 0 5px grey;
+      border-radius: 10px;
+    }
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+      background: grey;
+      border-radius: 10px;
+    }
+
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+      background: #FE8029;
+    }
   }
 `;

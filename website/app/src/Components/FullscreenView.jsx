@@ -286,6 +286,5 @@ const StyledFullscreenSection = styled.section`
     color: transparent;
   }
 
-
 `;
 

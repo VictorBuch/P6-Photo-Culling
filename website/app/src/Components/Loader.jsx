@@ -17,7 +17,7 @@ export default function Loader() {
 
 const StyledLoaderSection = styled.section`
   height: 100vh;
-  
+
   h3 {
     color: white;
     display: block;

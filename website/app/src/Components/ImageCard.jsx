@@ -37,7 +37,7 @@ export default function ImageCard(props) {
 
   function acceptImage() {
     if (isAccepted) {
-      props.setNumberOfSelectedImages((prev) => prev - 1);
+      props.setLlocalNumberOfSelectedImages((prev) => prev - 1);
       setTotalNumSelectedImages((prev) => prev - 1);
 
       // If an image is selected we want it to be deleted from the global selected image key array
@@ -49,7 +49,7 @@ export default function ImageCard(props) {
       ); // find the index of the key and delete it
       setAcceptedImageKeys([...acceptedImageKeysCopy]); // set the state array to the new modified array
     } else {
-      props.setNumberOfSelectedImages((prev) => prev + 1);
+      props.setLlocalNumberOfSelectedImages((prev) => prev + 1);
       setTotalNumSelectedImages((prev) => prev + 1);
 
       // the image key doesnt exist in the global image selected key array

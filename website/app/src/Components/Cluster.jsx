@@ -9,11 +9,20 @@ const tf = require("@tensorflow/tfjs");
 
 export default function Cluster({ imageBlobArr, isFullScreen }) {
   // Global variables
-  const { globalyStoredClusters } = useContext(NavContext);
+  const { globalyStoredClusters, numberOfSelectedImages } = useContext(
+    NavContext
+  );
   const [storedClusters, setStoredClusters] = globalyStoredClusters;
+  const [
+    numberOfSelectedImagesTotal,
+    setNumberOfSelectedImagesTotal,
+  ] = numberOfSelectedImages;
 
   // local variables
-  const [numberOfSelectedImages, setNumberOfSelectedImages] = useState(0);
+  const [
+    localNumberOfSelectedImages,
+    setLlocalNumberOfSelectedImages,
+  ] = useState(0);
   const { globalAcceptedImages } = useContext(NavContext);
   const [acceptedImagesKeys, setAcceptedImagesKeys] = globalAcceptedImages;
   const [isOpen, setIsOpen] = useState(false);
@@ -24,10 +33,16 @@ export default function Cluster({ imageBlobArr, isFullScreen }) {
 
   // checks if any of the images in the cluster are in the global selected images array and modify the counter state based on it
   useEffect(() => {
-    imageBlobArr.map((blob) => {
+    imageBlobArr.map((blob, index) => {
+      if (!isFullScreen && index === 0) {
+        const copy = acceptedImagesKeys;
+        copy.push(blob[0]);
+        setAcceptedImagesKeys(copy);
+        setNumberOfSelectedImagesTotal((prev) => prev + 1);
+      }
       clustersArray.push(blob[0]);
       if (acceptedImagesKeys.includes(blob[0])) {
-        setNumberOfSelectedImages((prev) => (prev += 1));
+        setLlocalNumberOfSelectedImages((prev) => (prev += 1));
       }
     });
 
@@ -59,7 +74,7 @@ export default function Cluster({ imageBlobArr, isFullScreen }) {
       <ImageCard
         key={blob}
         blob={isFullScreen ? blob : blob[0]}
-        setNumberOfSelectedImages={setNumberOfSelectedImages}
+        setLlocalNumberOfSelectedImages={setLlocalNumberOfSelectedImages}
       />
     );
   });
@@ -75,7 +90,7 @@ export default function Cluster({ imageBlobArr, isFullScreen }) {
       <StyledRowContainer isOpen={isOpen}>
         <StyledColumnContainer>
           <StyledSelectedText>
-            {numberOfSelectedImages} / {imageBlobArr.length}
+            {localNumberOfSelectedImages} / {imageBlobArr.length}
           </StyledSelectedText>
           <StyledOpenButton onClick={() => setIsOpen((prev) => !prev)}>
             {isOpen ? arrowOpen : arrowClosed}

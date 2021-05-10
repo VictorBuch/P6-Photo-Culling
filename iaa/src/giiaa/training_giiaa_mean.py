@@ -7,10 +7,10 @@ As this is a regression problem, the labels are normalized average ranks of aest
 from iaa.src.utils.dataframe_preparation import *
 import tensorflow as tf
 
-IMAGE_DATASET_PATH = "../../ava/train"
-IMAGE_DATASET_SUBSET_PATH = "../../ava/subset/"
+IMAGE_DATASET_PATH = "../../datasets/ava/train"
+IMAGE_DATASET_SUBSET_PATH = "../../datasets/ava/subset/"
 
-AVA_TEXT_PATH = "../../ava/AVA.txt"
+AVA_TEXT_PATH = "../../datasets/ava/AVA.txt"
 AVA_DATAFRAME_PATH = "../../iaa/ava/AVA_mean_dataframe.csv"
 AVA_DATAFRAME_SUBSET_PATH = "../../iaa/ava/AVA_mean_dataframe_subset.csv"
 

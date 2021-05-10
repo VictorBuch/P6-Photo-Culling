@@ -10,7 +10,7 @@ import PIL.Image
 import tqdm
 
 DATASET_PATH = "../../iaa/ava/images"
-OUTPUT_DIRECTORY_PATH = "../../ava"
+OUTPUT_DIRECTORY_PATH = "../../datasets/ava"
 
 SEED = 420
 TRAIN_TEST_SPLIT = 0.8

@@ -14,14 +14,14 @@ import os
 FULL_DATASET_TRAINING = True
 
 
-AVA_DATASET_PATH = "../../ava/train"
-AVA_DATAFRAME_PATH = "../../ava/gciaa/AVA_gciaa-cat_train_dataframe.csv"
+AVA_DATASET_PATH = "../../datasets/ava/train"
+AVA_DATAFRAME_PATH = "../../datasets/ava/gciaa/AVA_gciaa-cat_train_dataframe.csv"
 
-AVA_DATASET_SUBSET_PATH = "../../ava/subset/"
-AVA_DATAFRAME_SUBSET_PATH = "../../ava/gciaa/AVA_gciaa-cat_subset_dataframe.csv"
+AVA_DATASET_SUBSET_PATH = "../../datasets/ava/subset/"
+AVA_DATAFRAME_SUBSET_PATH = "../../datasets/ava/gciaa/AVA_gciaa-cat_subset_dataframe.csv"
 
 GIIAA_MODEL = "../../models/giiaa/model_giiaa-hist_200k_inceptionresnetv2_0.078.hdf5"
-LOG_PATH = "../../ava/gciaa/logs"
+LOG_PATH = "../../datasets/ava/gciaa/logs"
 MODELS_PATH = "../../models/gciaa/"
 
 BASE_MODEL_NAME = "InceptionResNetV2"

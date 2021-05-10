@@ -11,8 +11,8 @@ from tensorflow.keras.preprocessing.image import ImageDataGenerator
 
 MODEL_PATH = "../../models/giiaa/model_giiaa-hist_200k_inceptionresnetv2_0.078.hdf5"
 
-AVA_DATASET_TEST_PATH = "../../ava/test/"
-AVA_DATAFRAME_TEST_PATH = "../../ava/giiaa/AVA_giiaa-hist_test_dataframe.csv"
+AVA_DATASET_TEST_PATH = "../../datasets/ava/test/"
+AVA_DATAFRAME_TEST_PATH = "../../datasets/ava/giiaa/AVA_giiaa-hist_test_dataframe.csv"
 
 BATCH_SIZE = 32
 

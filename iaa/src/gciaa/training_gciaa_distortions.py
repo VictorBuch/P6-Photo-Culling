@@ -11,17 +11,17 @@ from tensorflow.keras import backend as K
 import pandas as pd
 import os
 
-FULL_DATASET_TRAINING = False
+FULL_DATASET_TRAINING = True
 
 
-AVA_DATASET_PATH = "../../ava/train"
-AVA_DATAFRAME_PATH = "../../ava/gciaa/AVA_gciaa-dist_train_dataframe.csv"
+AVA_DATASET_PATH = "../../datasets/ava/train"
+AVA_DATAFRAME_PATH = "../../datasets/ava/gciaa/AVA_gciaa-dist_train_dataframe.csv"
 
-AVA_DATASET_SUBSET_PATH = "../../ava/subset/"
-AVA_DATAFRAME_SUBSET_PATH = "../../ava/gciaa/AVA_gciaa-dist_subset_dataframe.csv"
+AVA_DATASET_SUBSET_PATH = "../../datasets/ava/subset/"
+AVA_DATAFRAME_SUBSET_PATH = "../../datasets/ava/gciaa/AVA_gciaa-dist_subset_dataframe.csv"
 
 GIIAA_MODEL = "../../models/giiaa/model_giiaa-hist_200k_inceptionresnetv2_0.078.hdf5"
-LOG_PATH = "../../ava/gciaa/logs"
+LOG_PATH = "../../datasets/ava/gciaa/logs"
 MODELS_PATH = "../../models/gciaa/"
 
 BASE_MODEL_NAME = "InceptionResNetV2"
@@ -63,31 +63,62 @@ if __name__ == "__main__":
     base.build()
     base.compile()
 
-    # Training the GCIAA model with same-category pairs generated from the AVA dataset.
+    # Training the GCIAA model with artificially created pairs of images.
     dataframe = pd.read_csv(dataframe_path, converters={'label': eval})
 
     data_generator = ImageDataGenerator(
         rescale=1.0 / 255,
-        validation_split=0.2,
-        vertical_flip=True
+        validation_split=0.2
     )
 
-    distortion_generator = ImageDataGenerator(
-        rescale=1.0 / 255,
-        validation_split=0.2,
-        vertical_flip=True
-    )
+    distortion_generators = [
+        ImageDataGenerator(
+            rescale=1.0 / 255,
+            validation_split=0.2,
+            brightness_range=[0.2, 0.75]
+        ),
+        ImageDataGenerator(
+            rescale=1.0 / 255,
+            validation_split=0.2,
+            brightness_range=[1.5, 5.0]
+        ),
+        ImageDataGenerator(
+            rescale=1.0 / 255,
+            validation_split=0.2,
+            rotation_range=90.0
+        ),
+        ImageDataGenerator(
+            rescale=1.0 / 255,
+            validation_split=0.2,
+            shear_range=90.0
+        ),
+        ImageDataGenerator(
+            rescale=1.0 / 255,
+            validation_split=0.2,
+            zoom_range=0.5
+        ),
+        ImageDataGenerator(
+            rescale=1.0 / 255,
+            validation_split=0.2,
+            preprocessing_function=SiameseGeneratorDistortions.apply_blur
+        ),
+        ImageDataGenerator(
+            rescale=1.0 / 255,
+            validation_split=0.2,
+            preprocessing_function=SiameseGeneratorDistortions.apply_blob
+        )
+    ]
 
-    train_generator = SiameseGeneratorDist(
+    train_generator = SiameseGeneratorDistortions(
         generator=data_generator,
-        distortion_generator=distortion_generator,
+        distortion_generators=distortion_generators,
         dataframe=dataframe,
         batch_size=BATCH_SIZE,
         subset='training')
 
-    validation_generator = SiameseGeneratorDist(
+    validation_generator = SiameseGeneratorDistortions(
         generator=data_generator,
-        distortion_generator=distortion_generator,
+        distortion_generators=distortion_generators,
         dataframe=dataframe,
         batch_size=BATCH_SIZE,
         subset='validation')

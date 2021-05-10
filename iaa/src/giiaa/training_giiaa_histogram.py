@@ -13,13 +13,13 @@ import os
 FULL_DATASET_TRAINING = True
 
 
-AVA_DATASET_PATH = "../../ava/train"
-AVA_DATAFRAME_PATH = "../../ava/giiaa/AVA_giiaa-hist_train_dataframe.csv"
+AVA_DATASET_PATH = "../../datasets/ava/train"
+AVA_DATAFRAME_PATH = "../../datasets/ava/giiaa/AVA_giiaa-hist_train_dataframe.csv"
 
-AVA_DATASET_SUBSET_PATH = "../../ava/subset/"
-AVA_DATAFRAME_SUBSET_PATH = "../../ava/giiaa/AVA_giiaa-hist_subset_dataframe.csv"
+AVA_DATASET_SUBSET_PATH = "../../datasets/ava/subset/"
+AVA_DATAFRAME_SUBSET_PATH = "../../datasets/ava/giiaa/AVA_giiaa-hist_subset_dataframe.csv"
 
-LOG_PATH = "../../ava/giiaa/logs"
+LOG_PATH = "../../datasets/ava/giiaa/logs"
 MODELS_PATH = "../../models/giiaa/"
 
 

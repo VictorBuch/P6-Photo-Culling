@@ -9,26 +9,27 @@ import pandas as pd
 from tqdm import tqdm
 import random
 
-AVA_TEXT_PATH = "../../ava/AVA.txt"
+AVA_TEXT_PATH = "../../datasets/ava/AVA.txt"
 
-AVA_DATASET_TRAIN_PATH = "../../ava/train"
-AVA_DATASET_TEST_PATH = "../../ava/test"
-AVA_DATASET_SUBSET_PATH = "../../ava/subset/"
+AVA_DATASET_TRAIN_PATH = "../../datasets/ava/train"
+AVA_DATASET_TEST_PATH = "../../datasets/ava/test"
+AVA_DATASET_SUBSET_PATH = "../../datasets/ava/subset/"
 
-AVA_DATAFRAME_GIIAA_HIST_TRAIN_PATH = "../../ava/giiaa/AVA_giiaa-hist_train_dataframe.csv"
-AVA_DATAFRAME_GIIAA_HIST_TEST_PATH = "../../ava/giiaa/AVA_giiaa-hist_test_dataframe.csv"
-AVA_DATAFRAME_GIIAA_HIST_SUBSET_PATH = "../../ava/giiaa/AVA_giiaa-hist_subset_dataframe.csv"
+AVA_DATAFRAME_GIIAA_HIST_TRAIN_PATH = "../../datasets/ava/giiaa/AVA_giiaa-hist_train_dataframe.csv"
+AVA_DATAFRAME_GIIAA_HIST_TEST_PATH = "../../datasets/ava/giiaa/AVA_giiaa-hist_test_dataframe.csv"
+AVA_DATAFRAME_GIIAA_HIST_SUBSET_PATH = "../../datasets/ava/giiaa/AVA_giiaa-hist_subset_dataframe.csv"
 
-AVA_DATAFRAME_GCIAA_CAT_TRAIN_PATH = "../../ava/gciaa/AVA_gciaa-cat_train_dataframe.csv"
-AVA_DATAFRAME_GCIAA_CAT_TEST_PATH = "../../ava/gciaa/AVA_gciaa-cat_test_dataframe.csv"
-AVA_DATAFRAME_GCIAA_CAT_SUBSET_PATH = "../../ava/gciaa/AVA_gciaa-cat_subset_dataframe.csv"
+AVA_DATAFRAME_GCIAA_CAT_TRAIN_PATH = "../../datasets/ava/gciaa/AVA_gciaa-cat_train_dataframe.csv"
+AVA_DATAFRAME_GCIAA_CAT_TEST_PATH = "../../datasets/ava/gciaa/AVA_gciaa-cat_test_dataframe.csv"
+AVA_DATAFRAME_GCIAA_CAT_SUBSET_PATH = "../../datasets/ava/gciaa/AVA_gciaa-cat_subset_dataframe.csv"
 
-AVA_DATAFRAME_GCIAA_DIST_TRAIN_PATH = "../../ava/gciaa/AVA_gciaa-dist_train_dataframe.csv"
-AVA_DATAFRAME_GCIAA_DIST_TEST_PATH = "../../ava/gciaa/AVA_gciaa-dist_test_dataframe.csv"
-AVA_DATAFRAME_GCIAA_DIST_SUBSET_PATH = "../../ava/gciaa/AVA_gciaa-dist_subset_dataframe.csv"
+AVA_DATAFRAME_GCIAA_DIST_TRAIN_PATH = "../../datasets/ava/gciaa/AVA_gciaa-dist_train_dataframe.csv"
+AVA_DATAFRAME_GCIAA_DIST_TEST_PATH = "../../datasets/ava/gciaa/AVA_gciaa-dist_test_dataframe.csv"
+AVA_DATAFRAME_GCIAA_DIST_SUBSET_PATH = "../../datasets/ava/gciaa/AVA_gciaa-dist_subset_dataframe.csv"
 
 
-SELECTED_CATEGORIES_FOR_PAIRWISE_TRAINING = (19, 20, 43, 57, 21, 50, 2, 4, 3, 38, 40, 65, 6, 14, 15, 47, 7, 28, 42, 26)
+SELECTED_CATEGORIES_FOR_PAIRWISE_TRAINING = (19, 20, 43, 57, 21, 50, 2, 4, 38, 14, 15, 47, 7, 42, 26)
+SEED = 31
 
 
 def prepare_dataframe_giiaa_mean(image_dataset_path, image_info_path):
@@ -127,7 +128,7 @@ def prepare_dataframe_gciaa_cat(
         image_dataset_path,
         image_info_path,
         selected_categories=SELECTED_CATEGORIES_FOR_PAIRWISE_TRAINING,
-        pairs_per_category_scalar=1):
+        pairs_per_category_scalar=0.7):
 
     original_dataframe = pd.read_csv(image_info_path, sep=' ')
 
@@ -152,7 +153,7 @@ def prepare_dataframe_gciaa_cat(
 
         print("Number of images for category {}: {}".format(i, len(images_per_category)))
 
-        for ii in range(len(images_per_category) * pairs_per_category_scalar):
+        for ii in range(int(len(images_per_category) * pairs_per_category_scalar)):
 
             try:
                 random_pair = images_per_category.sample(2)
@@ -183,14 +184,17 @@ def prepare_dataframe_gciaa_cat(
 def prepare_dataframe_gciaa_dist(
         image_dataset_path,
         image_info_path,
-        pairs_per_dataset_scalar=1):
+        pairs_per_dataset_scalar=0.25):
 
     data = {
         'id': [],
         'label': []
     }
 
-    for filename in tqdm(os.listdir(image_dataset_path)):
+    filenames = os.listdir(image_dataset_path)
+    random.Random(SEED).shuffle(filenames)
+
+    for filename in tqdm(filenames[:int(len(filenames) * pairs_per_dataset_scalar)]):
 
         data['id'].append(os.path.join(image_dataset_path, filename))
         data['label'].append(0.0)
@@ -199,5 +203,5 @@ def prepare_dataframe_gciaa_dist(
 
 
 if __name__ == "__main__":
-    dataframe = prepare_dataframe_gciaa_dist(AVA_DATASET_TEST_PATH, AVA_TEXT_PATH)
-    dataframe.to_csv(AVA_DATAFRAME_GCIAA_DIST_TEST_PATH)
+    dataframe = prepare_dataframe_gciaa_cat(AVA_DATASET_TEST_PATH, AVA_TEXT_PATH)
+    dataframe.to_csv(AVA_DATAFRAME_GCIAA_CAT_TEST_PATH)

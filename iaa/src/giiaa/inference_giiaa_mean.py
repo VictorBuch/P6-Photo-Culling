@@ -10,7 +10,7 @@ import random
 
 
 MODEL_PATH = "../../models/giiaa/weights_giiaa-hist_reference_mobilenet_0.070.hdf5"
-AVA_DATASET_SUBSET_PATH = "../../ava/subset/"
+AVA_DATASET_SUBSET_PATH = "../../datasets/ava/subset/"
 
 if __name__ == "__main__":
 

@@ -221,13 +221,7 @@ const StyledFullscreenSection = styled.section`
   }
 
   .clustersPanel{
-    //grid-area: clustersPanel;
-    //background-color: pink;
-    ////bottom: 0;
-    ////width: 100px;
-    ///* height: 20%px; */
-    //font-size: 17px; /* Changes card size within cluster */
-    //padding: 1em 1em 1em 1em;
+    height: 250px;
     border-top: 2px solid #b9b9b9;
   }
 
@@ -291,7 +285,6 @@ const StyledFullscreenSection = styled.section`
   .nothingness {
     color: transparent;
   }
-
 
 `;
 

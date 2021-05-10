@@ -171,11 +171,14 @@ const StyledImageCardSection = styled.section`
   min-height: 10%;
   max-width: 14%;
   max-height: 10%;
+  /* width: 12em;
+  height: fit-content; */
   margin-left: 2%;
   border: none;
   display: flex;
   flex-direction: column;
   margin-bottom: 1%;
+
   ${(props) =>
     props.isFullscreen &&
     `
@@ -184,7 +187,6 @@ const StyledImageCardSection = styled.section`
   max-width: 100%;
   max-height: 100%;
 `}
-
 
   .card-img-top {
     width: auto;

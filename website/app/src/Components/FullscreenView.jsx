@@ -137,9 +137,9 @@ export default function FullscreenView() {
                 id="AI"
                 transform="translate(88.281 90.811)"
                 fill="#b9b9b9"
-                font-size="9"
-                font-family="Helvetica"
-                letter-spacing="-0.02em"
+                fontSize="9"
+                fontFamily="Helvetica"
+                letterSpacing="-0.02em"
               >
                 <tspan x="-4.162" y="0">
                   AI
@@ -164,7 +164,6 @@ export default function FullscreenView() {
       <Cluster
         className="acceptedCluster"
         imageBlobArr={acceptedClustersImages}
-        isAcceptedCluster={true}
         isFullScreen={true}
       />
 
@@ -172,7 +171,6 @@ export default function FullscreenView() {
         className="horizontalCluster"
         imageBlobArr={nonAcceptedClustersImages}
         isFullScreen={true}
-        isAcceptedCluster={true}
       />
     </StyledFullscreenSection>
   );
@@ -183,7 +181,7 @@ const StyledFullscreenSection = styled.section`
   margin: 0 !important;
   display: grid;
   grid-template-columns: 0.75fr 1.25fr 1fr 1fr;
-  grid-template-rows: 2fr 0.7fr minmax(300px, 200px);
+  grid-template-rows: 2fr 0.8fr 1fr;
   gap: 3px 3px;
   grid-template-areas:
     "vertical-cluster bigImageContainer bigImageContainer bigImageContainer"
@@ -206,6 +204,14 @@ const StyledFullscreenSection = styled.section`
     }
   }
 
+  /* .middle-img {
+    align-items: center;
+    text-align: right;
+  } */
+  .overlay {
+    text-align: center;
+    align-self: right;
+  }
   .bigImageContainer {
     grid-area: bigImageContainer;
     //background-color: red;
@@ -227,10 +233,11 @@ const StyledFullscreenSection = styled.section`
   }
 
   .card {
-    width: 12em;
+    width: 15em;
     height: 100%;
     background-color: transparent;
     margin: 0.7em;
+    /* align-items: center; */
   }
 
   .bigImage {
@@ -278,10 +285,10 @@ const StyledFullscreenSection = styled.section`
     color: transparent;
   }
 
-  /* .acceptedCluster {
+  .acceptedCluster {
     grid-area: 3 / 1 / 3 / 2;
     height: 11rem;
     width: minMax(0%, 50%);
     overflow: hidden;
-  } */
+  }
 `;

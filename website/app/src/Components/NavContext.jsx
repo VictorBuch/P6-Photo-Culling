@@ -15,9 +15,7 @@ export function NavProvider(props) {
   const [storedClusters, setStoredClusters] = useState([]);
 
   // This is a string pointing to the image blob key which has been clicked, gives the image an orange outline
-  const [selectedImageKey, setSelectedImageKey] = useState(
-    "blob:http://localhost:3000/47f9f2c9-254d-44d8-88f3-e72ce4d56db3"
-  );
+  const [selectedImageKey, setSelectedImageKey] = useState();
 
   // used for debugging
   useEffect(() => {
@@ -27,7 +25,7 @@ export function NavProvider(props) {
     // console.log(storedClusters);
     // console.log("selectedImageKey: ");
     // console.log(selectedImageKey);
-  }, [acceptedImageKeys, selectedImageKey]);
+  }, [acceptedImageKeys, storedClusters, selectedImageKey]);
 
   return (
     <NavContext.Provider

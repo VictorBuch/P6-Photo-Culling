@@ -30,7 +30,7 @@ export default function Cluster({ index, setOffset }) {
         />
         <div className="overlay">{storedClusters[prevClusterIndex].length}</div>
       </div>
-      <div className="middle-img">
+      <div className="card middle-img">
         <img className="bigCluster" src={storedClusters[index][0]} alt="" />
         <div className="overlay-big">
           {storedClusters[currentClusterIndex].length}
@@ -84,7 +84,7 @@ const StyledVertClusterSection = styled.section`
   }
   .overlay-big {
     position: absolute;
-    bottom: 62%;
+    bottom: 0%;
     background: rgba(0, 0, 0, 0.6); /* Black see-through */
     width: 1%;
     height: 1%;

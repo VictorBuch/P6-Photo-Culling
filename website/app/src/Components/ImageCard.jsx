@@ -179,7 +179,7 @@ const StyledImageCardSection = styled.section`
   ${(props) =>
     props.isFullscreen &&
     `
-    min-width: 100%;
+    min-width: 20%;
   min-height: 100%;
   max-width: 100%;
   max-height: 100%;

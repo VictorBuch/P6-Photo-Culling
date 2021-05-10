@@ -137,9 +137,9 @@ export default function FullscreenView() {
                 id="AI"
                 transform="translate(88.281 90.811)"
                 fill="#b9b9b9"
-                font-size="9"
-                font-family="Helvetica"
-                letter-spacing="-0.02em"
+                fontSize="9"
+                fontFamily="Helvetica"
+                letterSpacing="-0.02em"
               >
                 <tspan x="-4.162" y="0">
                   AI
@@ -164,7 +164,6 @@ export default function FullscreenView() {
       <Cluster
         className="acceptedCluster"
         imageBlobArr={acceptedClustersImages}
-        isAcceptedCluster={true}
         isFullScreen={true}
       />
 
@@ -172,7 +171,6 @@ export default function FullscreenView() {
         className="horizontalCluster"
         imageBlobArr={nonAcceptedClustersImages}
         isFullScreen={true}
-        isAcceptedCluster={true}
       />
     </StyledFullscreenSection>
   );
@@ -278,10 +276,10 @@ const StyledFullscreenSection = styled.section`
     color: transparent;
   }
 
-  /* .acceptedCluster {
+  .acceptedCluster {
     grid-area: 3 / 1 / 3 / 2;
     height: 11rem;
     width: minMax(0%, 50%);
     overflow: hidden;
-  } */
+  }
 `;

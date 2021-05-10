@@ -1,12 +1,16 @@
 import { useState, useContext, useEffect } from "react";
 import { NavContext } from "./NavContext";
 
+import { saveAs } from "file-saver";
+
 // components
 import Clusters from "./Clusters";
 import FullscreenView from "./FullscreenView";
 
 // styles
 import styled from "styled-components";
+
+var JSZip = require("jszip");
 
 var i = 0;
 var ii = 0;
@@ -22,11 +26,14 @@ function applyNetflixSettings() {
 }
 
 export default function CullingView({ imageBlobArr }) {
-  const { globalyStoredClusters, globalSelectedImageKey } = useContext(
-    NavContext
-  ); // getting multiple states from the Nav Context
+  const {
+    globalyStoredClusters,
+    globalSelectedImageKey,
+    globalAcceptedImages,
+  } = useContext(NavContext); // getting multiple states from the Nav Context
   const [selectedImageKey, setSelectedImageKey] = globalSelectedImageKey;
   const [storedClusters, setStoredClusters] = globalyStoredClusters;
+  const [acceptedImageKeys, setAcceptedImageKeys] = globalAcceptedImages;
 
   const [isFullScreen, setIsFullScreen] = useState(false);
 
@@ -118,19 +125,6 @@ export default function CullingView({ imageBlobArr }) {
     }
   }
 
-  // function zipImages() {
-  //   var zip = new JSZip();
-  //   var img = zip.folder("images");
-  //   let index = 0;
-  //   for (let image of acceptedImageKeys) {
-  //     img.file(`Image${index++}.png`, image, { base64: true });
-  //   }
-  //   zip.generateAsync({ type: "blob" }).then(function (content) {
-  //     // see FileSaver.js
-
-  //   });
-  // }
-
   const netflix = (
     <div style={{ margin: 0 + "!important" }}>
       <div className="container-fluid" style={{ padding: 0 }}>
@@ -165,7 +159,7 @@ const StyledNetflixSection = styled.section`
     color: #b9b9b9;
   }
 
-  /* this is weird, everything works except the width of the scrollbar, i don't have time to look into it. */
+  //this is weird, everything works except the width of the scrollbar, i don't have time to look into it.
   * {
     ::-webkit-scrollbar {
       width: 5px;

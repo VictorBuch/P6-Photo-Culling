@@ -1,14 +1,24 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { NavContext } from "./NavContext";
 import styled from "styled-components";
 
 export default function Nav({ imageBlobArr }) {
-  const { numberOfSelectedImages } = useContext(NavContext);
+  const { numberOfSelectedImages, globalAcceptedImages } = useContext(
+    NavContext
+  );
 
   const [
     totalNumSelectedImages,
     setTotalNumSelectedImages,
   ] = numberOfSelectedImages;
+
+  const [acceptedImageKeys, setAcceptedImageKeys] = globalAcceptedImages;
+
+  const [selectedImages, setSelectedImages] = useState(0);
+
+  useEffect(() => {
+    setSelectedImages(totalNumSelectedImages);
+  }, [globalAcceptedImages]);
 
   return (
     <StyledNavSection>
@@ -23,13 +33,12 @@ export default function Nav({ imageBlobArr }) {
 
 const StyledNavSection = styled.nav`
   nav {
-    color: #B9B9B9;
+    color: #b9b9b9;
     top: 0px;
     z-index: 100;
   }
 
   p {
-margin: 5px 0 5px 20px
-
+    margin: 5px 0 5px 20px;
   }
 `;

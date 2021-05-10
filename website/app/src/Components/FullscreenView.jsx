@@ -183,7 +183,7 @@ const StyledFullscreenSection = styled.section`
   margin: 0 !important;
   display: grid;
   grid-template-columns: 0.75fr 1.25fr 1fr 1fr;
-  grid-template-rows: 2fr 0.7fr minmax(300px, 200px);
+  grid-template-rows: 2fr 0.8fr 1fr;
   gap: 3px 3px;
   grid-template-areas:
     "vertical-cluster bigImageContainer bigImageContainer bigImageContainer"
@@ -206,6 +206,14 @@ const StyledFullscreenSection = styled.section`
     }
   }
 
+  /* .middle-img {
+    align-items: center;
+    text-align: right;
+  } */
+  .overlay {
+    text-align: center;
+    align-self: right;
+  }
   .bigImageContainer {
     grid-area: bigImageContainer;
     //background-color: red;
@@ -227,10 +235,11 @@ const StyledFullscreenSection = styled.section`
   }
 
   .card {
-    width: 12em;
+    width: 15em;
     height: 100%;
     background-color: transparent;
     margin: 0.7em;
+    /* align-items: center; */
   }
 
   .bigImage {

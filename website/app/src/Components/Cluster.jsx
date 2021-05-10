@@ -137,6 +137,7 @@ const StyledClusterContainer = styled.div`
   overflow-x: auto;
   overflow-y: hidden;
   object-fit: contain;
+  //asdasd
   height: fit-content;
   ::-webkit-scrollbar {
     scrollbar-width: thin;

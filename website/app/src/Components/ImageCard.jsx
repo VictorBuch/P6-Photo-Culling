@@ -175,7 +175,8 @@ const StyledImageCardSection = styled.section`
   border: none;
   display: flex;
   flex-direction: column;
-  padding-bottom: 8px;
+  margin-bottom: 1%;
+  //asdasd
 
   .card-img-top {
     width: auto;

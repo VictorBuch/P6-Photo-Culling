@@ -139,7 +139,7 @@ export default function ImageCard(props) {
   );
 
   return (
-    <StyledImageCardSection>
+    <StyledImageCardSection isFullscreen={props.isFullScreen}>
       <StyledImageContainer
         className={"card" + (isSelected ? " cardSelected" : "")}
         isSelected={isSelected}
@@ -167,15 +167,20 @@ const StyledImageContainer = styled.div`
 `;
 
 const StyledImageCardSection = styled.section`
-  min-width: 199px;
-  min-height: 140px;
-  max-width: 199px;
-  max-height: 140px;
-  margin-left: 10px;
+  width: 16em;
+  height: fit-content;
+  margin-left: 2%;
   border: none;
   display: flex;
   flex-direction: column;
-  padding-bottom: 8px;
+  margin-bottom: 1%;
+
+  ${(props) =>
+    props.isFullscreen &&
+    `
+    width: 12em;
+    height: fit-content;
+`}
 
   .card-img-top {
     width: auto;

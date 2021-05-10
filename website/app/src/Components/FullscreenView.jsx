@@ -227,7 +227,6 @@ const StyledFullscreenSection = styled.section`
     grid-area: acceptedDiv;
     background-color: #282828;
     margin-right: 0.3rem;
-    color: #a8a8a8;
   }
   .rejectedDiv {
     grid-area: rejectedDiv;
@@ -235,8 +234,6 @@ const StyledFullscreenSection = styled.section`
   }
 
   .card {
-    width: 12em;
-    height: fit-content;
     background-color: transparent;
     margin: 0.6em;
   }

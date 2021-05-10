@@ -137,6 +137,7 @@ const StyledClusterContainer = styled.div`
   overflow-x: auto;
   overflow-y: hidden;
   object-fit: contain;
+  //asdasd
   height: fit-content;
   ::-webkit-scrollbar {
     scrollbar-width: thin;
@@ -163,15 +164,9 @@ const StyledRowContainer = styled.div`
   flex: 3;
   width: 100%;
   height: fit-content;
-  margin-bottom: 1%;
+  margin-bottom: 0.3%;
   overflow-y: auto;
   overflow-x: auto;
-
-  ${(props) =>
-    props.isOpen &&
-    `
-
-`}
 `;
 
 const StyledSelectedText = styled.p`
@@ -181,7 +176,7 @@ const StyledSelectedText = styled.p`
 const StyledOpenButton = styled.button`
   background-color: transparent;
   border: none;
-  padding-top: 30%;
+  padding-top: 25%;
 `;
 
 // const StyledFullscreenRowContainer = styled.div`

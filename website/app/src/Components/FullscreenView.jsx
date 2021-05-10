@@ -163,6 +163,7 @@ export default function FullscreenView() {
 
       {/*<div className="clustersPanel">*/}
       <div className="acceptedDiv">
+        <h1>Accepted</h1>
         <Cluster
           className="accepted"
           imageBlobArr={acceptedClustersImages}
@@ -171,6 +172,7 @@ export default function FullscreenView() {
         />
       </div>
       <div className="rejectedDiv">
+        <h1>Rejected</h1>
         <Cluster
           className="rejected"
           imageBlobArr={nonAcceptedClustersImages}
@@ -187,11 +189,11 @@ const StyledFullscreenSection = styled.section`
   background-color: #0d0d0d;
   margin: 0 !important;
   display: grid;
-  grid-template-columns: 0.75fr 1.25fr 1fr 1fr;
-  grid-template-rows: 2fr 0.9fr 1fr;
-  gap: 3px 3px;
+  grid-template-columns: 0.65fr 0.5fr 1.5fr 1.5fr;
+  grid-template-rows: 1.8fr 0.71fr 1fr;
+  gap: 0.1em 0.1em;
   grid-template-areas:
-    "vertical-cluster bigImageContainer bigImageContainer bigImageContainer"
+    "verticalCluster bigImageContainer bigImageContainer bigImageContainer"
     "bigImageInfo bigImageContainer bigImageContainer bigImageContainer"
     "acceptedDiv acceptedDiv rejectedDiv rejectedDiv";
 
@@ -199,11 +201,12 @@ const StyledFullscreenSection = styled.section`
     color: white;
     grid-area: bigImageInfo;
     background-color: #282828;
-    margin-bottom: 2px;
+    margin-bottom: 0.3em;
+    margin-top: 0.3em;
   }
 
   .vertical-cluster {
-    /* grid-area: verticalCluster; */
+    grid-area: verticalCluster;
     align-items: center;
     background-color: #282828;
     h1 {
@@ -213,20 +216,23 @@ const StyledFullscreenSection = styled.section`
 
   .bigImageContainer {
     grid-area: bigImageContainer;
-    //background-color: red;
-    margin: 30px 30px 30px 200px;
+    align-items: center;
+    margin: 2em 3em 3em 18em;
   }
 
   .clustersPanel {
     height: 250px;
-    border-top: 2px solid #b9b9b9;
   }
 
   .acceptedDiv {
     grid-area: acceptedDiv;
+    background-color: #282828;
+    margin-right: 0.3rem;
+    color: #a8a8a8;
   }
   .rejectedDiv {
     grid-area: rejectedDiv;
+    background-color: #282828;
   }
 
   .card {
@@ -244,11 +250,9 @@ const StyledFullscreenSection = styled.section`
   .bigImage {
     height: 100%;
     object-fit: contain;
-    /* padding-left: 10px; */
   }
 
   .bigImageMetadata {
-    /* background-color: green; */
     top: 80%;
     padding-left: 15px;
     list-style-type: none;
@@ -270,6 +274,7 @@ const StyledFullscreenSection = styled.section`
     font-size: 20px;
     font-weight: normal;
     padding-left: 10px;
+    padding-top: 0.2em;
     color: #b9b9b9;
   }
 

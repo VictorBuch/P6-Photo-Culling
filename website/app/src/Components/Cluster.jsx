@@ -60,6 +60,7 @@ export default function Cluster({ imageBlobArr, isFullScreen }) {
         key={blob}
         blob={isFullScreen ? blob : blob[0]}
         setNumberOfSelectedImages={setNumberOfSelectedImages}
+        isFullScreen={isFullScreen ? true : false}
       />
     );
   });

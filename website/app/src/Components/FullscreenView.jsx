@@ -192,6 +192,7 @@ const StyledFullscreenSection = styled.section`
   grid-template-columns: 0.65fr 0.5fr 1.5fr 1.5fr;
   grid-template-rows: 1.8fr 0.71fr 1fr;
   gap: 0.1em 0.1em;
+
   grid-template-areas:
     "verticalCluster bigImageContainer bigImageContainer bigImageContainer"
     "bigImageInfo bigImageContainer bigImageContainer bigImageContainer"
@@ -220,8 +221,9 @@ const StyledFullscreenSection = styled.section`
     margin: 2em 3em 3em 18em;
   }
 
-  .clustersPanel {
-    height: 250px;
+
+  .clustersPanel{
+    min-height: fit-content;
   }
 
   .acceptedDiv {

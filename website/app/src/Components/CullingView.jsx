@@ -159,7 +159,6 @@ const StyledNetflixSection = styled.section`
     max-width: 100%;
     max-height: 84%;
     text-align: center;
-    //asdasd
   }
 
   .eWeylI {

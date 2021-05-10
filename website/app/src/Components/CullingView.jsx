@@ -11,6 +11,18 @@ import styled from "styled-components";
 var i = 0;
 var ii = 0;
 var fullscreen = false;
+document.body.style.overflow = "hidden";
+
+
+
+function applyFullscreenSettings() {
+  document.getElementById("appNav").style.display = "none";
+}
+
+function applyNetflixSettings() {
+  document.getElementById("appNav").style.display = "block";
+}
+
 
 export default function CullingView({ imageBlobArr }) {
   const { globalyStoredClusters, globalSelectedImageKey } = useContext(
@@ -123,8 +135,8 @@ export default function CullingView({ imageBlobArr }) {
   // }
 
   const netflix = (
-    <div>
-      <div className="container-fluid m-2">
+    <div style={{margin: 0+'!important'}}>
+      <div className="container-fluid" style={{padding: 0}}>
         <div className="d-flex flex-column">
           <StyledNetflixSection>
             <Clusters imageBlobArr={imageBlobArr} isFullScreen={false} />
@@ -140,6 +152,7 @@ export default function CullingView({ imageBlobArr }) {
 const StyledNetflixSection = styled.section`
   height: 100vh;
   display: grid;
+
   .scrollMenu {
     height: 20rem;
   }
@@ -148,5 +161,34 @@ const StyledNetflixSection = styled.section`
     min-height: 100px;
     max-width: 200px;
     max-height: 100px;
+  }
+
+  .eWeylI {
+    color: #B9B9B9;
+  }
+
+  
+  //this is weird, everything works except the width of the scrollbar, i don't have time to look into it. 
+  * {
+    ::-webkit-scrollbar {
+      width: 5px;
+    }
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+      //box-shadow: inset 0 0 5px grey;
+      border-radius: 10px;
+    }
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+      background: grey;
+      border-radius: 10px;
+    }
+
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+      background: #FE8029;
+    }
   }
 `;

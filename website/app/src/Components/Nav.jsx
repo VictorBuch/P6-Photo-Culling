@@ -13,26 +13,23 @@ export default function Nav({ imageBlobArr }) {
   return (
     <StyledNavSection>
       <nav id="appNav">
-        <h1>
-          Accepted {totalNumSelectedImages} of {imageBlobArr.length}
-        </h1>
+        <p>
+          Accepted pictures: {totalNumSelectedImages} of {imageBlobArr.length}
+        </p>
       </nav>
     </StyledNavSection>
   );
 }
 
-const StyledNavSection = styled.section`
+const StyledNavSection = styled.nav`
   nav {
-    color: white;
-    padding: 5px;
-    position: sticky;
+    color: #B9B9B9;
     top: 0px;
     z-index: 100;
-    background-color: var(--background-color);
-    opacity: 0.9;
   }
 
-  h1 {
-    margin-left: 30px;
+  p {
+margin: 5px 0 5px 20px
+
   }
 `;

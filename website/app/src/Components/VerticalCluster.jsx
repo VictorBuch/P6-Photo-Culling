@@ -18,55 +18,40 @@ export default function Cluster({ index, setOffset }) {
   }
 
   return (
-    <StyledVertClusterSection className="grid-item">
-      <section className="d-flex flex-column vertical-cluster ">
-        {/* Replace index with the index of the cluster */}
+    <StyledVertClusterSection className="grid-item d-flex flex-column vertical-cluster">
+      {/* Replace index with the index of the cluster */}
 
-        <div className="card">
-          <img
-            className="smallCluster"
-            src={storedClusters[prevClusterIndex][0]}
-            alt=""
-            onClick={() => setOffset(-1)}
-          />
-          <div className="overlay">
-            {storedClusters[prevClusterIndex].length}
-          </div>
+      <div className="card top-bottom-imgs">
+        <img
+          className="smallCluster"
+          src={storedClusters[prevClusterIndex][0]}
+          alt=""
+          onClick={() => setOffset(-1)}
+        />
+        <div className="overlay">{storedClusters[prevClusterIndex].length}</div>
+      </div>
+      <div className="middle-img">
+        <img className="bigCluster" src={storedClusters[index][0]} alt="" />
+        <div className="overlay-big">
+          {storedClusters[currentClusterIndex].length}
         </div>
-        <div className="middle-img">
-          <img className="bigCluster" src={storedClusters[index][0]} alt="" />
-          <div className="overlay-big">
-            {storedClusters[currentClusterIndex].length}
-          </div>
-        </div>
-        <div className="card">
-          <img
-            className="smallCluster"
-            src={storedClusters[nextClusterIndex][0]}
-            alt=""
-            onClick={() => setOffset(+1)}
-          />
-          <div className="overlay">
-            {storedClusters[nextClusterIndex].length}
-          </div>
-        </div>
-        {/* Use the classNames for styling the image previews */}
-      </section>
+      </div>
+      <div className="card top-bottom-imgs">
+        <img
+          className="smallCluster"
+          src={storedClusters[nextClusterIndex][0]}
+          alt=""
+          onClick={() => setOffset(+1)}
+        />
+        <div className="overlay">{storedClusters[nextClusterIndex].length}</div>
+      </div>
+      {/* Use the classNames for styling the image previews */}
     </StyledVertClusterSection>
   );
 }
 
 const StyledVertClusterSection = styled.section`
-  .scrollMenuVertical {
-    grid-area: 1 / 1 / 1 / 1;
-    align-items: center;
-    overflow-y: hidden;
-    overflow-x: hidden;
-    white-space: nowrap;
-  }
-  .card {
-    width: 12em;
-    height: 100%;
+  .top-bottom-imgs {
     background-color: transparent;
   }
   .middle-img {
@@ -74,12 +59,12 @@ const StyledVertClusterSection = styled.section`
     width: 15rem;
   }
   .smallCluster {
+    object-fit: contain;
     height: 100%;
     width: 12rem;
-    margin: 1em 0em 1em 0em;
-    background-color: transparent;
   }
   .bigCluster {
+    object-fit: contain;
     height: 100%;
     width: 15rem;
     outline-width: 0.13em;
@@ -88,10 +73,10 @@ const StyledVertClusterSection = styled.section`
   }
   .overlay {
     position: absolute;
-    bottom: 10%;
+    bottom: 0%;
     background: rgba(0, 0, 0, 0.6); /* Black see-through */
-    width: 15%;
-    height: 15%;
+    width: 1%;
+    height: 1%;
     color: white;
     font-size: 20px;
     padding: 0em 1em 1.5em 0.4em;
@@ -99,7 +84,7 @@ const StyledVertClusterSection = styled.section`
   }
   .overlay-big {
     position: absolute;
-    bottom: 58%;
+    bottom: 62%;
     background: rgba(0, 0, 0, 0.6); /* Black see-through */
     width: 1%;
     height: 1%;

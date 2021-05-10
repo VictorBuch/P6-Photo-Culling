@@ -83,7 +83,9 @@ export default function Cluster({
           </StyledSelectedText>
           <StyledOpenButton
             onClick={() => setIsOpen((prev) => !prev)}
-          ></StyledOpenButton>
+          >              
+          {isOpen ? arrowOpen : arrowClosed}
+          </StyledOpenButton>
         </StyledColumnContainer>
         <StyledClusterContainer isOpen={isOpen}>
           {imageCards}
@@ -93,12 +95,34 @@ export default function Cluster({
   }
 }
 
+const arrowOpen = (
+  <svg xmlns="http://www.w3.org/2000/svg" width="22.644" height="13.443" viewBox="0 0 22.644 13.443">
+  <path id="Path_45" data-name="Path 45" d="M-4098,3547.375l10.261,10.261,10.261-10.261" transform="translate(4099.061 -3546.315)" fill="none" stroke="#fe8029" stroke-width="3"/>
+</svg>
+
+);
+
+const arrowClosed = (
+  <svg xmlns="http://www.w3.org/2000/svg" width="13.443" height="22.644" viewBox="0 0 13.443 22.644">
+  <path id="Path_49" data-name="Path 49" d="M-4098,3547.375l10.261,10.261,10.261-10.261" transform="translate(-3546.315 -4076.417) rotate(-90)" fill="none" stroke="#fe8029" stroke-width="3"/>
+</svg>
+)
+
+// styled components
+
 const StyledClusterContainer = styled.div`
   display: flex !important;
   flex-direction: row;
   flex-wrap: nowrap;
+  flex: 3;
   overflow-x: auto;
   overflow-y: hidden;
+  object-fit: contain;
+  height: fit-content;
+  ::-webkit-scrollbar {
+    scrollbar-width: thin;
+  }
+
 
   ${(props) =>
     props.isOpen &&
@@ -118,18 +142,16 @@ const StyledRowContainer = styled.div`
   background: #282828;
   display: flex;
   flex-direction: row;
+  flex:3;
   width: 100%;
-  min-height: 140px;
-  max-height: 140px;
+  height: fit-content;
   margin-bottom: 5px;
   overflow-y: auto;
-  overflow-x: hidden;
+  overflow-x: auto;
 
   ${(props) =>
-    props.isOpen &&
-    `
-max-height: 300px;
-min-height: 300px;
+    props.isOpen &&`
+
 `}
 `;
 
@@ -138,20 +160,22 @@ const StyledSelectedText = styled.p`
 `;
 
 const StyledOpenButton = styled.button`
-  color: ${(props) => (props.bg === "black" ? "black" : "blue")};
+  background-color: transparent;
+  border: none;
+  padding-top: 30px;
 `;
 
-const StyledFullscreenRowContainer = styled.div`
-  background: #282828;
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  min-height: 140px;
-  max-height: 140px;
-  margin-bottom: 5px;
-  overflow-y: auto;
-  overflow-x: hidden;
-`;
+// const StyledFullscreenRowContainer = styled.div`
+//   background: #282828;
+//   display: flex;
+//   flex-direction: row;
+//   width: 100%;
+//   min-height: 140px;
+//   max-height: 140px;
+//   margin-bottom: 5px;
+//   overflow-y: auto;
+//   overflow-x: hidden;
+// `;
 
 const StyledFullscreenClusterContainer = styled.div`
   display: flex !important;
@@ -168,32 +192,32 @@ flex-wrap: wrap
 `}
 `;
 
-const StyledHorizClusterSection = styled.section`
-  .scrollMenu {
-    overflow-x: scroll;
-    overflow-y: hidden;
-    white-space: nowrap;
-  }
+// const StyledHorizClusterSection = styled.section`
+//   .scrollMenu {
+//     overflow-x: scroll;
+//     overflow-y: hidden;
+//     white-space: nowrap;
+//   }
 
-  .clusterNum {
-    position: -webkit-sticky;
-    position: sticky;
-    left: 0px;
-  }
+//   .clusterNum {
+//     position: -webkit-sticky;
+//     position: sticky;
+//     left: 0px;
+//   }
 
-  * {
-    scrollbar-width: thin;
-    scrollbar-color: rgba(155, 155, 155, 0.5) transparent;
-  }
-  ::-webkit-scrollbar {
-    width: 5px;
-  }
-  ::-webkit-scrollbar-track {
-    background: transparent;
-  }
-  ::-webkit-scrollbar-thumb {
-    color: rgba(155, 155, 155, 0.5);
-    border-radius: 20px;
-    border: transparent;
-  }
-`;
+//   * {
+//     scrollbar-width: thin;
+//     scrollbar-color: rgba(155, 155, 155, 0.5) transparent;
+//   }
+//   ::-webkit-scrollbar {
+//     width: 5px;
+//   }
+//   ::-webkit-scrollbar-track {
+//     background: transparent;
+//   }
+//   ::-webkit-scrollbar-thumb {
+//     color: rgba(155, 155, 155, 0.5);
+//     border-radius: 20px;
+//     border: transparent;
+//   }
+// `;

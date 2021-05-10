@@ -1,8 +1,6 @@
 import { useState, useContext, useEffect } from "react";
 import { NavContext } from "./NavContext";
 
-import { saveAs } from "file-saver";
-
 // components
 import Clusters from "./Clusters";
 import FullscreenView from "./FullscreenView";

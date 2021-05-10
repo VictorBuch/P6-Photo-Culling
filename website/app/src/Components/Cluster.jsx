@@ -66,7 +66,7 @@ export default function Cluster({ imageBlobArr, isFullScreen }) {
 
   if (isFullScreen) {
     return (
-      <StyledFullscreenClusterContainer className="grid-item horizontal-cluster">
+      <StyledFullscreenClusterContainer className="clustersPanel">
         {imageCards}
       </StyledFullscreenClusterContainer>
     );

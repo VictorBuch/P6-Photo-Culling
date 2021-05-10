@@ -167,10 +167,10 @@ const StyledImageContainer = styled.div`
 `;
 
 const StyledImageCardSection = styled.section`
-  min-width: 12em;
-  /* min-height: 10%; */
-  max-width: 16em;
-  /* max-height: 10%; */
+  min-width: 14%;
+  min-height: 10%;
+  max-width: 14%;
+  max-height: 10%;
   margin-left: 2%;
   border: none;
   display: flex;

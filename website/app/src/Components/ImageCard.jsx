@@ -17,11 +17,11 @@ export default function ImageCard(props) {
     setTotalNumSelectedImages,
   ] = numberOfSelectedImages;
 
-  const [acceptedImagesKeys, setAcceptedImagesKeys] = globalAcceptedImages;
+  const [acceptedImageKeys, setAcceptedImageKeys] = globalAcceptedImages;
 
   // This checks on rerenders if the key of the image is in the global selected key array
   useEffect(() => {
-    if (acceptedImagesKeys.includes(props.blob)) {
+    if (acceptedImageKeys.includes(props.blob)) {
       // console.log('Key is in selected array, set selected state to true');
       setIsAccepted(true);
     } else {
@@ -42,21 +42,21 @@ export default function ImageCard(props) {
 
       // If an image is selected we want it to be deleted from the global selected image key array
       // React likes states to not be directly changed so copy the global state array
-      const acceptedImagesKeysCopy = [...acceptedImagesKeys];
-      acceptedImagesKeysCopy.splice(
-        acceptedImagesKeysCopy.indexOf(props.blob),
+      const acceptedImageKeysCopy = [...acceptedImageKeys];
+      acceptedImageKeysCopy.splice(
+        acceptedImageKeysCopy.indexOf(props.blob),
         1
       ); // find the index of the key and delete it
-      setAcceptedImagesKeys([...acceptedImagesKeysCopy]); // set the state array to the new modified array
+      setAcceptedImageKeys([...acceptedImageKeysCopy]); // set the state array to the new modified array
     } else {
       props.setNumberOfSelectedImages((prev) => prev + 1);
       setTotalNumSelectedImages((prev) => prev + 1);
 
       // the image key doesnt exist in the global image selected key array
       // make a copy of the global array
-      const acceptedImagesKeysCopy = [...acceptedImagesKeys];
-      acceptedImagesKeysCopy.push(props.blob); // add the key of the selected image
-      setAcceptedImagesKeys([...acceptedImagesKeysCopy]); // set the state to the modified array
+      const acceptedImageKeysCopy = [...acceptedImageKeys];
+      acceptedImageKeysCopy.push(props.blob); // add the key of the selected image
+      setAcceptedImageKeys([...acceptedImageKeysCopy]); // set the state to the modified array
     }
     return setIsAccepted(!isAccepted);
   }

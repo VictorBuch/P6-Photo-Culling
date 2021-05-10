@@ -133,7 +133,7 @@ flex-wrap: wrap
 `;
 
 const StyledColumnContainer = styled.div`
-  min-width: 50px;
+  min-width: 5%;
   display: flex;
   flex-direction: column;
 `;
@@ -145,7 +145,7 @@ const StyledRowContainer = styled.div`
   flex:3;
   width: 100%;
   height: fit-content;
-  margin-bottom: 5px;
+  margin-bottom: 1%;
   overflow-y: auto;
   overflow-x: auto;
 
@@ -162,7 +162,7 @@ const StyledSelectedText = styled.p`
 const StyledOpenButton = styled.button`
   background-color: transparent;
   border: none;
-  padding-top: 30px;
+  padding-top: 30%;
 `;
 
 // const StyledFullscreenRowContainer = styled.div`

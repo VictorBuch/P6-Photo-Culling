@@ -157,10 +157,11 @@ const StyledNetflixSection = styled.section`
     height: 20rem;
   }
   .card {
-    min-width: 200px;
-    min-height: 100px;
-    max-width: 200px;
-    max-height: 100px;
+    min-width: 84%;
+    min-height: 84%;
+    max-width: 100%;
+    max-height: 84%;
+    text-align: center;
   }
 
   .eWeylI {

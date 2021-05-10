@@ -167,12 +167,8 @@ const StyledImageContainer = styled.div`
 `;
 
 const StyledImageCardSection = styled.section`
-  min-width: 14%;
-  min-height: 10%;
-  max-width: 14%;
-  max-height: 10%;
-  /* width: 12em;
-  height: fit-content; */
+  width: 16em;
+  height: fit-content;
   margin-left: 2%;
   border: none;
   display: flex;
@@ -182,10 +178,8 @@ const StyledImageCardSection = styled.section`
   ${(props) =>
     props.isFullscreen &&
     `
-    min-width: 20%;
-  min-height: 100%;
-  max-width: 100%;
-  max-height: 100%;
+    width: 12em;
+    height: fit-content;
 `}
 
   .card-img-top {

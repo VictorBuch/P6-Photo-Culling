@@ -161,7 +161,6 @@ export default function FullscreenView() {
         </ul>
       </div>
 
-      {/*<div className="clustersPanel">*/}
       <div className="acceptedDiv">
         <h1>Accepted</h1>
         <Cluster
@@ -180,7 +179,6 @@ export default function FullscreenView() {
           isAcceptedCluster={true}
         />
       </div>
-      {/*</div>*/}
     </StyledFullscreenSection>
   );
 }
@@ -221,10 +219,9 @@ const StyledFullscreenSection = styled.section`
     margin: 2em 3em 3em 18em;
   }
 
-
-  .clustersPanel{
+  /* .clustersPanel{
     min-height: fit-content;
-  }
+  } */
 
   .acceptedDiv {
     grid-area: acceptedDiv;

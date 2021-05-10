@@ -237,9 +237,9 @@ const StyledFullscreenSection = styled.section`
 
   .card {
     width: 12em;
-    height: 100%;
+    height: fit-content;
     background-color: transparent;
-    margin: 0.7em;
+    margin: 0.6em;
   }
 
   .middle-img {

@@ -167,16 +167,17 @@ const StyledImageContainer = styled.div`
 `;
 
 const StyledImageCardSection = styled.section`
-  min-width: 14%;
+  /* min-width: 14%;
   min-height: 10%;
   max-width: 14%;
-  max-height: 10%;
+  max-height: 10%; */
+  width: 12em;
+  height: fit-content;
   margin-left: 2%;
   border: none;
   display: flex;
   flex-direction: column;
   margin-bottom: 1%;
-  //asdasd
 
   .card-img-top {
     width: auto;

@@ -22,29 +22,33 @@ function applyNetflixSettings() {
 }
 
 export default function CullingView({ imageBlobArr }) {
-  const {
-    globalSelectedImageKey,
-    globalAcceptedImages,
-    globalyStoredClusters,
-  } = useContext(NavContext);
+  const { globalyStoredClusters, globalSelectedImageKey } = useContext(
+    NavContext
+  ); // getting multiple states from the Nav Context
   const [selectedImageKey, setSelectedImageKey] = globalSelectedImageKey;
-  const [acceptedImageKeys, setAcceptedImageKeys] = globalAcceptedImages;
   const [storedClusters, setStoredClusters] = globalyStoredClusters;
-
-  const [clusterIndex, setClusterIndex] = useState(0);
 
   const [isFullScreen, setIsFullScreen] = useState(false);
 
-  const [firstRender, setFirstRender] = useState(false);
-
   useEffect(() => {
-    if (!firstRender) {
-      setSelectedImageKey(storedClusters[ii][0]);
-      document.addEventListener("keydown", handleKeyDown);
-      setFirstRender(true);
-      console.log("making eventlistener");
-    }
+    console.log("CullingView UseEffect");
+    window.addEventListener("keydown", handleKeyDown);
+    setSelectedImageKey(storedClusters[ii][0]);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
   }, []);
+
+  function applyFullscreenSettings() {
+    document.getElementById("appNav").style.display = "none";
+    document.body.style.overflow = "hidden";
+  }
+
+  function applyNetflixSettings() {
+    document.getElementById("appNav").style.display = "block";
+    document.body.style.overflow = "scroll";
+  }
 
   // some minor bug here but not too bad
   function changeOffset(direction) {
@@ -71,7 +75,6 @@ export default function CullingView({ imageBlobArr }) {
         fullscreen = true;
         setIsFullScreen(true);
         applyFullscreenSettings();
-
         break;
       case "Escape":
         fullscreen = false;
@@ -85,7 +88,6 @@ export default function CullingView({ imageBlobArr }) {
           return;
         }
         changeOffset(1);
-
         break;
       case "ArrowUp":
         if (fullscreen) {
@@ -152,10 +154,11 @@ const StyledNetflixSection = styled.section`
     height: 20rem;
   }
   .card {
-    min-width: 200px;
-    min-height: 100px;
-    max-width: 200px;
-    max-height: 100px;
+    min-width: 84%;
+    min-height: 84%;
+    max-width: 100%;
+    max-height: 84%;
+    text-align: center;
   }
 
   .eWeylI {

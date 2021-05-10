@@ -17,11 +17,11 @@ export default function ImageCard(props) {
     setTotalNumSelectedImages,
   ] = numberOfSelectedImages;
 
-  const [acceptedImagesKeys, setAcceptedImagesKeys] = globalAcceptedImages;
+  const [acceptedImageKeys, setAcceptedImageKeys] = globalAcceptedImages;
 
   // This checks on rerenders if the key of the image is in the global selected key array
   useEffect(() => {
-    if (acceptedImagesKeys.includes(props.blob)) {
+    if (acceptedImageKeys.includes(props.blob)) {
       // console.log('Key is in selected array, set selected state to true');
       setIsAccepted(true);
     } else {
@@ -42,21 +42,21 @@ export default function ImageCard(props) {
 
       // If an image is selected we want it to be deleted from the global selected image key array
       // React likes states to not be directly changed so copy the global state array
-      const acceptedImagesKeysCopy = [...acceptedImagesKeys];
-      acceptedImagesKeysCopy.splice(
-        acceptedImagesKeysCopy.indexOf(props.blob),
+      const acceptedImageKeysCopy = [...acceptedImageKeys];
+      acceptedImageKeysCopy.splice(
+        acceptedImageKeysCopy.indexOf(props.blob),
         1
       ); // find the index of the key and delete it
-      setAcceptedImagesKeys([...acceptedImagesKeysCopy]); // set the state array to the new modified array
+      setAcceptedImageKeys([...acceptedImageKeysCopy]); // set the state array to the new modified array
     } else {
       props.setNumberOfSelectedImages((prev) => prev + 1);
       setTotalNumSelectedImages((prev) => prev + 1);
 
       // the image key doesnt exist in the global image selected key array
       // make a copy of the global array
-      const acceptedImagesKeysCopy = [...acceptedImagesKeys];
-      acceptedImagesKeysCopy.push(props.blob); // add the key of the selected image
-      setAcceptedImagesKeys([...acceptedImagesKeysCopy]); // set the state to the modified array
+      const acceptedImageKeysCopy = [...acceptedImageKeys];
+      acceptedImageKeysCopy.push(props.blob); // add the key of the selected image
+      setAcceptedImageKeys([...acceptedImageKeysCopy]); // set the state to the modified array
     }
     return setIsAccepted(!isAccepted);
   }
@@ -140,51 +140,42 @@ export default function ImageCard(props) {
 
   return (
     <StyledImageCardSection>
-      <StyledImageContainer isSelected={isSelected}>
-      <StyledImage
-
+      <StyledImageContainer
+        className={"card" + (isSelected ? " cardSelected" : "")}
+        isSelected={isSelected}
+      >
+        <StyledImage
           key={props.blob}
           src={props.blob}
           alt=""
           onClick={handleSelected}
           //isSelected={isSelected}
-          >
-        </StyledImage>
+        ></StyledImage>
       </StyledImageContainer>
-        <span style={{textAlign: "center"}}>
-          {isAccepted ? accepted : rejected}
-        </span>
-
+      <span style={{ textAlign: "center" }}>
+        {isAccepted ? accepted : rejected}
+      </span>
     </StyledImageCardSection>
   );
 }
 
 const StyledImageContainer = styled.div`
-width: 97%;
-height: 80%;
-margin-top: 5px;
-background-color: #181818;
-${(props) =>
-  props.isSelected &&`
-  box-shadow: 0px 0px 8px 5px rgb(180, 180, 180);
-  //outline: 3px;
-  //outline-style: solid;
-  //outline-color: #A8A8A8;
-  //outline-radius: 4px;
-  `
-}
-`
+  width: 97%;
+  height: 80%;
+  margin-top: 5px;
+  background-color: #181818;
+`;
 
 const StyledImageCardSection = styled.section`
-min-width: 199px;
-min-height: 140px;
-max-width: 199px;
-max-height: 140px;
-margin-left: 10px;
-border: none;
-display: flex;
-flex-direction: column;
-padding-bottom: 8px;
+  min-width: 199px;
+  min-height: 140px;
+  max-width: 199px;
+  max-height: 140px;
+  margin-left: 10px;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 8px;
 
   .card-img-top {
     width: auto;
@@ -207,21 +198,22 @@ padding-bottom: 8px;
   .cardAccepted {
     box-shadow: 0px 0px 10px 7px var(--selected-image-color);
   }
-  .cardSelected {
-    box-shadow: 0px 0px 10px 7px rgb(255, 152, 18);
-  }
 
+  .cardSelected {
+    box-shadow: 0px 0px 8px 5px rgb(180, 180, 180);
+  }
 `;
 
 const StyledImage = styled.img`
-width: 100%;
-height: 100%;
-object-fit: contain;
-${(props) =>
-  props.isSelected &&`
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  ${(props) =>
+    props.isSelected &&
+    `
   //box-shadow: 0px 0px 5px 3px rgb(110, 110, 110);
   border: 5px;
   border-color: #A8A8A8;
   border-radius: 4px;
 `}
-`
+`;

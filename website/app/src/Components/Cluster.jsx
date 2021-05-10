@@ -7,11 +7,7 @@ import styled from "styled-components";
 // import tensorflow
 const tf = require("@tensorflow/tfjs");
 
-export default function Cluster({
-  imageBlobArr,
-  isFullScreen,
-  isAcceptedCluster,
-}) {
+export default function Cluster({ imageBlobArr, isFullScreen }) {
   // Global variables
   const { globalyStoredClusters } = useContext(NavContext);
   const [storedClusters, setStoredClusters] = globalyStoredClusters;
@@ -81,10 +77,8 @@ export default function Cluster({
           <StyledSelectedText>
             {numberOfSelectedImages} / {imageBlobArr.length}
           </StyledSelectedText>
-          <StyledOpenButton
-            onClick={() => setIsOpen((prev) => !prev)}
-          >              
-          {isOpen ? arrowOpen : arrowClosed}
+          <StyledOpenButton onClick={() => setIsOpen((prev) => !prev)}>
+            {isOpen ? arrowOpen : arrowClosed}
           </StyledOpenButton>
         </StyledColumnContainer>
         <StyledClusterContainer isOpen={isOpen}>
@@ -96,17 +90,42 @@ export default function Cluster({
 }
 
 const arrowOpen = (
-  <svg xmlns="http://www.w3.org/2000/svg" width="22.644" height="13.443" viewBox="0 0 22.644 13.443">
-  <path id="Path_45" data-name="Path 45" d="M-4098,3547.375l10.261,10.261,10.261-10.261" transform="translate(4099.061 -3546.315)" fill="none" stroke="#fe8029" stroke-width="3"/>
-</svg>
-
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="22.644"
+    height="13.443"
+    viewBox="0 0 22.644 13.443"
+  >
+    <path
+      id="Path_45"
+      data-name="Path 45"
+      d="M-4098,3547.375l10.261,10.261,10.261-10.261"
+      transform="translate(4099.061 -3546.315)"
+      fill="none"
+      stroke="#fe8029"
+      strokeWidth="3"
+    />
+  </svg>
 );
 
 const arrowClosed = (
-  <svg xmlns="http://www.w3.org/2000/svg" width="13.443" height="22.644" viewBox="0 0 13.443 22.644">
-  <path id="Path_49" data-name="Path 49" d="M-4098,3547.375l10.261,10.261,10.261-10.261" transform="translate(-3546.315 -4076.417) rotate(-90)" fill="none" stroke="#fe8029" stroke-width="3"/>
-</svg>
-)
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="13.443"
+    height="22.644"
+    viewBox="0 0 13.443 22.644"
+  >
+    <path
+      id="Path_49"
+      data-name="Path 49"
+      d="M-4098,3547.375l10.261,10.261,10.261-10.261"
+      transform="translate(-3546.315 -4076.417) rotate(-90)"
+      fill="none"
+      stroke="#fe8029"
+      strokeWidth="3"
+    />
+  </svg>
+);
 
 // styled components
 
@@ -123,7 +142,6 @@ const StyledClusterContainer = styled.div`
     scrollbar-width: thin;
   }
 
-
   ${(props) =>
     props.isOpen &&
     `
@@ -133,7 +151,7 @@ flex-wrap: wrap
 `;
 
 const StyledColumnContainer = styled.div`
-  min-width: 50px;
+  min-width: 5%;
   display: flex;
   flex-direction: column;
 `;
@@ -142,15 +160,16 @@ const StyledRowContainer = styled.div`
   background: #282828;
   display: flex;
   flex-direction: row;
-  flex:3;
+  flex: 3;
   width: 100%;
   height: fit-content;
-  margin-bottom: 5px;
+  margin-bottom: 1%;
   overflow-y: auto;
   overflow-x: auto;
 
   ${(props) =>
-    props.isOpen &&`
+    props.isOpen &&
+    `
 
 `}
 `;
@@ -162,7 +181,7 @@ const StyledSelectedText = styled.p`
 const StyledOpenButton = styled.button`
   background-color: transparent;
   border: none;
-  padding-top: 30px;
+  padding-top: 30%;
 `;
 
 // const StyledFullscreenRowContainer = styled.div`

@@ -187,6 +187,7 @@ const StyledFullscreenSection = styled.section`
   background-color: #0d0d0d;
   margin: 0 !important;
   display: grid;
+  height: 100vh;
   grid-template-columns: 0.65fr 0.5fr 1.5fr 1.5fr;
   grid-template-rows: 1.8fr 0.71fr 1fr;
   gap: 0.1em 0.1em;

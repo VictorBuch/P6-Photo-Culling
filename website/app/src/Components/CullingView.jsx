@@ -124,15 +124,9 @@ export default function CullingView({ imageBlobArr }) {
   }
 
   const netflix = (
-    <div style={{ margin: 0 + "!important" }}>
-      <div className="container-fluid" style={{ padding: 0 }}>
-        <div className="d-flex flex-column">
-          <StyledNetflixSection>
-            <Clusters imageBlobArr={imageBlobArr} isFullScreen={false} />
-          </StyledNetflixSection>
-        </div>
-      </div>
-    </div>
+    <StyledNetflixSection>
+      <Clusters imageBlobArr={imageBlobArr} isFullScreen={false} />
+    </StyledNetflixSection>
   );
 
   return <>{isFullScreen ? <FullscreenView /> : netflix}</>;
@@ -140,6 +134,7 @@ export default function CullingView({ imageBlobArr }) {
 
 const StyledNetflixSection = styled.section`
   display: grid;
+  overflow: hidden;
 
   .scrollMenu {
     height: 20rem;
@@ -157,26 +152,25 @@ const StyledNetflixSection = styled.section`
   }
 
   //this is weird, everything works except the width of the scrollbar, i don't have time to look into it.
-  * {
-    ::-webkit-scrollbar {
-      width: 5px;
-    }
 
-    /* Track */
-    ::-webkit-scrollbar-track {
-      //box-shadow: inset 0 0 5px grey;
-      border-radius: 10px;
-    }
+  ::-webkit-scrollbar {
+    width: 5px;
+  }
 
-    /* Handle */
-    ::-webkit-scrollbar-thumb {
-      background: grey;
-      border-radius: 10px;
-    }
+  /* Track */
+  ::-webkit-scrollbar-track {
+    //box-shadow: inset 0 0 5px grey;
+    border-radius: 10px;
+  }
 
-    /* Handle on hover */
-    ::-webkit-scrollbar-thumb:hover {
-      background: #fe8029;
-    }
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: grey;
+    border-radius: 10px;
+  }
+
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #fe8029;
   }
 `;

@@ -34,20 +34,18 @@ export default function App() {
 
   return (
     <StyledAppSection>
-      <>
-        {/* While the images have not been processed display either the upload btn or the loading page */}
-        {!areImagesLoaded && uploadBtn}
+      {/* While the images have not been processed display either the upload btn or the loading page */}
+      {!areImagesLoaded && uploadBtn}
 
-        {/* Images have now been processed and show the culing interface */}
-        {areImagesLoaded && (
-          <NavProvider>
-            <Nav imageBlobArr={imageBlobArr} />
+      {/* Images have now been processed and show the culing interface */}
+      {areImagesLoaded && (
+        <NavProvider>
+          <Nav imageBlobArr={imageBlobArr} />
 
-            {/* Component that is resposible for drawing the netflix or fullscreen view */}
-            <CullingView imageBlobArr={imageBlobArr} />
-          </NavProvider>
-        )}
-      </>
+          {/* Component that is resposible for drawing the netflix or fullscreen view */}
+          <CullingView imageBlobArr={imageBlobArr} />
+        </NavProvider>
+      )}
     </StyledAppSection>
   );
 }
@@ -64,29 +62,28 @@ const StyledAppSection = styled.section`
     -moz-user-select: none; /* Firefox all */
     -ms-user-select: none; /* IE 10+ */
     user-select: none;
+    overflow-x: hidden;
+    ::-webkit-scrollbar {
+      width: 5px;
+    }
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+      //box-shadow: inset 0 0 5px grey;
+      border-radius: 2px;
+    }
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+      background: grey;
+      border-radius: 2px;
+    }
+
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+      background: #fe8029;
+    }
   }
 
   background-color: #181818;
-  overflow-x: hidden;
-
-  ::-webkit-scrollbar {
-    width: 5px;
-  }
-
-  /* Track */
-  ::-webkit-scrollbar-track {
-    //box-shadow: inset 0 0 5px grey;
-    border-radius: 2px;
-  }
-
-  /* Handle */
-  ::-webkit-scrollbar-thumb {
-    background: grey;
-    border-radius: 2px;
-  }
-
-  /* Handle on hover */
-  ::-webkit-scrollbar-thumb:hover {
-    background: #FE8029;
-  }
 `;

@@ -65,10 +65,7 @@ export default function FullscreenView() {
   }, [acceptedImageKeys, clusterIndex]);
 
   return (
-    <StyledFullscreenSection
-      className="grid-container-fluid"
-      id="fullscreenView"
-    >
+    <StyledFullscreenSection id="fullscreenView">
       <div className="vertical-cluster">
         <h1>
           <svg
@@ -222,6 +219,7 @@ const StyledFullscreenSection = styled.section`
     grid-area: bigImageContainer;
     align-items: center;
     margin: 2em 3em 3em 18em;
+    overflow-y: hidden;
   }
 
   /* .clustersPanel{

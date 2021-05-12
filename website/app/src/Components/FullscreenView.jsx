@@ -152,7 +152,11 @@ export default function FullscreenView() {
         <ul className="aiList">
           <li>
             {" "}
-            Confidence <span className="nothingness"> nothingnesssss </span> 38%
+            Confidence <span className="nothingness">
+              {" "}
+              nothingnessssss{" "}
+            </span>{" "}
+            38%
           </li>
           <li>
             {" "}

@@ -3,14 +3,11 @@ import { NavContext } from "./NavContext";
 import styled from "styled-components";
 
 export default function Nav({ imageBlobArr }) {
-  const { numberOfSelectedImages, globalAcceptedImages } = useContext(
-    NavContext
-  );
+  const { numberOfSelectedImages, globalAcceptedImages } =
+    useContext(NavContext);
 
-  const [
-    totalNumSelectedImages,
-    setTotalNumSelectedImages,
-  ] = numberOfSelectedImages;
+  const [totalNumSelectedImages, setTotalNumSelectedImages] =
+    numberOfSelectedImages;
 
   const [acceptedImageKeys, setAcceptedImageKeys] = globalAcceptedImages;
 
@@ -34,7 +31,9 @@ export default function Nav({ imageBlobArr }) {
 const StyledNavSection = styled.nav`
   nav {
     color: #b9b9b9;
-    top: 0px;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 5px;
     z-index: 100;
   }
 

@@ -9,20 +9,15 @@ const tf = require("@tensorflow/tfjs");
 
 export default function Cluster({ imageBlobArr, isFullScreen }) {
   // Global variables
-  const { globalyStoredClusters, numberOfSelectedImages } = useContext(
-    NavContext
-  );
+  const { globalyStoredClusters, numberOfSelectedImages } =
+    useContext(NavContext);
   const [storedClusters, setStoredClusters] = globalyStoredClusters;
-  const [
-    numberOfSelectedImagesTotal,
-    setNumberOfSelectedImagesTotal,
-  ] = numberOfSelectedImages;
+  const [numberOfSelectedImagesTotal, setNumberOfSelectedImagesTotal] =
+    numberOfSelectedImages;
 
   // local variables
-  const [
-    localNumberOfSelectedImages,
-    setLlocalNumberOfSelectedImages,
-  ] = useState(0);
+  const [localNumberOfSelectedImages, setLlocalNumberOfSelectedImages] =
+    useState(0);
   const { globalAcceptedImages } = useContext(NavContext);
   const [acceptedImagesKeys, setAcceptedImagesKeys] = globalAcceptedImages;
   const [isOpen, setIsOpen] = useState(false);
@@ -34,7 +29,11 @@ export default function Cluster({ imageBlobArr, isFullScreen }) {
   // checks if any of the images in the cluster are in the global selected images array and modify the counter state based on it
   useEffect(() => {
     imageBlobArr.map((blob, index) => {
-      if (!isFullScreen && index === 0) {
+      if (
+        !isFullScreen &&
+        index === 0 &&
+        !acceptedImagesKeys.includes(blob[0])
+      ) {
         const copy = acceptedImagesKeys;
         copy.push(blob[0]);
         setAcceptedImagesKeys(copy);

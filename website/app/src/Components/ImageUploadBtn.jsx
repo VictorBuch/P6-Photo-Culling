@@ -1,5 +1,6 @@
 import React from "react";
 import exifr from "exifr"; // for getting image metadata
+import styled from "styled-components";
 
 export default function ImageUploadBtn({
   setAreImagesUploaded,
@@ -56,21 +57,35 @@ export default function ImageUploadBtn({
   }
 
   return (
-    <div
-      className="container d-flex flex-row justify-content-center align-items-center"
-      style={{ height: "100vh" }}
-    >
-      <label className="btn-lg btn-danger">
-        <div>Upload Images</div>
-        <input
-          id="inputFile"
-          className="file-upload"
-          type="file"
-          accept="image/*"
-          onChange={loadImages}
-          multiple
-        />
-      </label>
-    </div>
+    <StyledUploadBtnSection>
+      <div
+        className="container d-flex flex-row justify-content-center align-items-center"
+        style={{ height: "100vh" }}
+      >
+        <label className="btn-lg btn-danger">
+          <div>Upload Images</div>
+          <input
+            id="inputFile"
+            className="file-upload"
+            type="file"
+            accept="image/*"
+            onChange={loadImages}
+            multiple
+            autoFocus
+          />
+        </label>
+      </div>
+    </StyledUploadBtnSection>
   );
 }
+
+const StyledUploadBtnSection = styled.div`
+  h1 {
+    color: white;
+  }
+
+  // For the Upload Button, hides the input
+  .file-upload {
+    display: none;
+  }
+`;

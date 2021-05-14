@@ -1,45 +1,122 @@
-import { useEffect, useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { NavContext } from "./NavContext";
+
+// components
 import Clusters from "./Clusters";
-import Cluster from "./Cluster";
-import FullscreenCluster from "./FullscreenCluster";
-import VerticalCluster from "./VerticalCluster";
+import FullscreenView from "./FullscreenView";
+
+// styles
 import styled from "styled-components";
-import ImageCard from "./ImageCard";
+
+var JSZip = require("jszip");
+
+var i = 0;
+var ii = 0;
+var fullscreen = false;
+document.body.style.overflow = "hidden";
+
+function applyFullscreenSettings() {
+  document.getElementById("appNav").style.display = "none";
+}
+
+function applyNetflixSettings() {
+  document.getElementById("appNav").style.display = "block";
+}
 
 export default function CullingView({ imageBlobArr }) {
-  const [isFullScreen, setIsFullScreen] = useState(false);
-  const { globalyStoredClusters } = useContext(NavContext);
+  const {
+    globalyStoredClusters,
+    globalSelectedImageKey,
+    globalAcceptedImages,
+  } = useContext(NavContext); // getting multiple states from the Nav Context
+  const [selectedImageKey, setSelectedImageKey] = globalSelectedImageKey;
   const [storedClusters, setStoredClusters] = globalyStoredClusters;
-  const { globalOrange, selectedImages } = useContext(NavContext);
-  const [orange, setOrange] = globalOrange;
+  const [acceptedImageKeys, setAcceptedImageKeys] = globalAcceptedImages;
 
-  let clusterIndex = storedClusters.findIndex((element) =>
-    element.includes(orange)
-  );
+  const [isFullScreen, setIsFullScreen] = useState(false);
 
-  const [offset, setOffset] = useState(0);
+  useEffect(() => {
+    console.log("CullingView UseEffect");
+    window.addEventListener("keydown", handleKeyDown);
+    setSelectedImageKey(storedClusters[ii][0]);
 
-  document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
 
+  function applyFullscreenSettings() {
+    document.getElementById("appNav").style.display = "none";
+    document.body.style.overflow = "hidden";
+  }
+
+  function applyNetflixSettings() {
+    document.getElementById("appNav").style.display = "block";
+    document.body.style.overflow = "scroll";
+  }
+
+  // some minor bug here but not too bad
   function changeOffset(direction) {
-    setOffset((prev) => (prev += direction));
+    if (ii + direction > storedClusters.length - 1) {
+      // ii = 0;
+      // return setSelectedImageKey(storedClusters[ii][0]);
+      return;
+    }
+    if (ii + direction < 0) {
+      // ii = storedClusters.length - 1;
+      // return setSelectedImageKey(storedClusters[ii][0]);
+      return;
+    }
+    ii += direction;
+    setSelectedImageKey(storedClusters[ii][0]);
+    let selectedCard = document.querySelector(".cardSelected");
+    selectedCard.scrollIntoView({ behavior: "smooth", block: "center" });
   }
 
   function handleKeyDown(e) {
+    e.preventDefault();
     switch (e.key) {
       case "f":
-        if (orange) {
-          setIsFullScreen(true);
-        }
-        document.removeEventListener("keydown", handleKeyDown);
+        fullscreen = true;
+        setIsFullScreen(true);
+        applyFullscreenSettings();
         break;
       case "Escape":
+        fullscreen = false;
         setIsFullScreen(false);
-        document.removeEventListener("keydown", handleKeyDown);
+        applyNetflixSettings();
         break;
-      case "p":
-        console.log();
+
+      // Cluster controlls withe keyboard
+      case "ArrowDown":
+        if (fullscreen) {
+          return;
+        }
+        changeOffset(1);
+        break;
+      case "ArrowUp":
+        if (fullscreen) {
+          return;
+        }
+        changeOffset(-1);
+        break;
+      case "ArrowLeft":
+        if (i - 1 < 0) return;
+        i -= 1;
+        try {
+          setSelectedImageKey(storedClusters[ii][i]);
+        } catch (error) {
+          console.log(error);
+        }
+        break;
+      case "ArrowRight":
+        if (i + 1 > storedClusters[ii].length - 1) return;
+        i += 1;
+        try {
+          setSelectedImageKey(storedClusters[ii][i]);
+        } catch (error) {
+          console.log(error);
+        }
         break;
       default:
         break;
@@ -47,78 +124,53 @@ export default function CullingView({ imageBlobArr }) {
   }
 
   const netflix = (
-    <div>
-      <div className="container-fluid m-2">
-        <div className="d-flex flex-column">
-          <Clusters imageBlobArr={imageBlobArr} isFullScreen={false} />
-        </div>
-      </div>
-    </div>
-  );
-  const fullscreen = (
-    <div>
-      <StyledFullscreenSection
-        className="container-fluid m-2"
-        id="fullscreenView"
-      >
-        {/* Replace image with the currecnt clusters best image */}
-        <img className="" src={orange} alt="" />
-        {/* Replace with an actual view of clusters with the best image being the representative one */}
-        <VerticalCluster
-          index={clusterIndex + offset}
-          setOffset={changeOffset}
-        />
-
-        {/* Replace image with the currecnt clusters best image */}
-        <img class="bigImage" src={imageBlobArr[0][0]} alt="" />
-
-        <h1 class="bigImageInfo">Info and stuff goes here</h1>
-
-        {/* Replace with only the images from the current cluster */}
-        <FullscreenCluster
-          imageBlobArr={storedClusters[clusterIndex + offset]}
-          isFullScreen={true}
-        />
-
-        <h1>Info and shit</h1>
-      </StyledFullscreenSection>
-    </div>
+    <StyledNetflixSection>
+      <Clusters imageBlobArr={imageBlobArr} isFullScreen={false} />
+    </StyledNetflixSection>
   );
 
-  return (
-    <StyledCullingView>{isFullScreen ? fullscreen : netflix}</StyledCullingView>
-  );
+  return <>{isFullScreen ? <FullscreenView /> : netflix}</>;
 }
 
-const StyledCullingView = styled.div`
-  .hidden {
-    display: none;
-  }
-`;
-
-const StyledFullscreenSection = styled.section`
-  height: 90vh;
-
+const StyledNetflixSection = styled.section`
   display: grid;
-  grid-template-columns: 0.3fr 1fr;
-  grid-template-rows: 1fr 0.5fr 0.3fr;
-  gap: 1em;
+  overflow: hidden;
 
-  .scrollMenuVertical {
-    grid-area: 1 / 1 / 1 / 1;
-  }
-  .bigImage {
-    grid-area: 1 / 2 / 3 / 4;
-    height: 100%;
-    object-fit: contain;
-  }
   .scrollMenu {
-    grid-area: 3 / 1 / 3 / 4;
-  }
-  .bigImageInfo {
-    grid-area: 2 / 1;
+    height: 20rem;
   }
   .card {
-    width: 1em;
+    min-width: 84%;
+    min-height: 84%;
+    max-width: 100%;
+    max-height: 84%;
+    text-align: center;
+  }
+
+  .eWeylI {
+    color: #b9b9b9;
+  }
+
+  //this is weird, everything works except the width of the scrollbar, i don't have time to look into it.
+
+  ::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  /* Track */
+  ::-webkit-scrollbar-track {
+    //box-shadow: inset 0 0 5px grey;
+    border-radius: 10px;
+  }
+
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: grey;
+    border-radius: 10px;
+  }
+
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #fe8029;
   }
 `;

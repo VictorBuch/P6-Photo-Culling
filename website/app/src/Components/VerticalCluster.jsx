@@ -1,5 +1,6 @@
 import React, { useState, useContext } from "react";
 import { NavContext } from "./NavContext";
+import styled from "styled-components";
 
 export default function Cluster({ index, setOffset }) {
   const { globalyStoredClusters } = useContext(NavContext);
@@ -17,32 +18,80 @@ export default function Cluster({ index, setOffset }) {
   }
 
   return (
-    <section
-      className="d-flex flex-column scrollMenuVertical"
-      style={{ alignItems: "center" }}
-    >
+    <StyledVertClusterSection className="grid-item d-flex flex-column vertical-cluster">
       {/* Replace index with the index of the cluster */}
 
-      <div className="card" style={{ width: "12rem", margin: "5px" }}>
+      <div className="card top-bottom-imgs">
         <img
           className="smallCluster"
           src={storedClusters[prevClusterIndex][0]}
           alt=""
           onClick={() => setOffset(-1)}
         />
+        <div className="overlay">{storedClusters[prevClusterIndex].length}</div>
       </div>
-      <div className="card" style={{ width: "12rem", margin: "5px" }}>
+      <div className="card middle-img">
         <img className="bigCluster" src={storedClusters[index][0]} alt="" />
+        <div className="bigOverlay">
+          {storedClusters[currentClusterIndex].length}
+        </div>
       </div>
-      <div className="card" style={{ width: "12rem", margin: "5px" }}>
+      <div className="card top-bottom-imgs">
         <img
           className="smallCluster"
           src={storedClusters[nextClusterIndex][0]}
           alt=""
           onClick={() => setOffset(+1)}
         />
+        <div className="overlay">{storedClusters[nextClusterIndex].length}</div>
       </div>
       {/* Use the classNames for styling the image previews */}
-    </section>
+    </StyledVertClusterSection>
   );
 }
+
+const StyledVertClusterSection = styled.section`
+  .top-bottom-imgs {
+    background-color: transparent;
+  }
+
+  .smallCluster {
+    object-fit: contain;
+    height: 100%;
+    width: 12rem;
+  }
+  .bigCluster {
+    object-fit: contain;
+    height: 100%;
+    width: 15rem;
+    outline-width: 0.13em;
+    outline-color: white;
+    outline-style: solid;
+  }
+  .overlay {
+    position: absolute;
+    min-width: 1%;
+    max-width: 100%;
+    bottom: 0%;
+    background: rgba(0, 0, 0, 0.6); /* Black see-through */
+    width: 1%;
+    height: 1%;
+    color: white;
+    font-size: 20px;
+    padding: 0em 1em 1.5em 0.4em;
+    text-align: left;
+  }
+  .bigOverlay {
+    position: absolute;
+    min-width: 1%;
+    max-width: 100%;
+    bottom: 0%;
+    background: rgba(0, 0, 0, 0.6); /* Black see-through */
+    width: 1%;
+    height: 1%;
+    color: white;
+    font-size: 20px;
+    padding: 0em 1em 1.5em 0.4em;
+    text-align: left;
+  }
+`;

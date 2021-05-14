@@ -8,21 +8,24 @@ export function NavProvider(props) {
     setNumberOfSelectedImagesTotal,
   ] = useState(0); // used for displaying the total number of selected images
 
-  const [selectedImageKeys, setSelectedImageKeys] = useState([]); // use for storing the selected images key
+  // The images that have an orange check mark, saved in an array.
+  const [acceptedImageKeys, setAcceptedImageKeys] = useState([]);
 
+  // The clusters that we create, stored in a 2d array where each array is a new cluster [[new cluster], [new cluster]]
   const [storedClusters, setStoredClusters] = useState([]);
 
-  const [orange, setOrange] = useState();
+  // This is a string pointing to the image blob key which has been clicked, gives the image an orange outline
+  const [selectedImageKey, setSelectedImageKey] = useState();
 
   // used for debugging
   useEffect(() => {
-    // console.log("selectedImageKeys");
-    // console.log(selectedImageKeys);
+    // console.log("acceptedImageKeys");
+    // console.log(acceptedImageKeys);
     // console.log("storedClusters");
     // console.log(storedClusters);
-    console.log("orange: ");
-    console.log(orange);
-  }, [selectedImageKeys, storedClusters, orange]);
+    // console.log("selectedImageKey: ");
+    // console.log(selectedImageKey);
+  }, [acceptedImageKeys, storedClusters, selectedImageKey]);
 
   return (
     <NavContext.Provider
@@ -31,9 +34,9 @@ export function NavProvider(props) {
           numberOfSelectedImagesTotal,
           setNumberOfSelectedImagesTotal,
         ],
-        selectedImages: [selectedImageKeys, setSelectedImageKeys],
+        globalAcceptedImages: [acceptedImageKeys, setAcceptedImageKeys],
         globalyStoredClusters: [storedClusters, setStoredClusters],
-        globalOrange: [orange, setOrange],
+        globalSelectedImageKey: [selectedImageKey, setSelectedImageKey],
       }}
     >
       {props.children}

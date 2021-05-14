@@ -1,12 +1,14 @@
 import { useContext } from "react";
 import Cluster from "./Cluster";
 import { NavContext } from "./NavContext";
+import styled from "styled-components";
 
 export default function Clusters(props) {
   // local values
   const clusterArray = [[]];
   var prevClusterIndex = 0;
   var clusterNum = 0;
+  var interval = 2800; //change this number to tweak the clustering
 
   var prevDateTimeOriginal = null;
 
@@ -17,17 +19,13 @@ export default function Clusters(props) {
     if (prevDateTimeOriginal === null) {
       prevDateTimeOriginal = element[1];
     }
-    if (Math.abs(element[1] - prevDateTimeOriginal) < 10000) {
-      prevDateTimeOriginal = element[1];
-    }
 
-    // if the new image element is bigger that means 10 seconds have passed and it should create a new cluster
+    //check if the image creation date is within the interval compared to the previous image
     if (
-      Math.abs(element[1] - prevDateTimeOriginal) > 10000 ||
+      Math.abs(element[1] - prevDateTimeOriginal) > interval ||
       index === props.imageBlobArr.length - 1
     ) {
-      // the image element is not withing the threshold so make a new cluster
-
+      // the image element is not within the threshold so make a new cluster
       if (index === props.imageBlobArr.length - 1) {
         clusterArray.push([prevClusterIndex, index + 1]);
       } else {
@@ -43,15 +41,42 @@ export default function Clusters(props) {
       );
 
       return (
-        <Cluster
-          id="cluster"
-          key={clusterNum}
-          imageBlobArr={newCluster}
-          isFullScreen={props.isFullScreen}
-        />
+          <Cluster
+            id="cluster"
+            key={clusterNum}
+            imageBlobArr={newCluster}
+            isFullScreen={props.isFullScreen}
+          />
+
       );
+    } else {
+      prevDateTimeOriginal = element[1];
     }
   });
 }
 
 // get the images into a prop for the individual clusters
+
+const StyledClustersSection = styled.section`
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(155, 155, 155, 0.5) transparent;
+  }
+  ::-webkit-scrollbar {
+    width: 2px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    color: rgba(155, 155, 155, 0.5);
+    border-radius: 20px;
+    border: transparent;
+  }
+
+  .scrollMenu {
+    overflow-x: scroll;
+    overflow-y: hidden;
+    white-space: nowrap;
+  }
+`;

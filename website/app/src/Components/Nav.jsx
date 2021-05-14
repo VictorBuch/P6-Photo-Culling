@@ -1,16 +1,43 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { NavContext } from "./NavContext";
+import styled from "styled-components";
 
-export default function Nav({imageBlobArr}) {
-  const {numberOfSelectedImages} = useContext(NavContext)
+export default function Nav({ imageBlobArr }) {
+  const { numberOfSelectedImages, globalAcceptedImages } =
+    useContext(NavContext);
 
-  const [totalNumSelectedImages, setTotalNumSelectedImages] = numberOfSelectedImages;
+  const [totalNumSelectedImages, setTotalNumSelectedImages] =
+    numberOfSelectedImages;
+
+  const [acceptedImageKeys, setAcceptedImageKeys] = globalAcceptedImages;
+
+  const [selectedImages, setSelectedImages] = useState(0);
+
+  useEffect(() => {
+    setSelectedImages(totalNumSelectedImages);
+  }, [globalAcceptedImages]);
 
   return (
-    <nav id="appNav">
-      <h1>
-        Accepted {totalNumSelectedImages} of {imageBlobArr.length}
-      </h1>
-    </nav>
+    <StyledNavSection>
+      <nav id="appNav">
+        <p>
+          Accepted pictures: {totalNumSelectedImages} of {imageBlobArr.length}
+        </p>
+      </nav>
+    </StyledNavSection>
   );
 }
+
+const StyledNavSection = styled.nav`
+  nav {
+    color: #b9b9b9;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 5px;
+    z-index: 100;
+  }
+
+  p {
+    margin: 5px 0 5px 20px;
+  }
+`;

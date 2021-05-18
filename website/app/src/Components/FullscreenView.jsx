@@ -37,11 +37,13 @@ export default function FullscreenView() {
   );
 
   function changeOffset(direction) {
-    if (clusterIndex + direction >= storedClusters.length - 1) {
-      return setClusterIndex(0);
+    if (clusterIndex + direction > storedClusters.length - 1) {
+      // return setClusterIndex(0);
+      return;
     }
-    if (clusterIndex + direction <= 0) {
-      return setClusterIndex(storedClusters.length - 1);
+    if (clusterIndex + direction < 0) {
+      // return setClusterIndex(storedClusters.length - 1);
+      return;
     }
     setClusterIndex((prev) => (prev += direction));
   }
